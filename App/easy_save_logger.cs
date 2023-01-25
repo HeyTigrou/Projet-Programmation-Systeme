@@ -82,7 +82,7 @@ namespace EasySave
                 fileData = JsonConvert.DeserializeObject<List<EasySaveRealtimeLoggerObject>>(json);
             }
             fileData.Add(
-                                new EasySaveRRealtimeLoggerObject
+                                new EasySaveRealtimeLoggerObject
                                 {
                                     name = name,
                                     sourceFilePath = sourceFilePath,

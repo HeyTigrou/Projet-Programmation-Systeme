@@ -1,0 +1,5 @@
+C:\Users\gauti\Source\Repos\HeyTigrou\Projet-Programmation-Systeme\App\obj\Debug\net6.0\easy_save.csproj.AssemblyReference.cache
+C:\Users\gauti\Source\Repos\HeyTigrou\Projet-Programmation-Systeme\App\obj\Debug\net6.0\easy_save.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\gauti\Source\Repos\HeyTigrou\Projet-Programmation-Systeme\App\obj\Debug\net6.0\easy_save.AssemblyInfoInputs.cache
+C:\Users\gauti\Source\Repos\HeyTigrou\Projet-Programmation-Systeme\App\obj\Debug\net6.0\easy_save.AssemblyInfo.cs
+C:\Users\gauti\Source\Repos\HeyTigrou\Projet-Programmation-Systeme\App\obj\Debug\net6.0\easy_save.csproj.CoreCompileInputs.cache
