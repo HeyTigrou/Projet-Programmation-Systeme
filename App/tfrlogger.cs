@@ -16,7 +16,7 @@ namespace Poc
         public string name { set; get; }
         public string sourceFilePath { set; get; }
         public string targetFilePath { set; get; }
-        public string filesize { set; get; }
+        public int filesize { set; get; }
         public DateTime FileTransferTime { set; get; }
         public DateTime time { set; get; }
     }
@@ -36,7 +36,7 @@ namespace Poc
         private string fileName;
         private DateTime date;
         private string realtimeLogFilePath;
-        private string dailyLogFilePath
+        private string dailyLogFilePath;
         private string directoryPath;
 
         private void setLogFilePath()
