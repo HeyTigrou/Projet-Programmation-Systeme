@@ -43,8 +43,8 @@ namespace Poc
         {
             date = DateTime.Today;
             string currentDate = date.ToString("yyyy-MM-dd");
-            this.realtimeLogFilePath = directoryPath + currentDate + "-" + fileName + ".log";
-            this.dailyLogFilePath = directoryPath + fileName + ".log";
+            this.realtimeLogFilePath = this.directoryPath + currentDate + "-" + this.fileName + ".log";
+            this.dailyLogFilePath = this.directoryPath + this.fileName + ".log";
             if (!File.Exists(this.logFilePath))
             {
                 File.Create(this.logFilePath).Close();
