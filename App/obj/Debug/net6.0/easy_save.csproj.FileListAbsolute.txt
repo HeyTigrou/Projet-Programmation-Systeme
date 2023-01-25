@@ -3,3 +3,15 @@ C:\Users\gauti\Source\Repos\HeyTigrou\Projet-Programmation-Systeme\App\obj\Debug
 C:\Users\gauti\Source\Repos\HeyTigrou\Projet-Programmation-Systeme\App\obj\Debug\net6.0\easy_save.AssemblyInfoInputs.cache
 C:\Users\gauti\Source\Repos\HeyTigrou\Projet-Programmation-Systeme\App\obj\Debug\net6.0\easy_save.AssemblyInfo.cs
 C:\Users\gauti\Source\Repos\HeyTigrou\Projet-Programmation-Systeme\App\obj\Debug\net6.0\easy_save.csproj.CoreCompileInputs.cache
+C:\Users\gauti\Source\Repos\HeyTigrou\Projet-Programmation-Systeme\App\bin\Debug\net6.0\easy_save.exe
+C:\Users\gauti\Source\Repos\HeyTigrou\Projet-Programmation-Systeme\App\bin\Debug\net6.0\easy_save.deps.json
+C:\Users\gauti\Source\Repos\HeyTigrou\Projet-Programmation-Systeme\App\bin\Debug\net6.0\easy_save.runtimeconfig.json
+C:\Users\gauti\Source\Repos\HeyTigrou\Projet-Programmation-Systeme\App\bin\Debug\net6.0\easy_save.dll
+C:\Users\gauti\Source\Repos\HeyTigrou\Projet-Programmation-Systeme\App\bin\Debug\net6.0\easy_save.pdb
+C:\Users\gauti\Source\Repos\HeyTigrou\Projet-Programmation-Systeme\App\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\gauti\Source\Repos\HeyTigrou\Projet-Programmation-Systeme\App\obj\Debug\net6.0\easy_save.csproj.CopyComplete
+C:\Users\gauti\Source\Repos\HeyTigrou\Projet-Programmation-Systeme\App\obj\Debug\net6.0\easy_save.dll
+C:\Users\gauti\Source\Repos\HeyTigrou\Projet-Programmation-Systeme\App\obj\Debug\net6.0\refint\easy_save.dll
+C:\Users\gauti\Source\Repos\HeyTigrou\Projet-Programmation-Systeme\App\obj\Debug\net6.0\easy_save.pdb
+C:\Users\gauti\Source\Repos\HeyTigrou\Projet-Programmation-Systeme\App\obj\Debug\net6.0\easy_save.genruntimeconfig.cache
+C:\Users\gauti\Source\Repos\HeyTigrou\Projet-Programmation-Systeme\App\obj\Debug\net6.0\ref\easy_save.dll
