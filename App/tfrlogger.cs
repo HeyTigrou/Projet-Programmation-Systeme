@@ -11,7 +11,7 @@ using System.Xml;
 
 namespace Poc
 {
-    public class JsonObject
+    public class TFRJsonObject
     {
         public string name { set; get; }
         public string sourceFilePath { set; get; }
@@ -23,8 +23,8 @@ namespace Poc
         public int progression { set; get; }
     }
 
-    public class LoggerClass
-    {
+    public class TFRLogger
+{
         private string fileName;
         private DateTime date;
         private string logFilePath;
@@ -49,7 +49,7 @@ namespace Poc
             }
         }
 
-        public LoggerClass(string fileName, string directoryPath)
+        public TFRLogger(string fileName, string directoryPath)
         {
             this.fileName = fileName;
             this.directoryPath = directoryPath;
@@ -57,18 +57,18 @@ namespace Poc
             setLogFilePath();
         }
 
-        public void makeJson(string name, string sourceFilePath, string targetFilePath, string state, int totalFileToCopy, int totalFileSize, int nbFilesLeft, int progression)
+        public void appendJsonToLogFile(string name, string sourceFilePath, string targetFilePath, string state, int totalFileToCopy, int totalFileSize, int nbFilesLeft, int progression)
         {
             string json;
-            List<JsonObject> fileData = new List<JsonObject>();
+            List<TFRJsonObject> fileData = new List<TFRJsonObject>();
             checkDate();
             if (new FileInfo(this.logFilePath).Length != 0)
             {
                 json = File.ReadAllText(this.logFilePath);
-                fileData = JsonConvert.DeserializeObject<List<JsonObject>>(json);
+                fileData = JsonConvert.DeserializeObject<List<TFRJsonObject>>(json);
             }
             fileData.Add(
-                                new JsonObject
+                                new TFRJsonObject
                                 {
                                     name = name,
                                     sourceFilePath = sourceFilePath,

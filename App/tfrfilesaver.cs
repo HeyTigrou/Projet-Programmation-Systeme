@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace Poc
 {
-    public class ProcessClass
+    public class TFRFileSaver
     {
         private string sourcePath;
         private string targetPath;
         private string name;
         private string type;
 
-        public ProcessClass(string sourcePath = "", string targetPath = "", string name = "", string type = "")
+        public TFRFileSaver(string sourcePath = "", string targetPath = "", string name = "", string type = "")
         {
             this.sourcePath = sourcePath;
             this.targetPath = targetPath;
@@ -22,7 +22,7 @@ namespace Poc
             this.type = type;
         }
 
-        private void copy(string sourcePath, string targetPath)
+        private void saveFile(string sourcePath, string targetPath)
         {
            try
             {
@@ -34,25 +34,25 @@ namespace Poc
             }
         }
         
-        public void process(string type)
+        public void saveProcess(string type)
         {
             if (type == "Complete")
             {
-                CompleteProcess();
+                saveAllFiles();
             }
             else if (type == "Incremental")
             {
-                IncrementalProcess();
+                saveChangedFiles();
             }
         }
 
-        private void CompleteProcess()
+        private void saveAllFiles()
         {
             foreach (var file in Directory.GetFiles(this.sourcePath))
                 File.Copy(file, Path.Combine(this.targetPath, Path.GetFileName(file)));
         }
 
-        private void IncrementalProcess()
+        private void saveChangedFiles()
         {
             DateTime lackSaveTime = DateTime.MinValue;
 

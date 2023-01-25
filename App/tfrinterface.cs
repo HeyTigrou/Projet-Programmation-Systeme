@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Poc
 {
-    public class InterfaceClass
+    public class TFRInterface
     {
     }
 }
