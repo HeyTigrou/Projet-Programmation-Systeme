@@ -58,6 +58,7 @@ namespace Poc
 
             foreach(var file in Directory.GetFiles(this.sourcePath))
             {
+                
                 FileInfo fileInfo = new FileInfo(file);
                 if (fileInfo.LastAccessTime > lackSaveTime)
                 {
