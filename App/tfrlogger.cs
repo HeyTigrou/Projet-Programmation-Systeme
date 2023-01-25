@@ -16,7 +16,7 @@ namespace Poc
         public string name { set; get; }
         public string sourceFilePath { set; get; }
         public string targetFilePath { set; get; }
-        public string state { set; get; }
+        public string filesize { set; get; }
         public DateTime FileTransferTime { set; get; }
         public DateTime time { set; get; }
     }
@@ -43,11 +43,11 @@ namespace Poc
         {
             date = DateTime.Today;
             string currentDate = date.ToString("yyyy-MM-dd");
-            this.realtimeLogFilePath = this.directoryPath + currentDate + "-" + this.fileName + ".log";
-            this.dailyLogFilePath = this.directoryPath + this.fileName + ".log";
-            if (!File.Exists(this.logFilePath))
+            this.realtimeLogFilePath = directoryPath + currentDate + "-" + fileName + ".log";
+            this.dailyLogFilePath = directoryPath + fileName + ".log";
+            if (!File.Exists(this.realtimeLogFilePath))
             {
-                File.Create(this.logFilePath).Close();
+                File.Create(this.realtimeLogFilePath).Close();
             }
             if (!File.Exists(this.dailyLogFilePath))
             {
@@ -82,7 +82,7 @@ namespace Poc
                 fileData = JsonConvert.DeserializeObject<List<TFRRealtimeLoggerObject>>(json);
             }
             fileData.Add(
-                                new TFRJsonObject
+                                new TFRRealtimeLoggerObject
                                 {
                                     name = name,
                                     sourceFilePath = sourceFilePath,
@@ -105,7 +105,7 @@ namespace Poc
             if (new FileInfo(this.dailyLogFilePath).Length != 0)
             {
                 json = File.ReadAllText(this.dailyLogFilePath);
-                fileData = JsonConvert.DeserializeObject<List<TFRJsonObject>>(json);
+                fileData = JsonConvert.DeserializeObject<List<TFRDailyLoggerObject>>(json);
             }
             fileData.Add(
                                 new TFRDailyLoggerObject
