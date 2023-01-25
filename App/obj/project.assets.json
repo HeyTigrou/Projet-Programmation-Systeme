@@ -61,11 +61,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\gauti\\source\\repos\\POC Projet Prog Sys\\ConsoleApp1\\Poc.csproj",
+      "projectUniqueName": "C:\\Users\\gauti\\source\\repos\\POC Projet Prog Sys\\App\\Poc.csproj",
       "projectName": "Poc",
-      "projectPath": "C:\\Users\\gauti\\source\\repos\\POC Projet Prog Sys\\ConsoleApp1\\Poc.csproj",
+      "projectPath": "C:\\Users\\gauti\\source\\repos\\POC Projet Prog Sys\\App\\Poc.csproj",
       "packagesPath": "C:\\Users\\gauti\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\gauti\\source\\repos\\POC Projet Prog Sys\\ConsoleApp1\\obj\\",
+      "outputPath": "C:\\Users\\gauti\\source\\repos\\POC Projet Prog Sys\\App\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
