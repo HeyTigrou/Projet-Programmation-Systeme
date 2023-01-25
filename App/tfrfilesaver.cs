@@ -57,15 +57,13 @@ namespace Poc
             DateTime lackSaveTime = DateTime.MinValue;
 
             foreach(var file in Directory.GetFiles(this.sourcePath))
-            {
-                
+            {   
                 FileInfo fileInfo = new FileInfo(file);
                 if (fileInfo.LastAccessTime > lackSaveTime)
                 {
                     File.Copy(file, Path.Combine(this.targetPath, Path.GetFileName(file)), true);
                 }
             }
-
             lackSaveTime = DateTime.Now;
         }
     }
