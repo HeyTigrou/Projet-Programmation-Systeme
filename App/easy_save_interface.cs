@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Poc
+namespace EasySave
 {
-    public class TFRInterface
+    public class EasySaveInterface
     {
     }
 }

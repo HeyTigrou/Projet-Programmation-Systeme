@@ -9,9 +9,9 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System.Xml;
 
-namespace Poc
+namespace EasySave
 {
-    public class TFRDailyLoggerObject
+    public class EasySaveDailyLoggerObject
     {
         public string name { set; get; }
         public string sourceFilePath { set; get; }
@@ -20,7 +20,7 @@ namespace Poc
         public DateTime FileTransferTime { set; get; }
         public DateTime time { set; get; }
     }
-    public class TFRRealtimeLoggerObject
+    public class EasySaveRealtimeLoggerObject
     {
         public string name { set; get; }
         public string sourceFilePath { set; get; }
@@ -31,8 +31,8 @@ namespace Poc
         public int nbFilesLeft { set; get; }
     }
 
-    public class TFRLogger
-{
+    public class EasySaveLogger
+    {
         private string fileName;
         private DateTime date;
         private string realtimeLogFilePath;
@@ -63,7 +63,7 @@ namespace Poc
             }
         }
 
-        public TFRLogger(string fileName, string directoryPath)
+        public EasySaveLogger(string fileName, string directoryPath)
         {
             this.fileName = fileName;
             this.directoryPath = directoryPath;
@@ -74,15 +74,15 @@ namespace Poc
         public void logSaveFolderFilesProgression(string name, string sourceFilePath, string targetFilePath, string state, int totalFileToCopy, int totalFileSize, int nbFilesLeft)
         {
             string json;
-            List<TFRRealtimeLoggerObject> fileData = new List<TFRRealtimeLoggerObject>();
+            List<EasySaveRealtimeLoggerObject> fileData = new List<EasySaveRealtimeLoggerObject>();
             checkDate();
             if (new FileInfo(this.realtimeLogFilePath).Length != 0)
             {
                 json = File.ReadAllText(this.realtimeLogFilePath);
-                fileData = JsonConvert.DeserializeObject<List<TFRRealtimeLoggerObject>>(json);
+                fileData = JsonConvert.DeserializeObject<List<EasySaveRealtimeLoggerObject>>(json);
             }
             fileData.Add(
-                                new TFRRealtimeLoggerObject
+                                new EasySaveRRealtimeLoggerObject
                                 {
                                     name = name,
                                     sourceFilePath = sourceFilePath,
@@ -100,15 +100,15 @@ namespace Poc
         public void logSaveFolderFiles(string name, string sourceFilePath, string targetFilePath, int filesize, DateTime FileTransferTime, DateTime time)
         {
             string json;
-            List<TFRDailyLoggerObject> fileData = new List<TFRDailyLoggerObject>();
+            List<EasySaveDailyLoggerObject> fileData = new List<EasySaveDailyLoggerObject>();
             checkDate();
             if (new FileInfo(this.dailyLogFilePath).Length != 0)
             {
                 json = File.ReadAllText(this.dailyLogFilePath);
-                fileData = JsonConvert.DeserializeObject<List<TFRDailyLoggerObject>>(json);
+                fileData = JsonConvert.DeserializeObject<List<EasySaveDailyLoggerObject>>(json);
             }
             fileData.Add(
-                                new TFRDailyLoggerObject
+                                new EasySaveDailyLoggerObject
                                 {
                                     name = name,
                                     sourceFilePath = sourceFilePath,

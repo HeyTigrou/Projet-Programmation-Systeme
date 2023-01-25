@@ -5,16 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Poc
+namespace EasySave
 {
-    public class TFRFileSaver
+    public class EasySaveFileSaver
     {
         private string sourcePath;
         private string targetPath;
         private string name;
         private string type;
 
-        public TFRFileSaver(string sourcePath = "", string targetPath = "", string name = "", string type = "")
+        public EasySaveFileSaver(string sourcePath = "", string targetPath = "", string name = "", string type = "")
         {
             this.sourcePath = sourcePath;
             this.targetPath = targetPath;
