@@ -51,9 +51,11 @@ namespace EasySave
             foreach (var file in Directory.GetFiles(this.sourcePath))
                 File.Copy(file, Path.Combine(this.targetPath, Path.GetFileName(file)));
         }
-
+        
         private void saveChangedFiles()
         {
+            //var sourceFile = Directory.GetFiles()
+            
             DateTime lackSaveTime = DateTime.MinValue;
 
             foreach(var file in Directory.GetFiles(this.sourcePath))
