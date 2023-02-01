@@ -1,0 +1,17 @@
+{
+  "Daily log emplacement": "/",
+  "Status log emplacement": "/",
+  "Languages": {
+    "en": {
+      "Name": "English",
+      "Native name": "English",
+      "File Path": "C:\\Users\\User\\Desktop\\English.json"
+    },
+    "fr": {
+      "Name": "French",
+      "Native name": "Français",
+      "File Path": "C:\\Users\\User\\Desktop\\French.json"
+    }
+  },
+  }
+}

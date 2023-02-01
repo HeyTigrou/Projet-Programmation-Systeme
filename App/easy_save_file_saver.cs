@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO.Enumeration;
+using System.Security.Cryptography;
 
 namespace EasySave
 {
@@ -21,52 +23,62 @@ namespace EasySave
             this.name = name;
             this.type = type;
         }
-
-        private void saveFile(string sourcePath, string targetPath)
-        {
-           try
-            {
-                File.Copy(sourcePath, targetPath, true);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-        }
         
         public void saveProcess(string type)
         {
             if (type == "Complete")
             {
-                saveAllFiles();
+                saveAllFiles(this.sourcePath, this.targetPath);
             }
             else if (type == "Incremental")
             {
-                saveChangedFiles();
+                saveChangedFiles(this.sourcePath, this.targetPath);
             }
-        }
-
-        private void saveAllFiles()
-        {
-            foreach (var file in Directory.GetFiles(this.sourcePath))
-                File.Copy(file, Path.Combine(this.targetPath, Path.GetFileName(file)));
         }
         
-        private void saveChangedFiles()
-        {
-            //var sourceFile = Directory.GetFiles()
-            
-            DateTime lackSaveTime = DateTime.MinValue;
+        private void saveAllFiles(string sourcePath, string destinationPath)
+        {  
+            foreach ( string dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
+            {
+                Directory.CreateDirectory(dirPath.Replace(sourcePath, destinationPath));
+            }
 
-            foreach(var file in Directory.GetFiles(this.sourcePath))
-            {   
-                FileInfo fileInfo = new FileInfo(file);
-                if (fileInfo.LastAccessTime > lackSaveTime)
+            foreach (string newPath in Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories))
+            {
+                File.Copy(newPath, newPath.Replace(sourcePath, destinationPath), true);
+            }
+        }
+        
+        
+
+        private void saveChangedFiles(string sourcePath, string destinationPath)
+        {
+            
+            foreach (string dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
+            {
+                DirectoryInfo sourceDirectoryInfo = new DirectoryInfo(dirPath);
+                DirectoryInfo destinationDirectoryInfo = new DirectoryInfo(dirPath.Replace(sourcePath, destinationPath));
+
+                if ( sourceDirectoryInfo.LastWriteTime > destinationDirectoryInfo.LastWriteTime)
                 {
-                    File.Copy(file, Path.Combine(this.targetPath, Path.GetFileName(file)), true);
+                    Directory.CreateDirectory(dirPath.Replace(sourcePath, destinationPath));
+                    Console.WriteLine("Directory : " + dirPath);
+                }  
+            }
+
+            foreach (string newPath in Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories))
+            {
+
+                Console.WriteLine(newPath.Replace(sourcePath, destinationPath));
+
+                FileInfo sourceFileInfo = new FileInfo(newPath);
+                FileInfo destinationFileInfo = new FileInfo(newPath.Replace(sourcePath, destinationPath));
+
+                if (sourceFileInfo.LastWriteTime > destinationFileInfo.LastWriteTime)
+                {
+                    File.Copy(newPath, newPath.Replace(sourcePath, destinationPath), true);
                 }
             }
-            lackSaveTime = DateTime.Now;
-        }
+        }    
     }
 }

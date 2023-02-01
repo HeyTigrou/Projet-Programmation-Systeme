@@ -72,54 +72,58 @@ namespace EasySave
         }
 
         public void logSaveFolderFilesProgression(string name, string sourceFilePath, string targetFilePath, string state, int totalFileToCopy, int totalFileSize, int nbFilesLeft)
+        
         {
             string json;
-            List<EasySaveRealtimeLoggerObject> fileData = new List<EasySaveRealtimeLoggerObject>();
             checkDate();
-            if (new FileInfo(this.realtimeLogFilePath).Length != 0)
+
+            EasySaveRealtimeLoggerObject data = new EasySaveRealtimeLoggerObject
             {
-                json = File.ReadAllText(this.realtimeLogFilePath);
-                fileData = JsonConvert.DeserializeObject<List<EasySaveRealtimeLoggerObject>>(json);
+                name = name,
+                sourceFilePath = sourceFilePath,
+                targetFilePath = targetFilePath,
+                state = state,
+                totalFileToCopy = totalFileToCopy,
+                totalFileSize = totalFileSize,
+                nbFilesLeft = nbFilesLeft
+            };
+            
+            json = JsonConvert.SerializeObject(data, Newtonsoft.Json.Formatting.Indented);
+            using (StreamWriter sw = File.AppendText(this.realtimeLogFilePath))
+                
+            {
+                if (new FileInfo(this.realtimeLogFilePath).Length != 0)
+                    {
+                        sw.WriteLine(",");
+                    }
+                sw.Write(json);
             }
-            fileData.Add(
-                                new EasySaveRealtimeLoggerObject
-                                {
-                                    name = name,
-                                    sourceFilePath = sourceFilePath,
-                                    targetFilePath = targetFilePath,
-                                    state = state,
-                                    totalFileToCopy = totalFileToCopy,
-                                    totalFileSize = totalFileSize,
-                                    nbFilesLeft = nbFilesLeft
-                                }
-                       );
-            json = JsonConvert.SerializeObject(fileData, Newtonsoft.Json.Formatting.Indented);
-            File.WriteAllText(this.realtimeLogFilePath, json);
         }
 
         public void logSaveFolderFiles(string name, string sourceFilePath, string targetFilePath, int filesize, DateTime FileTransferTime, DateTime time)
         {
             string json;
-            List<EasySaveDailyLoggerObject> fileData = new List<EasySaveDailyLoggerObject>();
             checkDate();
-            if (new FileInfo(this.dailyLogFilePath).Length != 0)
+
+            EasySaveDailyLoggerObject data = new EasySaveDailyLoggerObject
             {
-                json = File.ReadAllText(this.dailyLogFilePath);
-                fileData = JsonConvert.DeserializeObject<List<EasySaveDailyLoggerObject>>(json);
+                name = name,
+                sourceFilePath = sourceFilePath,
+                targetFilePath = targetFilePath,
+                filesize = filesize,
+                FileTransferTime = FileTransferTime,
+                time = time
+            };
+            json = JsonConvert.SerializeObject(data, Newtonsoft.Json.Formatting.Indented);
+            using (StreamWriter sw = File.AppendText(this.dailyLogFilePath))
+            {
+                if (new FileInfo(this.dailyLogFilePath).Length != 0)
+                {
+
+                    sw.WriteLine(",");
+                }
+                sw.Write(json);
             }
-            fileData.Add(
-                                new EasySaveDailyLoggerObject
-                                {
-                                    name = name,
-                                    sourceFilePath = sourceFilePath,
-                                    targetFilePath = targetFilePath,
-                                    filesize = filesize,
-                                    FileTransferTime = FileTransferTime,
-                                    time = time
-                                }
-                       );
-            json = JsonConvert.SerializeObject(fileData, Newtonsoft.Json.Formatting.Indented);
-            File.WriteAllText(this.dailyLogFilePath, json);
         }
     }
 }
