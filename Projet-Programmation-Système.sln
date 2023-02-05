@@ -1,9 +1,9 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Poc", "ConsoleApp1\Poc.csproj", "{DD6F5EFB-F25C-47A1-9A32-D8F127C9BB08}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "easy_save", "App\easy_save.csproj", "{DD6F5EFB-F25C-47A1-9A32-D8F127C9BB08}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

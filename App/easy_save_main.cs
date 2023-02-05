@@ -4,9 +4,10 @@
     {
         static void Main(string[] args)
         {
-            System.Console.WriteLine("Hello, World!");
+            System.Console.WriteLine("t'es dans le main");
 
-            
+
+
             var logger = new EasySaveLogger("logs", "C:\\Users\\gauti\\OneDrive\\Bureau\\CESI\\A3\\Semestre 1\\Programation système\\Projet\\TestEnv\\");
             logger.logSaveFolderFilesProgression("Save1", "a", "b", "end", 0, 0, 0);
             
