@@ -1,9 +1,12 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "easy_save", "App\easy_save.csproj", "{DD6F5EFB-F25C-47A1-9A32-D8F127C9BB08}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "easy_save", "App\easy_save.csproj", "{DD6F5EFB-F25C-47A1-9A32-D8F127C9BB08}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "easy_save.Cmd", "easy_save.Cmd\easy_save.Cmd.csproj", "{7109F2F0-4C2F-4152-A8F6-70CA5E4ACC16}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "easy_save.Lib", "easy_save.Lib\easy_save.Lib.csproj", "{75C2039E-C19D-4EAB-853D-20AFE0DF4FD0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +18,14 @@ Global
 		{DD6F5EFB-F25C-47A1-9A32-D8F127C9BB08}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD6F5EFB-F25C-47A1-9A32-D8F127C9BB08}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD6F5EFB-F25C-47A1-9A32-D8F127C9BB08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7109F2F0-4C2F-4152-A8F6-70CA5E4ACC16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7109F2F0-4C2F-4152-A8F6-70CA5E4ACC16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7109F2F0-4C2F-4152-A8F6-70CA5E4ACC16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7109F2F0-4C2F-4152-A8F6-70CA5E4ACC16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75C2039E-C19D-4EAB-853D-20AFE0DF4FD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75C2039E-C19D-4EAB-853D-20AFE0DF4FD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75C2039E-C19D-4EAB-853D-20AFE0DF4FD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75C2039E-C19D-4EAB-853D-20AFE0DF4FD0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
