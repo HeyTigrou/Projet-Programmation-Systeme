@@ -1,0 +1,13 @@
+{
+  "Main": {
+    "Menu": " 1| Create a new backup  \n 2| Remove a backup  \n 3| Start a save  \n 4| Start all available backup processes  \n 5| View backup details  \n 6| Exit",
+    "Option": "\nEnter an option: "
+  },
+  "Save": {
+    "Name": "Enter the name of your save",
+    "PathSave": "Enter the path of the file to save",
+    "PathDestination": "Enter the path of the destination",
+    "SaveType": "Enter the type of save(0 : All files / 1 : Changed files)"
+  }
+
+}

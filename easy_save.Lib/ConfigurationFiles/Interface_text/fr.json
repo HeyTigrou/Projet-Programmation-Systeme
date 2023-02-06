@@ -1,0 +1,12 @@
+{
+  "Main": {
+    "Menu": " 1| Créer un processus de sauvegarde  \n 2| Supprimer une sauvegarde  \n 3| Lancer une sauvegarde  \n 4| Lancer tous les processus de sauvegarde disponible \n 5| Afficher les details de sauvegarde  \n 6| Quitter",
+    "Option": "\nChoisir une option: "
+  },
+  "Save": {
+    "Name": "Entrer le nom de la sauvegarde",
+    "PathSave": "Enter le chemin de la sauvegarde",
+    "PathDestination": "Enter le chemin de destination",
+    "SaveType": "Enter le type de sauvegarde (0 => Tous les fichiers | 1 => Uniquement les fichiers modifiés)"
+  }
+}

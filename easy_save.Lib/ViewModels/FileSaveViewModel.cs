@@ -19,7 +19,18 @@ namespace easy_save.Lib.ViewModels
         {
             FileSaveService service = new FileSaveService(this.InputPath, this.OutputPath, this.Name);
             service.SaveProcess(this.SaveType);
-            Console.WriteLine("Save "+ this.Name+" : " + this.InputPath + " to " + this.OutputPath + " with type " + this.SaveType);
+        }
+
+        public static string[] GetAvailableWorks()
+        {
+            string[] works = new string[Directory.GetFiles(@"..\..\..\..\easy_save.Lib\ConfigurationFiles\SaveProjects\", "*.json", SearchOption.AllDirectories).Length];
+            int i = 0;
+            foreach (var saveWork in SaveWorkManagerService.GetSaveWorks())
+            {
+                works[i] = $"Name: {saveWork.Name} | Source: {saveWork.InputPath} | Target: {saveWork.OutputPath} | SaveType: {saveWork.SaveType}";
+                i++;
+            }
+            return works;
         }
     }
 }

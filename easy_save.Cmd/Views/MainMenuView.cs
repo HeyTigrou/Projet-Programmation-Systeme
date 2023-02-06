@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using easy_save.Lib.ViewModels;
+using Newtonsoft.Json;
 
 namespace easy_save.Cmd.Views
 {
     internal class MainMenuView
     {
+        private enum languages { en, fr }
+        
         private readonly FileSaveViewModel fileSaveViewModel = new();
 
         private static MainMenuView instance;
@@ -31,47 +35,81 @@ namespace easy_save.Cmd.Views
         {
             while (true)
             {
-                Console.WriteLine("Welcome to Easy Save");
-                Console.WriteLine("1. Create a new backup");
-                Console.WriteLine("2. Restore a backup");
-                Console.WriteLine("3. View logs");
-                Console.WriteLine("4. Exit");
-                string inputChoice = Console.ReadLine();
-                switch (inputChoice)
+                string Language = "";
+                
+                do
                 {
-                    case "1":
-                        Console.Clear();
-                        Console.WriteLine("Enter the name of your save");
-                        fileSaveViewModel.Name = Console.ReadLine();
-                        Console.WriteLine("Enter the path of the file to save");
-                        fileSaveViewModel.InputPath = Console.ReadLine();
-                        Console.WriteLine("Enter the path of the destination");
-                        fileSaveViewModel.OutputPath = Console.ReadLine();
-                        Console.WriteLine("Enter the type of save(0 : All files / 1 : Changed files)");
-                        fileSaveViewModel.SaveType = int.Parse(Console.ReadLine());
-                        fileSaveViewModel.Save();
-                        break;
-                    case "2":
-                        Console.Clear();
-                        /*
-                         Example use of the logger
-                        var logger = new EasySaveLogger("logs", "C:\\Users\\gauti\\OneDrive\\Bureau\\CESI\\A3\\Semestre 1\\Programation système\\Projet\\TestEnv\\");
-                        logger.logSaveFolderFilesProgression("Save1", "a", "b", "end", 0, 0, 0);
-                        */
-                        break;
-                    case "3":
-                        Console.Clear();
-                        break;
-                    case "4":
-                        Environment.Exit(0);
-                        break;
-                    default:
-                        Console.Clear();
-                        Console.WriteLine("Please enter a valid choice");
-                        break;
+                    Console.Clear();
+                    Console.WriteLine("*** Welcome to EasySave ***\n ");
+                    Console.WriteLine("Choose a language: \n> English => en \n> French => fr");
+                    Console.Write("\nEnter an option: ");
+                    Language = Console.ReadLine();
                 }
-            }
-            
+                while (!(Enum.IsDefined(typeof(languages), Language)));
+
+                dynamic languageJson = JsonConvert.DeserializeObject(File.ReadAllText($@"..\..\..\..\easy_save.Lib\ConfigurationFiles\Interface_text\{Language}.json"));
+
+                bool inputIsOk;
+                do
+                {
+                    inputIsOk = true;
+
+                    Console.Clear();
+                    Console.WriteLine("*** EasySave ***\n ");
+                    Console.WriteLine(languageJson.Main.Menu);
+                    Console.Write(languageJson.Main.Option);
+                    string inputChoice = Console.ReadLine();
+
+
+                    switch (inputChoice)
+                    {
+                        case "1":
+                            
+                            break;
+                        case "2":
+                            Console.Clear();
+                            /*
+                             Example use of the logger
+                            var logger = new EasySaveLogger("logs", "C:\\Users\\gauti\\OneDrive\\Bureau\\CESI\\A3\\Semestre 1\\Programation système\\Projet\\TestEnv\\");
+                            logger.logSaveFolderFilesProgression("Save1", "a", "b", "end", 0, 0, 0);
+                            */
+                            break;
+                        case "3":
+                            Console.Clear();
+                            Console.WriteLine(languageJson.Save.Name);
+                            fileSaveViewModel.Name = Console.ReadLine();
+                            Console.WriteLine(languageJson.Save.PathSave);
+                            fileSaveViewModel.InputPath = Console.ReadLine();
+                            Console.WriteLine(languageJson.Save.PathDestination);
+                            fileSaveViewModel.OutputPath = Console.ReadLine();
+                            Console.WriteLine(languageJson.Save.SaveType);
+                            fileSaveViewModel.SaveType = int.Parse(Console.ReadLine());
+                            fileSaveViewModel.Save();
+                            // Add Proccess done
+                            break;
+                        case "4":
+                            Environment.Exit(0);
+                            break;
+                        case "5":
+                            foreach (var saveWork in FileSaveViewModel.GetAvailableWorks())
+                            {
+                                Console.WriteLine(saveWork);
+                            }
+                            Console.ReadLine();
+                            Console.Clear();
+                            break;
+                        case "6":
+                            Console.Clear();
+                            break;
+
+                        default:
+                            Console.Clear();
+                            inputIsOk = false;
+                            break;
+                    }
+                }
+                while (!inputIsOk);
+            } 
         }
     }
 }

@@ -17,11 +17,11 @@ namespace easy_save.Lib.Service
         public string SourceFilePath { set; get; }
         public string TargetFilePath { set; get; }
         public int Filesize { set; get; }
-        public DateTime FileTransferTime { set; get; }
-        public DateTime Time { set; get; }
+        public TimeSpan FileTransferTime { set; get; }
+        public string Time { set; get; }
     }
 
-    public class RealtimeLoggerService
+    public class StateLoggerService
     {
         public string Name { set; get; }
         public string SourceFilePath { set; get; }
@@ -36,23 +36,31 @@ namespace easy_save.Lib.Service
     {
         private string FileName;
         private DateTime Date;
-        private string RealtimeLogFilePath;
-        private string DailyLogFilePath;
+        private string stateLogDirectoryPath;
+        private string DailyLogFile;
+        private string stateLogFile;
         private string DirectoryPath;
+
+        public LoggerService(string fileName, string directoryPath)
+        {
+            this.FileName = fileName;
+            this.DirectoryPath = directoryPath;
+            setLogFilePath();
+        }
 
         private void setLogFilePath()
         {
             Date = DateTime.Today;
             string currentDate = Date.ToString("yyyy-MM-dd");
-            this.RealtimeLogFilePath = DirectoryPath + currentDate + "-" + FileName + ".log";
-            this.DailyLogFilePath = DirectoryPath + FileName + ".log";
-            if (!File.Exists(this.RealtimeLogFilePath))
+            this.stateLogDirectoryPath = DirectoryPath + currentDate + "-" + FileName;
+            this.DailyLogFile = DirectoryPath + currentDate + "-" + FileName + ".log";
+            if (!Directory.Exists(this.stateLogDirectoryPath))
             {
-                File.Create(this.RealtimeLogFilePath).Close();
+                Directory.CreateDirectory(this.stateLogDirectoryPath);
             }
-            if (!File.Exists(this.DailyLogFilePath))
+            if (!File.Exists(this.DailyLogFile))
             {
-                File.Create(this.DailyLogFilePath).Close();
+                File.Create(this.DailyLogFile).Close();
             }
         }
 
@@ -64,20 +72,19 @@ namespace easy_save.Lib.Service
             }
         }
 
-        public LoggerService(string fileName, string directoryPath)
+        public void logProcessFileCreation(string processName)
         {
-            this.FileName = fileName;
-            this.DirectoryPath = directoryPath;
-            setLogFilePath();
+            stateLogFile = stateLogDirectoryPath + "\\" + processName + ".log";
+            File.Create(stateLogFile).Close();
         }
-        
-        public void logSaveFolderFilesProgression(string name, string sourceFilePath, string targetFilePath, string state, int totalFileToCopy, int totalFileSize, int nbFilesLeft)
+
+        public void logProcessState(string name, string sourceFilePath, string targetFilePath, string state, int totalFileToCopy, int totalFileSize, int nbFilesLeft)
 
         {
             string json;
             checkDate();
 
-            RealtimeLoggerService data = new RealtimeLoggerService
+            StateLoggerService data = new StateLoggerService
             {
                 Name = name,
                 SourceFilePath = sourceFilePath,
@@ -89,10 +96,10 @@ namespace easy_save.Lib.Service
             };
 
             json = JsonConvert.SerializeObject(data, Newtonsoft.Json.Formatting.Indented);
-            using (StreamWriter sw = File.AppendText(this.RealtimeLogFilePath))
+            using (StreamWriter sw = File.AppendText(this.stateLogFile))
 
             {
-                if (new FileInfo(this.RealtimeLogFilePath).Length != 0)
+                if (new FileInfo(this.stateLogFile).Length != 0)
                 {
                     sw.WriteLine(",");
                 }
@@ -100,7 +107,7 @@ namespace easy_save.Lib.Service
             }
         }
 
-        public void logSaveFolderFiles(string name, string sourceFilePath, string targetFilePath, int filesize, DateTime FileTransferTime, DateTime time)
+        public void logDailySaves(string name, string sourceFilePath, string targetFilePath, int filesize, TimeSpan fileTransferTime, DateTime time)
         {
             string json;
             checkDate();
@@ -111,13 +118,13 @@ namespace easy_save.Lib.Service
                 SourceFilePath = sourceFilePath,
                 TargetFilePath = targetFilePath,
                 Filesize = filesize,
-                FileTransferTime = FileTransferTime,
-                Time = time
+                FileTransferTime = fileTransferTime,
+                Time = time.ToString("yyyy/MM/dd HH:mm:ss")
             };
             json = JsonConvert.SerializeObject(data, Newtonsoft.Json.Formatting.Indented);
-            using (StreamWriter sw = File.AppendText(this.DailyLogFilePath))
+            using (StreamWriter sw = File.AppendText(this.DailyLogFile))
             {
-                if (new FileInfo(this.DailyLogFilePath).Length != 0)
+                if (new FileInfo(this.DailyLogFile).Length != 0)
                 {
 
                     sw.WriteLine(",");
