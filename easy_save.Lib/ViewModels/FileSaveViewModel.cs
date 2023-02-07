@@ -1,29 +1,71 @@
-﻿using easy_save.Lib.Service;
+﻿using easy_save.Lib.Models;
+using easy_save.Lib.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 
 namespace easy_save.Lib.ViewModels
 {
     public class FileSaveViewModel
     {
-        public string InputPath { get; set; }
-        public string OutputPath { get; set; }
-        public string Name { get; set; }
-        public int SaveType { get; set; }
-
-        public void Save()
+        public static bool Save(string name)
         {
-            FileSaveService service = new FileSaveService(this.InputPath, this.OutputPath, this.Name);
-            service.SaveProcess(this.SaveType);
+            foreach (var saveWork in SaveWorkManagerService.GetSaveWorks())
+            {
+                if (saveWork.Name == name)
+                {
+                    FileSaveService.SaveProcess(saveWork);
+                    return true;
+                }
+
+            }
+            return false;
+        }
+
+        public static int AllSave()
+        {
+            int errorCount = 0;
+            foreach (var saveWork in SaveWorkManagerService.GetSaveWorks())
+            {
+                try
+                {
+                    FileSaveService.SaveProcess(saveWork);
+                }
+                catch (Exception e)
+                {
+                    errorCount++;
+                }
+            }
+            return errorCount;
+        }
+
+        public static bool CreateSaveWork(string inputPath, string outputPath, string name, int saveType)
+        {
+            SaveWorkModel saveWork = new SaveWorkModel(name, inputPath, outputPath, saveType);
+
+            return SaveWorkManagerService.AddSaveWork(saveWork);
+        }
+
+        public static bool DeleteSaveWork(string name)
+        {
+            foreach (var saveWork in SaveWorkManagerService.GetSaveWorks())
+            {
+                if (saveWork.Name == name)
+                {
+                    return SaveWorkManagerService.DeleteSaveWork(name);
+                }
+                
+            }
+            return false;
         }
 
         public static string[] GetAvailableWorks()
         {
-            string[] works = new string[Directory.GetFiles(@"..\..\..\..\easy_save.Lib\ConfigurationFiles\SaveProjects\", "*.json", SearchOption.AllDirectories).Length];
+            string[] works = new string[SaveWorkManagerService.GetSaveProjectnumber()];
             int i = 0;
             foreach (var saveWork in SaveWorkManagerService.GetSaveWorks())
             {

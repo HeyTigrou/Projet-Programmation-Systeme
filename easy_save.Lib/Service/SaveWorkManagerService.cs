@@ -11,6 +11,11 @@ namespace easy_save.Lib.Service
 {
     public class SaveWorkManagerService
     {
+        public static int GetSaveProjectnumber()
+        {
+            string[] saveWorks = Directory.GetFiles(@"..\..\..\..\easy_save.Lib\ConfigurationFiles\SaveProjects\", "*.json", SearchOption.AllDirectories);
+            return saveWorks.Length;
+        }
 
         public static SaveWorkModel[] GetSaveWorks()
         {
@@ -25,6 +30,35 @@ namespace easy_save.Lib.Service
                 i++;
             }
             return works;
+        }
+
+        public static bool AddSaveWork(SaveWorkModel saveWork)
+        {
+            if (GetSaveProjectnumber() >= 5)
+            {
+                return false;
+            }
+            else
+            {
+                string json = JsonConvert.SerializeObject(saveWork);
+                File.WriteAllText($@"..\..\..\..\easy_save.Lib\ConfigurationFiles\SaveProjects\{saveWork.Name}.json", json);
+                return true;
+            }
+
+        }
+        
+        public static bool DeleteSaveWork(string name)
+        {
+            string path = $@"..\..\..\..\easy_save.Lib\ConfigurationFiles\SaveProjects\{name}.json";
+            try
+            {
+                File.Delete(path);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }

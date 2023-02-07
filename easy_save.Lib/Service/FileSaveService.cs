@@ -6,35 +6,25 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO.Enumeration;
 using System.Security.Cryptography;
+using easy_save.Lib.Models;
 
 namespace easy_save.Lib.Service
 {
     public class FileSaveService
     {
-        private string SourcePath;
-        private string TargetPath;
-        private string Name;
-
-        public FileSaveService(string sourcePath = "", string targetPath = "", string name = "")
+        public static void SaveProcess(SaveWorkModel save)
         {
-            this.SourcePath = sourcePath;
-            this.TargetPath = targetPath;
-            this.Name = name;
-        }
-
-        public void SaveProcess(int type)
-        {
-            if (type == 0)
+            if (save.SaveType == 0)
             {
-                SaveAllFiles(this.SourcePath, this.TargetPath);
+                SaveAllFiles(save.InputPath, save.OutputPath);
             }
-            else if (type == 1)
+            else if (save.SaveType == 1)
             {
-                SaveChangedFiles(this.SourcePath, this.TargetPath);
+                SaveChangedFiles(save.InputPath, save.OutputPath);
             }
         }
 
-        private void SaveAllFiles(string sourcePath, string destinationPath)
+        private static void SaveAllFiles(string sourcePath, string destinationPath)
         {
             foreach (string dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
             {
@@ -47,7 +37,7 @@ namespace easy_save.Lib.Service
             }
         }
 
-        private void SaveChangedFiles(string sourcePath, string destinationPath)
+        private static void SaveChangedFiles(string sourcePath, string destinationPath)
         {
             foreach (string dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
             {
