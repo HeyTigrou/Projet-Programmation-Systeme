@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using System.IO.Enumeration;
+using easy_save.Lib.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System.Xml;
@@ -41,10 +42,11 @@ namespace easy_save.Lib.Service
         private string stateLogFile;
         private string DirectoryPath;
 
-        public LoggerService(string fileName, string directoryPath)
+        public LoggerService(string fileName)
         {
+            var config = JsonConvert.DeserializeObject<ConfigFileModel>(File.ReadAllText(@"..\..\..\..\easy_save.Lib\ConfigurationFiles\easy_save_config.json"));
             this.FileName = fileName;
-            this.DirectoryPath = directoryPath;
+            this.DirectoryPath = config.Daily_log_emplacement;
             setLogFilePath();
         }
 

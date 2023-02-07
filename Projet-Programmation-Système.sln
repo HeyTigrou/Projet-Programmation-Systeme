@@ -6,6 +6,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "easy_save.Cmd", "easy_save.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "easy_save.Lib", "easy_save.Lib\easy_save.Lib.csproj", "{75C2039E-C19D-4EAB-853D-20AFE0DF4FD0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "easy_save_logs", "easy_save_logs", "{AC0E2921-7AB9-4DEE-923A-D4D236FBA284}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

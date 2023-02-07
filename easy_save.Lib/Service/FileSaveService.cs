@@ -26,6 +26,8 @@ namespace easy_save.Lib.Service
 
         private static void SaveAllFiles(string sourcePath, string destinationPath)
         {
+            LoggerService logger = new LoggerService("logs"); // !!!!!!!!
+            
             foreach (string dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
             {
                 Directory.CreateDirectory(dirPath.Replace(sourcePath, destinationPath));
@@ -33,6 +35,7 @@ namespace easy_save.Lib.Service
 
             foreach (string newPath in Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories))
             {
+                
                 File.Copy(newPath, newPath.Replace(sourcePath, destinationPath), true);
             }
         }

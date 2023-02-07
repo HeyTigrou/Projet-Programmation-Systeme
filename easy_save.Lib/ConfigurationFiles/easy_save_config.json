@@ -1,4 +1,4 @@
 {
-  "Daily log emplacement": "/",
-  "Status log emplacement": "/",
+  "Daily_log_emplacement": "..\\..\\..\\..\\easy_savelogs\\daily\\",
+  "Status_log_emplacement": "..\\..\\..\\..\\easy_savelogs\\"
 }
