@@ -48,8 +48,9 @@ namespace easy_save.Lib.Service
             long fileLeft = fileCount;
 
             string state = "Starting";
+            string progression = "0%";
 
-            logger.logProcessState(saveName, sourcePath, destinationPath, state, fileCount, totalFileSize, fileLeft);
+            logger.logProcessState(saveName, sourcePath, destinationPath, state, fileCount, totalFileSize, fileLeft, progression);
 
 
             foreach (string dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
@@ -59,9 +60,11 @@ namespace easy_save.Lib.Service
 
             foreach (string newPath in Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories))
             {
+                float progress = (fileCount - fileLeft) * 100 / fileCount;
+                progression = progress.ToString() + "%";
                 DateTime before = DateTime.Now;
                 state = "Running";
-                logger.logProcessState(saveName, sourcePath, destinationPath, state, fileCount, totalFileSize, fileLeft);
+                logger.logProcessState(saveName, sourcePath, destinationPath, state, fileCount, totalFileSize, fileLeft, progression);
                 File.Copy(newPath, newPath.Replace(sourcePath, destinationPath), true);
                 DateTime after = DateTime.Now;
                 TimeSpan fileTransferTime;
@@ -77,8 +80,8 @@ namespace easy_save.Lib.Service
             fileLeft = 0;
             sourcePath = "";
             destinationPath = "";
-            logger.logProcessState(saveName, sourcePath, destinationPath, state, fileCount, totalFileSize, fileLeft);
-
+            progression = "";
+            logger.logProcessState(saveName, sourcePath, destinationPath, state, fileCount, totalFileSize, fileLeft, progression);
         }
 
         private static void SaveChangedFiles(string sourcePath, string destinationPath, string saveName)
@@ -104,8 +107,9 @@ namespace easy_save.Lib.Service
             long fileLeft = fileCount;
 
             string state = "Starting";
+            string progression = "0%";
 
-            logger.logProcessState(saveName, sourcePath, destinationPath, state, fileCount, totalFileSize, fileLeft);
+            logger.logProcessState(saveName, sourcePath, destinationPath, state, fileCount, totalFileSize, fileLeft, progression);
 
             foreach (string dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
             {
@@ -124,10 +128,11 @@ namespace easy_save.Lib.Service
                 FileInfo destinationFileInfo = new FileInfo(newPath.Replace(sourcePath, destinationPath));
                 if (!destinationFileInfo.Exists || sourceFileInfo.LastWriteTime > destinationFileInfo.LastWriteTime)
                 {
-
+                    float progress = (fileCount - fileLeft) * 100 / fileCount;
+                    progression = progress.ToString() + "%";
                     DateTime before = DateTime.Now;
                     state = "Running";
-                    logger.logProcessState(saveName, sourcePath, destinationPath, state, fileCount, totalFileSize, fileLeft);
+                    logger.logProcessState(saveName, sourcePath, destinationPath, state, fileCount, totalFileSize, fileLeft, progression);
                     File.Copy(newPath, newPath.Replace(sourcePath, destinationPath), true);
                     DateTime after = DateTime.Now;
                     TimeSpan fileTransferTime;
@@ -148,7 +153,8 @@ namespace easy_save.Lib.Service
             fileLeft = 0;
             sourcePath = "";
             destinationPath = "";
-            logger.logProcessState(saveName, sourcePath, destinationPath, state, fileCount, totalFileSize, fileLeft);
+            progression = "";
+            logger.logProcessState(saveName, sourcePath, destinationPath, state, fileCount, totalFileSize, fileLeft, progression);
         }
     }
 }

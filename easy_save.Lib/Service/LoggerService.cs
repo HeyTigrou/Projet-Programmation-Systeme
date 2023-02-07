@@ -31,6 +31,7 @@ namespace easy_save.Lib.Service
         public int TotalFileToCopy { set; get; }
         public long TotalFileSize { set; get; }
         public long NbFilesLeft { set; get; }
+        public string Progression { set; get; }
     }
 
     public class LoggerService
@@ -79,7 +80,7 @@ namespace easy_save.Lib.Service
             }
         }
 
-        public void logProcessState(string name, string sourceFilePath, string targetFilePath, string state, int totalFileToCopy, long totalFileSize, long nbFilesLeft)
+        public void logProcessState(string name, string sourceFilePath, string targetFilePath, string state, int totalFileToCopy, long totalFileSize, long nbFilesLeft, string progression)
 
         {
             string json;
@@ -93,7 +94,8 @@ namespace easy_save.Lib.Service
                 State = state,
                 TotalFileToCopy = totalFileToCopy,
                 TotalFileSize = totalFileSize,
-                NbFilesLeft = nbFilesLeft
+                NbFilesLeft = nbFilesLeft,
+                Progression = progression
             };
 
             json = JsonConvert.SerializeObject(data, Newtonsoft.Json.Formatting.Indented);
