@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using easy_save.Lib.ViewModels;
 using Newtonsoft.Json;
 
@@ -72,74 +74,75 @@ namespace easy_save.Cmd.Views
                             bool success = FileSaveViewModel.CreateSaveWork(inputPath, outputPath, name, saveType);
                             if (success)
                             {
-                                Console.WriteLine("=> Processus de sauvegarde crée");
+                                Console.WriteLine(languageJson.Save.Process);
                             }
                             else
                             {
-                                Console.WriteLine("=> Nombre de processus de sauvegarde maximum atteint, impossible de créer");
+                                Console.WriteLine(languageJson.Save.ErrorLimit);
                             }
-                            Console.WriteLine("! Appuyer sur entrée pour continuer !");
+                            Console.WriteLine(languageJson.Save.Continue);
                             Console.ReadLine();
                             break;
                             
                         case "2":
                             Console.Clear();
-                            Console.WriteLine("Entrer le nom de la sauvegarde à supprimer");
+                            Console.WriteLine(languageJson.Remove.Name);
                             string nameToDelete = Console.ReadLine();
                             bool successDelete = FileSaveViewModel.DeleteSaveWork(nameToDelete);
                             if (successDelete)
                             {
-                                Console.WriteLine("=> Processus de sauvegarde supprimé");
+                                Console.WriteLine(languageJson.Remove.SucessRemove);
                             }
                             else
                             {
-                                Console.WriteLine("=> Processus de sauvegarde non trouvé");
+                                Console.WriteLine(languageJson.Remove.MissingFile);
                             }
-                            Console.WriteLine("! Appuyer sur entrée pour continuer !");
+                            Console.WriteLine(languageJson.Remove.Continue);
                             Console.ReadLine();
                             break;
                             
                         case "3":
                             Console.Clear();
-                            Console.WriteLine("Entrer le nom du processus de sauvegarde à lancer");
+                            Console.WriteLine(languageJson.StartSave.Name);
                             string saveName = Console.ReadLine();
                             bool successUse = FileSaveViewModel.Save(saveName);
                             if (successUse)
                             {
-                                Console.WriteLine("=> Processus de sauvegarde lancé");
+                                Console.WriteLine(languageJson.StartSave.StartProcess);
                             }
                             else
                             {
-                                Console.WriteLine("=> Processus de sauvegarde non trouvé");
+                                Console.WriteLine(languageJson.StartSave.MissingFile);
                             }
-                            Console.WriteLine("! Appuyer sur entrée pour continuer !");
+                            Console.WriteLine(languageJson.StartSave.Continue);
                             Console.ReadLine();
                             Console.Clear();
                             break;
                             
                         case "4":
                             Console.Clear();
-                            Console.WriteLine("Lancement de tout les processus de sauvegarde");
+                            Console.WriteLine(languageJson.AllProcess.StartProcess);
                             int errors = FileSaveViewModel.AllSave();
                             if (errors == 0)
                             {
-                                Console.WriteLine("=> Tous les processus de sauvegarde ont été lancés corrêctement");
+                                Console.WriteLine(languageJson.AllProcess.EndProcess);
                             }
                             else
                             {
-                                Console.WriteLine($"=> {errors} processus de sauvegarde n'a / ont pas pu(s) être lancé(s)");
+                                Console.WriteLine("=> " + errors + languageJson.AllProcess.Error);
                             }
-                            Console.WriteLine("! Appuyer sur entrée pour continuer !");
+                            Console.WriteLine(languageJson.AllProcess.Continue);
                             Console.ReadLine();
                             Console.Clear();
                             break;
                             
                         case "5":
+                            Console.Clear();
                             foreach (var saveWork in FileSaveViewModel.GetAvailableWorks())
                             {
                                 Console.WriteLine("=> " + saveWork);
                             }
-                            Console.WriteLine("! Appuyer sur entrée pour continuer !");
+                            Console.WriteLine(languageJson.BackupDetails.Continue);
                             Console.ReadLine();
                             Console.Clear();
                             break;
@@ -151,11 +154,6 @@ namespace easy_save.Cmd.Views
                         default:
                             Console.Clear();
                             inputIsOk = false;
-                            /*
-                             Example use of the logger
-                            var logger = new EasySaveLogger("logs", "C:\\Users\\gauti\\OneDrive\\Bureau\\CESI\\A3\\Semestre 1\\Programation système\\Projet\\TestEnv\\");
-                            logger.logSaveFolderFilesProgression("Save1", "a", "b", "end", 0, 0, 0);
-                            */
                             break;
                     }
                 }
