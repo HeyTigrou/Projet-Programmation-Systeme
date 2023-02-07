@@ -29,8 +29,8 @@ namespace easy_save.Lib.Service
         public string TargetFilePath { set; get; }
         public string State { set; get; }
         public int TotalFileToCopy { set; get; }
-        public int TotalFileSize { set; get; }
-        public int NbFilesLeft { set; get; }
+        public long TotalFileSize { set; get; }
+        public long NbFilesLeft { set; get; }
     }
 
     public class LoggerService
@@ -47,6 +47,7 @@ namespace easy_save.Lib.Service
             var config = JsonConvert.DeserializeObject<ConfigFileModel>(File.ReadAllText(@"..\..\..\..\easy_save.Lib\ConfigurationFiles\easy_save_config.json"));
             this.FileName = fileName;
             this.DirectoryPath = config.Daily_log_emplacement;
+            this.stateLogDirectoryPath = config.Status_log_emplacement;
             setLogFilePath();
         }
 
@@ -54,12 +55,7 @@ namespace easy_save.Lib.Service
         {
             Date = DateTime.Today;
             string currentDate = Date.ToString("yyyy-MM-dd");
-            this.stateLogDirectoryPath = DirectoryPath + currentDate + "-" + FileName;
             this.DailyLogFile = DirectoryPath + currentDate + "-" + FileName + ".log";
-            if (!Directory.Exists(this.stateLogDirectoryPath))
-            {
-                Directory.CreateDirectory(this.stateLogDirectoryPath);
-            }
             if (!File.Exists(this.DailyLogFile))
             {
                 File.Create(this.DailyLogFile).Close();
@@ -74,13 +70,16 @@ namespace easy_save.Lib.Service
             }
         }
 
-        public void logProcessFileCreation(string processName)
+        public void logProcessFile(string processName)
         {
             stateLogFile = stateLogDirectoryPath + "\\" + processName + ".log";
-            File.Create(stateLogFile).Close();
+            if (!File.Exists(this.stateLogFile))
+            {
+                File.Create(this.stateLogFile).Close();
+            }
         }
 
-        public void logProcessState(string name, string sourceFilePath, string targetFilePath, string state, int totalFileToCopy, int totalFileSize, int nbFilesLeft)
+        public void logProcessState(string name, string sourceFilePath, string targetFilePath, string state, int totalFileToCopy, long totalFileSize, long nbFilesLeft)
 
         {
             string json;
@@ -98,15 +97,9 @@ namespace easy_save.Lib.Service
             };
 
             json = JsonConvert.SerializeObject(data, Newtonsoft.Json.Formatting.Indented);
-            using (StreamWriter sw = File.AppendText(this.stateLogFile))
+            File.WriteAllText(this.stateLogFile, json);
 
-            {
-                if (new FileInfo(this.stateLogFile).Length != 0)
-                {
-                    sw.WriteLine(",");
-                }
-                sw.Write(json);
-            }
+           
         }
 
         public void logDailySaves(string name, string sourceFilePath, string targetFilePath, int filesize, TimeSpan fileTransferTime, DateTime time)

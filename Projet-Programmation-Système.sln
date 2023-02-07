@@ -8,6 +8,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "easy_save.Lib", "easy_save.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "easy_save_logs", "easy_save_logs", "{AC0E2921-7AB9-4DEE-923A-D4D236FBA284}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "daily", "daily", "{511DD01B-DC7C-4175-A161-C24442A5EAFD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{511DD01B-DC7C-4175-A161-C24442A5EAFD} = {AC0E2921-7AB9-4DEE-923A-D4D236FBA284}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {87E86D56-28AC-4F43-9499-9EDF7831877C}
