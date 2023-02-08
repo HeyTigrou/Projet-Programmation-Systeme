@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace easy_save.Lib.Models
 {
-    public class StateLoggerModel // This Model is used to create the state log
+    // This Model is used to create the state log
+    public class StateLoggerModel 
     {
         public string Name { set; get; }
         public string SourceFilePath { set; get; }

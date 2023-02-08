@@ -4,10 +4,13 @@ namespace easy_save.Cmd
 {
     internal class Program
     {
-        static void Main(string[] args) // Launch of the program
+        // Launch of the program
+        static void Main(string[] args) 
         {
-            MainMenuView view = MainMenuView.Instance; // Recuperation of the unique instance of the console interface
-            view.Display(); // Launch of the console interface
+            // Recuperation of the unique instance of the console interface
+            MainMenuView view = MainMenuView.Instance;
+            // Launch of the console interface
+            view.Display(); 
         }
     }
 }

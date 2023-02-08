@@ -15,47 +15,61 @@ namespace easy_save.Lib.Service
 {
     public class FileSaveService
     {
+        // We create a instance of the logger service that will be used later
         private static StateLoggerModel stateLoggerModel = new StateLoggerModel();
-
-        public static void SaveProcess(SaveWorkModel save) // This method is used to select the right method to use : SaveAllFiles (Complete save) or SaveChangedFiles (Incremental Save)
+        
+        // This method is used to select the right method to use : SaveAllFiles (Complete save) or SaveChangedFiles (Incremental Save)
+        public static void SaveProcess(SaveWorkModel save) 
         {
-            if (save.SaveType == 0) // 0 = Complete save
+            // 0 = Complete save
+            if (save.SaveType == 0) 
             {
-                SaveAllFiles(save.InputPath, save.OutputPath, save.Name); // Launch the complete save
+                // Launch the complete save
+                SaveAllFiles(save.InputPath, save.OutputPath, save.Name); 
             }
-            else if (save.SaveType == 1) // 1 = Incremental Save
+            // 1 = Incremental Save
+            else if (save.SaveType == 1) 
             {
-                SaveChangedFiles(save.InputPath, save.OutputPath, save.Name); // Launch the incremental save
+                // Launch the incremental save
+                SaveChangedFiles(save.InputPath, save.OutputPath, save.Name); 
             }
         }
 
+        // This method is used to initialise the logger
         private static void InitializeStateLoggerModel(string sourcePath, string destinationPath, string saveName)
         {
-            
-            stateLoggerModel.TotalFileToCopy = Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories).Length; // Get number of files in the folder and sub folders
+            // Get number of files in the folder and sub folders
+            stateLoggerModel.TotalFileToCopy = Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories).Length; 
 
             long totalFileSize = 0;
-            string[] files = Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories); // Get total file size in the folder and sub folders
+            // Get total file size in the folder and sub folders
+            string[] files = Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories);
 
-            foreach (string file in files) // We're going to collect the size of each file of the directory 
+            // We're going to collect the size of each file of the directory 
+            foreach (string file in files) 
             {
                 FileInfo info = new FileInfo(file);
-                totalFileSize += info.Length; // Storage of the entire storage 
+                // Storage of the entire storage 
+                totalFileSize += info.Length; 
             }
             stateLoggerModel.TotalFileSize = totalFileSize;
 
-            stateLoggerModel.NbFilesLeft = stateLoggerModel.TotalFileToCopy; // We create a variable to count the number of files left to copy
+            // We create a variable to count the number of files left to copy
+            stateLoggerModel.NbFilesLeft = stateLoggerModel.TotalFileToCopy;
 
-            stateLoggerModel.State = "Starting"; // We create a variable to store the state of the process
-            stateLoggerModel.Progression = "0%"; // We create a variable to store the progression of the process
+            // We create a variable to store the state of the process
+            stateLoggerModel.State = "Starting";
+            // We create a variable to store the progression of the process
+            stateLoggerModel.Progression = "0%"; 
             stateLoggerModel.SourceFilePath = sourcePath;
             stateLoggerModel.TargetFilePath= destinationPath;
             stateLoggerModel.Name = saveName;
         }
 
+        // This method is used to reset the state logger once the process is stopped
         private static void StateLoggerToNeutral()
         {
-            //--- We change all the values to neutral because the process has ended
+            // We change all the values to neutral because the process has ended
             stateLoggerModel.State = "Done";
             stateLoggerModel.TotalFileSize = 0;
             stateLoggerModel.NbFilesLeft= 0;
@@ -65,82 +79,108 @@ namespace easy_save.Lib.Service
             stateLoggerModel.Progression = "";
         }
 
-        private static void SaveAllFiles(string sourcePath, string destinationPath, string saveName) // This method is used to save all the files from the source folder into the destination folder
+        // This method is used to save all the files from the source folder into the destination folder
+        private static void SaveAllFiles(string sourcePath, string destinationPath, string saveName) 
         {
-            LoggerService logger = new LoggerService("logs"); // We create a new logger service to log the process
+            // We create a new logger service to log the process
+            LoggerService logger = new LoggerService("logs");
             logger.logProcessFile(saveName);
 
             InitializeStateLoggerModel(sourcePath, destinationPath, saveName);
 
-            logger.logProcessState(stateLoggerModel); // We log the process state
+            // We log the process state
+            logger.logProcessState(stateLoggerModel);
 
-
-            foreach (string dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories)) // We collect all the different folder and sub-foldes
+            // We collect all the different folder and sub-foldes
+            foreach (string dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories)) 
             {
-                Directory.CreateDirectory(dirPath.Replace(sourcePath, destinationPath)); // We create the same folder and sub-folders in the destination folder
+                // We create the same folder and sub-folders in the destination folder
+                Directory.CreateDirectory(dirPath.Replace(sourcePath, destinationPath)); 
             }
-
-            foreach (string newPath in Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories)) // We collect all the files in the folder and sub-folders
+            // We collect all the files in the folder and sub-folders
+            foreach (string newPath in Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories)) 
             {
-                long progress = (stateLoggerModel.TotalFileToCopy - stateLoggerModel.NbFilesLeft) * 100 / stateLoggerModel.TotalFileToCopy; // We calculate the progression of the process (%)
+                // We calculate the progression of the process (%)
+                long progress = (stateLoggerModel.TotalFileToCopy - stateLoggerModel.NbFilesLeft) * 100 / stateLoggerModel.TotalFileToCopy; 
 
                 stateLoggerModel.Progression = progress.ToString() + "%";
-                DateTime before = DateTime.Now; // We get the time before the copy
-                stateLoggerModel.State = "Running"; // We change the state of the process
-                logger.logProcessState(stateLoggerModel); // We log the process state
+                // We get the time before the copy
+                DateTime before = DateTime.Now;
+                // We change the state of the process
+                stateLoggerModel.State = "Running";
+                // We log the process state
+                logger.logProcessState(stateLoggerModel);
 
-                File.Copy(newPath, newPath.Replace(sourcePath, destinationPath), true); // We copy the file from the source folder to the destination folder
+                // We copy the file from the source folder to the destination folder
+                File.Copy(newPath, newPath.Replace(sourcePath, destinationPath), true);
 
-                DateTime after = DateTime.Now; // We get the time after the copy
+                // We get the time after the copy
+                DateTime after = DateTime.Now; 
                 TimeSpan fileTransferTime;
-                fileTransferTime = after - before; // We calculate the time of the copy
-                DateTime time = DateTime.Now; // We get the time of the copy
-                int fileSize = newPath.Length; // We get the size of the file
-                logger.logDailySaves(saveName, sourcePath, destinationPath, fileSize, fileTransferTime, time); // We add a log to the daily log file
+                // We calculate the time of the copy
+                fileTransferTime = after - before;
+                // We get the time of the copy
+                DateTime time = DateTime.Now;
+                // We get the size of the file
+                int fileSize = newPath.Length;
+                // We add a log to the daily log file
+                logger.logDailySaves(saveName, sourcePath, destinationPath, fileSize, fileTransferTime, time); 
                 stateLoggerModel.NbFilesLeft--;
             }
 
             StateLoggerToNeutral();
-
-            logger.logProcessState(stateLoggerModel); // We log the process state
+            // We log the process state
+            logger.logProcessState(stateLoggerModel); 
         }
 
-        private static void SaveChangedFiles(string sourcePath, string destinationPath, string saveName) // This method is used to only save the files that changed in the source folder into the destination folder
+        // This method is used to only save the files that changed in the source folder into the destination folder
+        private static void SaveChangedFiles(string sourcePath, string destinationPath, string saveName) 
         {
-
-            LoggerService logger = new LoggerService("logs"); // We create a new logger service to log the process
+            // We create a new logger service to log the process
+            LoggerService logger = new LoggerService("logs"); 
             logger.logProcessFile(saveName);
 
-            InitializeStateLoggerModel(sourcePath, destinationPath, saveName);
+            // We initialise the logger
+            InitializeStateLoggerModel(sourcePath, destinationPath, saveName); 
 
             logger.logProcessState(stateLoggerModel);
 
-            foreach (string dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
+            // We creating the directories that aren't in the destination directory
+            foreach (string dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))  
             {
                 DirectoryInfo sourceDirectoryInfo = new DirectoryInfo(dirPath);
                 DirectoryInfo destinationDirectoryInfo = new DirectoryInfo(dirPath.Replace(sourcePath, destinationPath));
+                // If the directory doesn't exist
                 if (!destinationDirectoryInfo.Exists)
                 {
+                    // We create the sub directory
                     destinationDirectoryInfo.Create();
                 }
             }
-
+            // We collect all the files in the folder and sub-folders
             foreach (string newPath in Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories))
             {
 
                 FileInfo sourceFileInfo = new FileInfo(newPath);
                 FileInfo destinationFileInfo = new FileInfo(newPath.Replace(sourcePath, destinationPath));
+                // We check if the file in the destination repertory exists or isn't updated
                 if (!destinationFileInfo.Exists || sourceFileInfo.LastWriteTime > destinationFileInfo.LastWriteTime)
                 {
-                    long progress = (stateLoggerModel.TotalFileToCopy - stateLoggerModel.NbFilesLeft) * 100 / stateLoggerModel.TotalFileToCopy; // We calculate the progression of the process (%)
+                    // We calculate the progression of the process (%)
+                    long progress = (stateLoggerModel.TotalFileToCopy - stateLoggerModel.NbFilesLeft) * 100 / stateLoggerModel.TotalFileToCopy; 
 
                     stateLoggerModel.Progression = progress.ToString() + "%";
-                    DateTime before = DateTime.Now; // We get the time before the copy
-                    stateLoggerModel.State = "Running"; // We change the state of the process
-                    logger.logProcessState(stateLoggerModel); // We log the process state
+                    // We get the time before the copy
+                    DateTime before = DateTime.Now;
+                    // We change the state of the process
+                    stateLoggerModel.State = "Running";
+                    // We log the process state
+                    logger.logProcessState(stateLoggerModel); 
 
+                    // We copy the file
                     File.Copy(newPath, newPath.Replace(sourcePath, destinationPath), true);
 
+                    // We calculate the save time
                     DateTime after = DateTime.Now;
                     TimeSpan fileTransferTime;
                     fileTransferTime = after - before;
@@ -148,6 +188,7 @@ namespace easy_save.Lib.Service
 
                     int fileSize = newPath.Length;
 
+                    // We add a log to the daily log file
                     logger.logDailySaves(saveName, sourcePath, destinationPath, fileSize, fileTransferTime, time);
                 }
                 else 
@@ -159,6 +200,7 @@ namespace easy_save.Lib.Service
 
             StateLoggerToNeutral();
 
+            // We update the state log
             logger.logProcessState(stateLoggerModel);
         }
     }

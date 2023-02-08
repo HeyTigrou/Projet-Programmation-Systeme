@@ -1,4 +1,5 @@
 {
   "Daily_log_emplacement": "..\\..\\..\\..\\easy_save_logs\\daily\\",
-  "Status_log_emplacement": "..\\..\\..\\..\\easy_save_logs\\"
+  "Status_log_emplacement": "..\\..\\..\\..\\easy_save_logs\\",
+  "Max_number_of_save" :  5
 }

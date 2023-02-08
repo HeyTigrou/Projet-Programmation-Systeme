@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace easy_save.Lib.Models
 {
-    public class DailyLoggerModel // This Model is used to create the daily log
+    // This Model is used to create the daily log file
+    public class DailyLoggerModel 
     {
         public string Name { set; get; }
         public string SourceFilePath { set; get; }

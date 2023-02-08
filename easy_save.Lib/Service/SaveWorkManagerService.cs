@@ -34,7 +34,8 @@ namespace easy_save.Lib.Service
 
         public static bool AddSaveWork(SaveWorkModel saveWork)
         {
-            if (GetSaveProjectnumber() >= 5)
+            var config = JsonConvert.DeserializeObject<ConfigFileModel>(File.ReadAllText(@"..\..\..\..\easy_save.Lib\ConfigurationFiles\easy_save_config.json"));
+            if (GetSaveProjectnumber() >= config.Max_number_of_save)
             {
                 return false;
             }

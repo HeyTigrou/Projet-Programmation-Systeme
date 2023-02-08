@@ -13,7 +13,8 @@ namespace easy_save.Cmd.Views
 {
     internal class MainMenuView
     {
-        private enum languages { en, fr } // this enum will be used to check if the user input is valid when he select the language
+        // this enum will be used to check if the user input is valid when he select the language
+        private enum languages { en, fr } 
 
         // 1. This part is used to make the class a singleton
         private static MainMenuView instance;
@@ -33,7 +34,8 @@ namespace easy_save.Cmd.Views
         private MainMenuView(){}
         // .1
 
-        public void Display() // this method will be called in the main method of the program
+        // this method will be called in the main method of the program
+        public void Display()
         {
             string Language = "";
             do
@@ -42,12 +44,16 @@ namespace easy_save.Cmd.Views
                 Console.WriteLine("*** Welcome to EasySave ***\n ");
                 Console.WriteLine("Choose a language: \n> English => en \n> French => fr");
                 Console.Write("\nEnter an option: ");
-                Language = Console.ReadLine(); // the user will enter the language he wants to use
+                // the user will enter the language he wants to use
+                Language = Console.ReadLine();
             }
-            while (!(Enum.IsDefined(typeof(languages), Language))); // this loop will be executed while the user input is not valid
-            while (true) // this loop will be executed until the user wants to quit the program
+            // this loop will be executed while the user input is not valid
+            while (!(Enum.IsDefined(typeof(languages), Language)));
+            // this loop will be executed until the user wants to quit the program
+            while (true) 
             {
-                dynamic languageJson = JsonConvert.DeserializeObject(File.ReadAllText($@"..\..\..\..\easy_save.Lib\ConfigurationFiles\Interface_text\{Language}.json")); // this line will get the json file corresponding to the language selected by the user
+                // this line will get the json file corresponding to the language selected by the user
+                dynamic languageJson = JsonConvert.DeserializeObject(File.ReadAllText($@"..\..\..\..\easy_save.Lib\ConfigurationFiles\Interface_text\{Language}.json")); 
 
                 bool inputIsOk;
                 do
@@ -58,12 +64,14 @@ namespace easy_save.Cmd.Views
                     Console.WriteLine("*** EasySave ***\n ");
                     Console.WriteLine(languageJson.Main.Menu);
                     Console.Write(languageJson.Main.Option);
-                    string inputChoice = Console.ReadLine(); // the user will enter the option he wants to use
+                    // the user will enter the option he wants to use
+                    string inputChoice = Console.ReadLine(); 
 
 
                     switch (inputChoice)
                     {
-                        case "1": // the user wants to create a save work
+                        // the user wants to create a save work
+                        case "1": 
                             Console.Clear();
                             Console.WriteLine(languageJson.Save.Name);
                             string name = Console.ReadLine();
@@ -71,89 +79,127 @@ namespace easy_save.Cmd.Views
                             string inputPath = Console.ReadLine();
                             Console.WriteLine(languageJson.Save.PathDestination);
                             string outputPath = Console.ReadLine();
-                            Console.WriteLine(languageJson.Save.SaveType);
-                            int saveType = int.Parse(Console.ReadLine());
-                            bool success = FileSaveViewModel.CreateSaveWork(inputPath, outputPath, name, saveType); // this method will create the save work via the view model
+                            int saveType = 0;
+                            while (true)
+                            {
+                                Console.WriteLine(languageJson.Save.SaveType);
+                                saveType = int.Parse(Console.ReadLine());
+                                // the user can only choose between 0 and 1 (full or incremental)
+                                if (saveType == 0 || saveType == 1) 
+                                {
+                                    break;
+                                }
+                                else
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine(languageJson.Save.ErrorSaveType);
+                                }
+                            }
+                            
+                            // this method will create the save work via the view model
+                            bool success = FileSaveViewModel.CreateSaveWork(inputPath, outputPath, name, saveType); 
                             if (success)
                             {
-                                Console.WriteLine(languageJson.Save.Process); // the save work has been created
+                                // the save work has been created
+                                Console.WriteLine(languageJson.Save.Process); 
                             }
                             else
                             {
-                                Console.WriteLine(languageJson.Save.ErrorLimit); // the user has reached the limit of save works he can create
+                                // the user has reached the limit of save works he can create
+                                Console.WriteLine(languageJson.Save.ErrorLimit); 
                             }
-                            Console.WriteLine(languageJson.Save.Continue);  // the user will have to press enter to continue
+                            // the user will have to press enter to continue
+                            Console.WriteLine(languageJson.Save.Continue);  
                             Console.ReadLine();
                             break;
 
-                        case "2": // the user wants to delete a save work
+                        // the user wants to delete a save work
+                        case "2": 
                             Console.Clear();
                             Console.WriteLine(languageJson.Remove.Name);
                             string nameToDelete = Console.ReadLine();
-                            bool successDelete = FileSaveViewModel.DeleteSaveWork(nameToDelete); // this method will delete the save work via the view model
+                            // this method will delete the save work via the view model
+                            bool successDelete = FileSaveViewModel.DeleteSaveWork(nameToDelete); 
                             if (successDelete)
                             {
-                                Console.WriteLine(languageJson.Remove.SucessRemove); // the save work has been deleted
+                                // the save work has been deleted
+                                Console.WriteLine(languageJson.Remove.SucessRemove); 
                             }
                             else
                             {
-                                Console.WriteLine(languageJson.Remove.MissingFile); // the save work doesn't exist
+                                // the save work doesn't exist
+                                Console.WriteLine(languageJson.Remove.MissingFile);
                             }
-                            Console.WriteLine(languageJson.Remove.Continue); // the user will have to press enter to continue
+                            // the user will have to press enter to continue
+                            Console.WriteLine(languageJson.Remove.Continue); 
                             Console.ReadLine();
                             break;
 
-                        case "3": // the user wants to use a save work
+                        // the user wants to use a save work
+                        case "3": 
                             Console.Clear();
                             Console.WriteLine(languageJson.StartSave.Name);
                             string saveName = Console.ReadLine();
-                            bool successUse = FileSaveViewModel.Save(saveName); // this method will use the save work via the view model
+                            // this method will use the save work via the view model
+                            bool successUse = FileSaveViewModel.Save(saveName); 
                             if (successUse)
                             {
-                                Console.WriteLine(languageJson.StartSave.StartProcess); // the save work has been used
+                                // the save work has been used
+                                Console.WriteLine(languageJson.StartSave.StartProcess); 
                             }
                             else
                             {
-                                Console.WriteLine(languageJson.StartSave.MissingFile); // the save work doesn't exist
+                                // the save work doesn't exist
+                                Console.WriteLine(languageJson.StartSave.MissingFile); 
                             }
-                            Console.WriteLine(languageJson.StartSave.Continue); // the user will have to press enter to continue
+                            // the user will have to press enter to continue
+                            Console.WriteLine(languageJson.StartSave.Continue); 
                             Console.ReadLine();
                             Console.Clear();
                             break;
-
-                        case "4": // the user wants to use all save works
+                        
+                        // the user wants to use all save works
+                        case "4": 
                             Console.Clear();
                             Console.WriteLine(languageJson.AllProcess.StartProcess);
-                            int errors = FileSaveViewModel.AllSave(); // this method will use all save works via the view model
+                            // this method will use all save works via the view model
+                            int errors = FileSaveViewModel.AllSave(); 
                             if (errors == 0)
                             {
-                                Console.WriteLine(languageJson.AllProcess.EndProcess); // all save works have been used
+                                // all save works have been used
+                                Console.WriteLine(languageJson.AllProcess.EndProcess); 
                             }
                             else
                             {
-                                Console.WriteLine("=> " + errors + languageJson.AllProcess.Error); // some save works have not been used, the number of errors is displayed
+                                // some save works have not been used, the number of errors is displayed
+                                Console.WriteLine("=> " + errors + languageJson.AllProcess.Error); 
                             }
                             Console.WriteLine(languageJson.AllProcess.Continue);
                             Console.ReadLine();
                             Console.Clear();
                             break;
 
-                        case "5": // the user wants to see the details of a save work
+                        // the user wants to see the details of a save work
+                        case "5": 
                             Console.Clear();
-                            foreach (var saveWork in FileSaveViewModel.GetAvailableWorks()) // this method will get the details of each save work via the view model
+                            // this method will get the details of each save work via the view model
+                            foreach (var saveWork in FileSaveViewModel.GetAvailableWorks()) 
                             {
                                 Console.WriteLine("=> " + saveWork);
                             }
-                            Console.WriteLine(languageJson.BackupDetails.Continue); // the user will have to press enter to continue
+                            // the user will have to press enter to continue
+                            Console.WriteLine(languageJson.BackupDetails.Continue); 
                             Console.ReadLine();
                             Console.Clear();
                             break;
-
-                        case "6": // the user wants to quit the program
+                        
+                        // the user wants to quit the program
+                        case "6": 
                             Environment.Exit(0); 
                             break;
 
-                        default: // the user input is not valid
+                        // the user input is not valid
+                        default: 
                             Console.Clear();
                             inputIsOk = false;
                             break;

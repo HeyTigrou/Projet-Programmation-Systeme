@@ -1,6 +1,6 @@
 {
   "Main": {
-    "Menu": " 1| Créer un processus de sauvegarde  \n 2| Supprimer une sauvegarde  \n 3| Lancer une sauvegarde  \n 4| Lancer tous les processus de sauvegarde disponible \n 5| Afficher les details de sauvegarde  \n 6| Quitter",
+    "Menu": " 1| Créer un processus de sauvegarde  \n 2| Supprimer une sauvegarde  \n 3| Lancer une sauvegarde  \n 4| Lancer tous les processus de sauvegarde disponible \n 5| Afficher les détails de sauvegarde  \n 6| Quitter",
     "Option": "\nChoisir une option: "
   },
   "Save": {
@@ -10,7 +10,8 @@
     "SaveType": "\nEnter le type de sauvegarde (0 => Tous les fichiers | 1 => Uniquement les fichiers modifiés)",
     "Process": "=> Processus de sauvegarde crée",
     "ErrorLimit": "\n=> Nombre de processus de sauvegarde maximum atteint, impossible de créer",
-    "Continue": "\n! Appuyer sur entrée pour continuer !"
+    "Continue": "\n! Appuyer sur entrée pour continuer !",
+    "ErrorSaveType": "\n=> Type de sauvegarde non valide",
   },
   "Remove": {
     "Name": "Entrer le nom de la sauvegarde à supprimer",
