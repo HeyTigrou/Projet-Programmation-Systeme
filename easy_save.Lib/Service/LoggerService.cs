@@ -15,7 +15,6 @@ namespace easy_save.Lib.Service
     public class LoggerService
     {
         private string FileName;
-        private DateTime Date;
         private string stateLogDirectoryPath;
         private string DailyLogFile;
         private string stateLogFile;
@@ -32,7 +31,7 @@ namespace easy_save.Lib.Service
 
         private void setLogFilePath()
         {
-            Date = DateTime.Today;
+            DateTime Date = DateTime.Today;
             string currentDate = Date.ToString("yyyy-MM-dd");
             this.DailyLogFile = DirectoryPath + currentDate + "-" + FileName + ".log";
             if (!File.Exists(this.DailyLogFile))
