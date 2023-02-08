@@ -127,7 +127,7 @@ namespace easy_save.Lib.Service
                 FileInfo destinationFileInfo = new FileInfo(newPath.Replace(sourcePath, destinationPath));
                 if (!destinationFileInfo.Exists || sourceFileInfo.LastWriteTime > destinationFileInfo.LastWriteTime)
                 {
-                    float progress = (fileCount - fileLeft) * 100 / fileCount;
+                    long progress = (fileCount - fileLeft) * 100 / fileCount;
                     progression = progress.ToString() + "%";
                     DateTime before = DateTime.Now;
                     state = "Running";
