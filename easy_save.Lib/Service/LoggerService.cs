@@ -50,25 +50,13 @@ namespace easy_save.Lib.Service
             }
         }
 
-        public void logProcessState(string name, string sourceFilePath, string targetFilePath, string state, int totalFileToCopy, long totalFileSize, long nbFilesLeft, string progression)
+        public void logProcessState(StateLoggerModel stateLoggerModel)
 
         {
             string json;
             setLogFilePath();
 
-            StateLoggerModel data = new StateLoggerModel
-            {
-                Name = name,
-                SourceFilePath = sourceFilePath,
-                TargetFilePath = targetFilePath,
-                State = state,
-                TotalFileToCopy = totalFileToCopy,
-                TotalFileSize = totalFileSize,
-                NbFilesLeft = nbFilesLeft,
-                Progression = progression
-            };
-
-            json = JsonConvert.SerializeObject(data, Newtonsoft.Json.Formatting.Indented);
+            json = JsonConvert.SerializeObject(stateLoggerModel, Newtonsoft.Json.Formatting.Indented);
             File.WriteAllText(this.stateLogFile, json);
 
            
