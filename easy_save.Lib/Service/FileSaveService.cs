@@ -14,6 +14,7 @@ namespace easy_save.Lib.Service
 {
     public class FileSaveService
     {
+        
         public static void SaveProcess(SaveWorkModel save) // This method is used to select the right method to use : SaveAllFiles (Complete save) or SaveChangedFiles (Incremental Save)
         {
             if (save.SaveType == 0) // 0 = Complete save
@@ -84,21 +85,19 @@ namespace easy_save.Lib.Service
             logger.logProcessState(saveName, sourcePath, destinationPath, state, fileCount, totalFileSize, fileLeft, progression); // We log the process state
         }
 
-        private static void SaveChangedFiles(string sourcePath, string destinationPath, string saveName) // 
+        private static void SaveChangedFiles(string sourcePath, string destinationPath, string saveName) // This method is used to only save the files that changed in the source folder into the destination folder
         {
 
-            LoggerService logger = new LoggerService("logs"); // !!!!!!!!
+            LoggerService logger = new LoggerService("logs"); // We create a new logger service to log the process
             logger.logProcessFile(saveName);
 
-            //--- Get number of files in the folder and sub folders
             int fileCount = 0;
-            fileCount = Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories).Length;
+            fileCount = Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories).Length; // Get number of files in the folder and sub folders
 
-            //--- Get total file size in the folder and sub folders
             long totalFileSize = 0;
+            string[] files = Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories); // Get total file size in the folder and sub folders
 
-            string[] files = Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories);
-            foreach (string file in files)
+            foreach (string file in files) // We're going to collect the size of each file of the directory
             {
                 FileInfo info = new FileInfo(file);
                 totalFileSize += info.Length;
