@@ -12,66 +12,98 @@ namespace easy_save.Lib.ViewModels
 {
     public class FileSaveViewModel
     {
-        public static bool Save(string name) // This method is used to launch a specific save work
+        // This method is used to launch a specific save work
+        public static bool Save(string name) 
         {
-            foreach (var saveWork in SaveWorkManagerService.GetSaveWorks()) // We get all the save works
+            // We get all the save works
+            foreach (var saveWork in SaveWorkManagerService.GetSaveWorks()) 
             {
-                if (saveWork.Name == name) // We check if the name of the save work is the same as the name that we selected
+                // We check if the name of the save work is the same as the name that we selected
+                if (saveWork.Name == name) 
                 {
-                    FileSaveService.SaveProcess(saveWork); // We launch the save process
-                    return true; // We return true if the save process is launched
+                    try
+                    {
+                        // We launch the save process
+                        FileSaveService.SaveProcess(saveWork);
+                        // We return true if the save process is launched
+                        return true;
+                    }
+                    catch (Exception e)
+                    {
+                        return false;
+                    }
+                    
                 }
-
             }
-            return false; // We return false if the save process is not launched
+            // We return false if the save process is not launched
+            return false; 
         }
 
-        public static int AllSave() // This method is used to launch all the save works
+        // This method is used to launch all the save works
+        public static int AllSave() 
         {
-            int errorCount = 0; // We create a variable to count the number of errors
-            foreach (var saveWork in SaveWorkManagerService.GetSaveWorks()) // We get all the save works
+            // We create a variable to count the number of errors
+            int errorCount = 0;
+            // We get all the save works
+            foreach (var saveWork in SaveWorkManagerService.GetSaveWorks()) 
             {
-                try // We try to launch the save process
+                // We try to launch the save process
+                try
                 {
                     FileSaveService.SaveProcess(saveWork);
                 }
-                catch (Exception e) // If there is an error, we increment the error count
+                // If there is an error, we increment the error count
+                catch (Exception e) 
                 {
                     errorCount++;
                 }
             }
-            return errorCount; // We return the number of errors
+            // We return the number of errors
+            return errorCount; 
         }
 
-        public static bool CreateSaveWork(string inputPath, string outputPath, string name, int saveType) // This method is used to create a save work
+        // This method is used to create a save work
+        public static bool CreateSaveWork(string inputPath, string outputPath, string name, int saveType) 
         {
-            SaveWorkModel saveWork = new SaveWorkModel(name, inputPath, outputPath, saveType); // We create a new save work
-            return SaveWorkManagerService.AddSaveWork(saveWork); // We add the save work to the save work list and we return if it's a success or not
+            // We create a new save work
+            SaveWorkModel saveWork = new SaveWorkModel(name, inputPath, outputPath, saveType);
+            // We add the save work to the save work list and we return if it's a success or not
+            return SaveWorkManagerService.AddSaveWork(saveWork); 
         }
 
-        public static bool DeleteSaveWork(string name) // This method is used to delete a save work
+        // This method is used to delete a save work
+        public static bool DeleteSaveWork(string name) 
         {
-            foreach (var saveWork in SaveWorkManagerService.GetSaveWorks()) // We get all the save works
+            // We get all the save works
+            foreach (var saveWork in SaveWorkManagerService.GetSaveWorks()) 
             {
-                if (saveWork.Name == name) // We check if the name of the save work is the same as the name that we selected
+                // We check if the name of the save work is the same as the name that we selected
+                if (saveWork.Name == name) 
                 {
-                    return SaveWorkManagerService.DeleteSaveWork(name); // We delete the save work and we return if it's a success or not
+                    // We delete the save work and we return if it's a success or not
+                    return SaveWorkManagerService.DeleteSaveWork(name); 
                 }
                 
             }
-            return false; // We return false if the save work can't be found
+            // We return false if the save work can't be found
+            return false; 
         }
 
-        public static string[] GetAvailableWorks() // This method is used to get all the save works
+        // This method is used to get all the save works
+        public static string[] GetAvailableWorks() 
         {
-            string[] works = new string[SaveWorkManagerService.GetSaveProjectnumber()]; // We create a string array with the number of save works
+            // We create a string array with the number of save works
+            string[] works = new string[SaveWorkManagerService.GetSaveProjectnumber()]; 
             int i = 0;
-            foreach (var saveWork in SaveWorkManagerService.GetSaveWorks()) // We get all the save works
+            // We get all the save works
+            foreach (var saveWork in SaveWorkManagerService.GetSaveWorks()) 
             {
-                works[i] = $"Name: {saveWork.Name} | Source: {saveWork.InputPath} | Target: {saveWork.OutputPath} | SaveType: {saveWork.SaveType}"; // We add the save work to the string array
+                // We add the save work to the string array
+                works[i] = $"Name: {saveWork.Name} | Source: {saveWork.InputPath} | Target: {saveWork.OutputPath} | SaveType: {saveWork.SaveType}"; 
                 i++;
             }
-            return works; // We return the string array
+            // We return the string array
+            return works; 
         }
     }
 }

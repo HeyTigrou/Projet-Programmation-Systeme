@@ -14,7 +14,7 @@ namespace easy_save.Cmd.Views
     internal class MainMenuView
     {
         // this enum will be used to check if the user input is valid when he select the language
-        private enum languages { en, fr } 
+        private enum Languages { en, fr } 
 
         // 1. This part is used to make the class a singleton
         private static MainMenuView instance;
@@ -34,10 +34,26 @@ namespace easy_save.Cmd.Views
         private MainMenuView(){}
         // .1
 
+        // This is called when we need to check if the user input isn't null or empty
+        public static string CheckInput(string question, string error)
+        {
+            while (true)
+            {
+                Console.WriteLine(question);
+                string? input = Console.ReadLine();
+                if (input != "" && input != null)
+                {
+                    return input;
+                }
+                Console.Clear();
+                Console.WriteLine(error);
+            }
+        }
+
         // this method will be called in the main method of the program
         public void Display()
         {
-            string Language = "";
+            string? language;
             do
             {
                 Console.Clear();
@@ -45,15 +61,15 @@ namespace easy_save.Cmd.Views
                 Console.WriteLine("Choose a language: \n> English => en \n> French => fr");
                 Console.Write("\nEnter an option: ");
                 // the user will enter the language he wants to use
-                Language = Console.ReadLine();
+                language = Console.ReadLine();
             }
             // this loop will be executed while the user input is not valid
-            while (!(Enum.IsDefined(typeof(languages), Language)));
+            while (!Enum.IsDefined(typeof(Languages), language));
             // this loop will be executed until the user wants to quit the program
             while (true) 
             {
                 // this line will get the json file corresponding to the language selected by the user
-                dynamic languageJson = JsonConvert.DeserializeObject(File.ReadAllText($@"..\..\..\..\easy_save.Lib\ConfigurationFiles\Interface_text\{Language}.json")); 
+                dynamic languageJson = JsonConvert.DeserializeObject(File.ReadAllText($@"..\..\..\..\easy_save.Lib\ConfigurationFiles\Interface_text\{language}.json")); 
 
                 bool inputIsOk;
                 do
@@ -66,20 +82,14 @@ namespace easy_save.Cmd.Views
                     Console.Write(languageJson.Main.Option);
                     // the user will enter the option he wants to use
                     string inputChoice = Console.ReadLine(); 
-
-
                     switch (inputChoice)
                     {
                         // the user wants to create a save work
                         case "1": 
-                            Console.Clear();
-                            Console.WriteLine(languageJson.Save.Name);
-                            string name = Console.ReadLine();
-                            Console.WriteLine(languageJson.Save.PathSave);
-                            string inputPath = Console.ReadLine();
-                            Console.WriteLine(languageJson.Save.PathDestination);
-                            string outputPath = Console.ReadLine();
-                            int saveType = 0;
+                            string name = CheckInput(languageJson.Save.Name.ToString(), languageJson.Save.ErrorInput.ToString());
+                            string inputPath = CheckInput(languageJson.Save.PathSave.ToString(), languageJson.Save.ErrorInput.ToString());
+                            string outputPath = CheckInput(languageJson.Save.PathDestination.ToString(), languageJson.Save.ErrorInput.ToString());
+                            int saveType;
                             while (true)
                             {
                                 Console.WriteLine(languageJson.Save.SaveType);
@@ -89,11 +99,8 @@ namespace easy_save.Cmd.Views
                                 {
                                     break;
                                 }
-                                else
-                                {
-                                    Console.Clear();
-                                    Console.WriteLine(languageJson.Save.ErrorSaveType);
-                                }
+                                Console.Clear();
+                                Console.WriteLine(languageJson.Save.ErrorSaveType);
                             }
                             
                             // this method will create the save work via the view model
@@ -116,8 +123,7 @@ namespace easy_save.Cmd.Views
                         // the user wants to delete a save work
                         case "2": 
                             Console.Clear();
-                            Console.WriteLine(languageJson.Remove.Name);
-                            string nameToDelete = Console.ReadLine();
+                            string nameToDelete = CheckInput(languageJson.Remove.Name.ToString(), languageJson.Save.ErrorInput.ToString());
                             // this method will delete the save work via the view model
                             bool successDelete = FileSaveViewModel.DeleteSaveWork(nameToDelete); 
                             if (successDelete)
@@ -138,8 +144,7 @@ namespace easy_save.Cmd.Views
                         // the user wants to use a save work
                         case "3": 
                             Console.Clear();
-                            Console.WriteLine(languageJson.StartSave.Name);
-                            string saveName = Console.ReadLine();
+                            string saveName = CheckInput(languageJson.StartSave.Name.ToString(), languageJson.Save.ErrorInput.ToString());
                             // this method will use the save work via the view model
                             bool successUse = FileSaveViewModel.Save(saveName); 
                             if (successUse)
@@ -150,7 +155,7 @@ namespace easy_save.Cmd.Views
                             else
                             {
                                 // the save work doesn't exist
-                                Console.WriteLine(languageJson.StartSave.MissingFile); 
+                                Console.WriteLine(languageJson.StartSave.Error); 
                             }
                             // the user will have to press enter to continue
                             Console.WriteLine(languageJson.StartSave.Continue); 

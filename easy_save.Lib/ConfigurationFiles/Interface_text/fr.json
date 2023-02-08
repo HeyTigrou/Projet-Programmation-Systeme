@@ -9,9 +9,10 @@
     "PathDestination": "\nEnter le chemin de destination",
     "SaveType": "\nEnter le type de sauvegarde (0 => Tous les fichiers | 1 => Uniquement les fichiers modifiés)",
     "Process": "=> Processus de sauvegarde crée",
-    "ErrorLimit": "\n=> Nombre de processus de sauvegarde maximum atteint, impossible de créer",
+    "ErrorLimit": "\n=> Nombre de processus de sauvegarde maximum atteint ou nom déjà choisi, impossible de créer",
     "Continue": "\n! Appuyer sur entrée pour continuer !",
     "ErrorSaveType": "\n=> Type de sauvegarde non valide",
+    "ErrorInput": "\n=> Erreur d'entrée, veuillez recommencer",
   },
   "Remove": {
     "Name": "Entrer le nom de la sauvegarde à supprimer",
@@ -22,7 +23,7 @@
   "StartSave": {
     "Name": "Entrer le nom du processus de sauvegarde à lancer",
     "StartProcess": "=> Processus de sauvegarde lancé",
-    "MissingFile": "\n=> Processus de sauvegarde non trouvé",
+    "Error": "\n=> Erreur au moment du lancement du processus de sauvegarde",
     "Continue": "\n! Appuyer sur entrée pour continuer !"
   },
   "AllProcess": {

@@ -9,13 +9,13 @@ namespace easy_save.Lib.Models
     // This Model is used to create the state log
     public class StateLoggerModel 
     {
-        public string Name { set; get; }
-        public string SourceFilePath { set; get; }
-        public string TargetFilePath { set; get; }
-        public string State { set; get; }
+        public string? Name { set; get; }
+        public string? SourceFilePath { set; get; }
+        public string? TargetFilePath { set; get; }
+        public string? State { set; get; }
         public int TotalFileToCopy { set; get; }
         public long TotalFileSize { set; get; }
         public long NbFilesLeft { set; get; }
-        public string Progression { set; get; }
+        public string? Progression { set; get; }
     }
 }

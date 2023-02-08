@@ -9,9 +9,10 @@
     "PathDestination": "\nEnter the path of the destination",
     "SaveType": "\nEnter the type of save(0 : All files / 1 : Changed files)",
     "Process": "=> Backup process created",
-    "ErrorLimit": "\n=> Maximum number of backup processes reached, unable to create",
+    "ErrorLimit": "\n=> Maximum number of backup processes reached or name already taken, unable to create",
     "Continue": "\n! Press enter to continue !",
     "ErrorSaveType": "\n=> Invalid save type",
+    "ErrorInput": "\n=> Invalid input, please try again",
   },
   "Remove": {
     "Name": "Enter the name of the backup to delete",
@@ -22,7 +23,7 @@
   "StartSave": {
     "Name": "Enter the name of the backup process to launch",
     "StartProcess": "=> Backup process started",
-    "MissingFile": "\n=> Backup process not found",
+    "Error": "\n=> Error when launching the save process",
     "Continue": "\n! Press enter to continue !"
   },
   "AllProcess": {

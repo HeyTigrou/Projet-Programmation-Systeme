@@ -16,7 +16,7 @@ namespace easy_save.Lib.Service
     public class FileSaveService
     {
         // We create a instance of the logger service that will be used later
-        private static StateLoggerModel stateLoggerModel = new StateLoggerModel();
+        private static StateLoggerModel stateLoggerModel = new();
         
         // This method is used to select the right method to use : SaveAllFiles (Complete save) or SaveChangedFiles (Incremental Save)
         public static void SaveProcess(SaveWorkModel save) 
@@ -48,7 +48,7 @@ namespace easy_save.Lib.Service
             // We're going to collect the size of each file of the directory 
             foreach (string file in files) 
             {
-                FileInfo info = new FileInfo(file);
+                FileInfo info = new(file);
                 // Storage of the entire storage 
                 totalFileSize += info.Length; 
             }
@@ -83,7 +83,7 @@ namespace easy_save.Lib.Service
         private static void SaveAllFiles(string sourcePath, string destinationPath, string saveName) 
         {
             // We create a new logger service to log the process
-            LoggerService logger = new LoggerService("logs");
+            LoggerService logger = new("logs");
             logger.logProcessFile(saveName);
 
             InitializeStateLoggerModel(sourcePath, destinationPath, saveName);
@@ -137,7 +137,7 @@ namespace easy_save.Lib.Service
         private static void SaveChangedFiles(string sourcePath, string destinationPath, string saveName) 
         {
             // We create a new logger service to log the process
-            LoggerService logger = new LoggerService("logs"); 
+            LoggerService logger = new("logs"); 
             logger.logProcessFile(saveName);
 
             // We initialise the logger
@@ -161,8 +161,8 @@ namespace easy_save.Lib.Service
             foreach (string newPath in Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories))
             {
 
-                FileInfo sourceFileInfo = new FileInfo(newPath);
-                FileInfo destinationFileInfo = new FileInfo(newPath.Replace(sourcePath, destinationPath));
+                FileInfo sourceFileInfo = new(newPath);
+                FileInfo destinationFileInfo = new(newPath.Replace(sourcePath, destinationPath));
                 // We check if the file in the destination repertory exists or isn't updated
                 if (!destinationFileInfo.Exists || sourceFileInfo.LastWriteTime > destinationFileInfo.LastWriteTime)
                 {
