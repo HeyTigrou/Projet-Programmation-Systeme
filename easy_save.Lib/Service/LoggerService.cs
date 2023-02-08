@@ -12,28 +12,6 @@ using System.Xml;
 
 namespace easy_save.Lib.Service
 {
-    public class DailyLoggerService
-    {
-        public string Name { set; get; }
-        public string SourceFilePath { set; get; }
-        public string TargetFilePath { set; get; }
-        public int Filesize { set; get; }
-        public TimeSpan FileTransferTime { set; get; }
-        public string Time { set; get; }
-    }
-
-    public class StateLoggerService
-    {
-        public string Name { set; get; }
-        public string SourceFilePath { set; get; }
-        public string TargetFilePath { set; get; }
-        public string State { set; get; }
-        public int TotalFileToCopy { set; get; }
-        public long TotalFileSize { set; get; }
-        public long NbFilesLeft { set; get; }
-        public string Progression { set; get; }
-    }
-
     public class LoggerService
     {
         private string FileName;
@@ -86,7 +64,7 @@ namespace easy_save.Lib.Service
             string json;
             checkDate();
 
-            StateLoggerService data = new StateLoggerService
+            StateLoggerModel data = new StateLoggerModel
             {
                 Name = name,
                 SourceFilePath = sourceFilePath,
@@ -109,7 +87,7 @@ namespace easy_save.Lib.Service
             string json;
             checkDate();
 
-            DailyLoggerService data = new DailyLoggerService
+            DailyLoggerModel data = new DailyLoggerModel
             {
                 Name = name,
                 SourceFilePath = sourceFilePath,

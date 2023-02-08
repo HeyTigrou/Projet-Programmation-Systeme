@@ -1,37 +1,37 @@
 {
   "Main": {
-    "Menu": " 1| Create a new backup  \n 2| Remove a backup  \n 3| Start a save  \n 4| Start all available backup processes  \n 5| View backup details  \n 6| Exit",
-    "Option": "\nEnter an option: "
+    "Menu": " 1| Créer un processus de sauvegarde  \n 2| Supprimer une sauvegarde  \n 3| Lancer une sauvegarde  \n 4| Lancer tous les processus de sauvegarde disponible \n 5| Afficher les details de sauvegarde  \n 6| Quitter",
+    "Option": "\nChoisir une option: "
   },
   "Save": {
-    "Name": "Enter the name of your save",
-    "PathSave": "\nEnter the path of the file to save",
-    "PathDestination": "\nEnter the path of the destination",
-    "SaveType": "\nEnter the type of save(0 : All files / 1 : Changed files)",
-    "Process": "=> Backup process created",
-    "ErrorLimit": "\n=> Maximum number of backup processes reached, unable to create",
-    "Continue": "\n! Press enter to continue !"
+    "Name": "Entrer le nom de la sauvegarde",
+    "PathSave": "\nEnter le chemin de la sauvegarde",
+    "PathDestination": "\nEnter le chemin de destination",
+    "SaveType": "\nEnter le type de sauvegarde (0 => Tous les fichiers | 1 => Uniquement les fichiers modifiés)",
+    "Process": "=> Processus de sauvegarde crée",
+    "ErrorLimit": "\n=> Nombre de processus de sauvegarde maximum atteint, impossible de créer",
+    "Continue": "\n! Appuyer sur entrée pour continuer !"
   },
   "Remove": {
-    "Name": "Enter the name of the backup to delete",
-    "SucessRemove": "=> Backup process removed",
-    "MissingFile": "\n=> Backup process not found",
-    "Continue": "\n! Press enter to continue !"
+    "Name": "Entrer le nom de la sauvegarde à supprimer",
+    "SucessRemove": "=> Processus de sauvegarde supprimé",
+    "MissingFile": "\n=> Processus de sauvegarde non trouvé",
+    "Continue": "\n! Appuyer sur entrée pour continuer !"
   },
   "StartSave": {
-    "Name": "Enter the name of the backup process to launch",
-    "StartProcess": "=> Backup process started",
-    "MissingFile": "\n=> Backup process not found",
-    "Continue": "\n! Press enter to continue !"
+    "Name": "Entrer le nom du processus de sauvegarde à lancer",
+    "StartProcess": "=> Processus de sauvegarde lancé",
+    "MissingFile": "\n=> Processus de sauvegarde non trouvé",
+    "Continue": "\n! Appuyer sur entrée pour continuer !"
   },
   "AllProcess": {
-    "StartProcess": "Start all backup processes",
-    "EndProcess": "=> All backup processes have been launched correctly",
-    "Error": "\n backup process could not be started",
-    "Continue": "\n! Press enter to continue !"
+    "StartProcess": "Lancement de tout les processus de sauvegarde",
+    "EndProcess": "=> Tous les processus de sauvegarde ont été lancés corrêctement",
+    "Error": "\n processus de sauvegarde n'a / ont pas pu(s) être lancé(s)",
+    "Continue": "\n! Appuyer sur entrée pour continuer !"
   },
   "BackupDetails": {
-    "Continue": "\n! Press enter to continue !"
+    "Continue": "\n! Appuyer sur entrée pour continuer !"
 
   }
 }
