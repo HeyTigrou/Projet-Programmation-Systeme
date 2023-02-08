@@ -63,14 +63,6 @@ namespace easy_save.Lib.Service
             }
         }
 
-        private void checkDate()
-        {
-            if (Date != DateTime.Today)
-            {
-                setLogFilePath();
-            }
-        }
-
         public void logProcessFile(string processName)
         {
             stateLogFile = stateLogDirectoryPath + "\\" + processName + ".log";
@@ -84,7 +76,7 @@ namespace easy_save.Lib.Service
 
         {
             string json;
-            checkDate();
+            setLogFilePath();
 
             StateLoggerService data = new StateLoggerService
             {
@@ -107,7 +99,7 @@ namespace easy_save.Lib.Service
         public void logDailySaves(string name, string sourceFilePath, string targetFilePath, int filesize, TimeSpan fileTransferTime, DateTime time)
         {
             string json;
-            checkDate();
+            setLogFilePath();
 
             DailyLoggerService data = new DailyLoggerService
             {
