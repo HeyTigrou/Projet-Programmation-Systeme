@@ -12,7 +12,11 @@
     "ErrorLimit": "\n=> Nombre de processus de sauvegarde maximum atteint ou nom déjà choisi, impossible de créer",
     "Continue": "\n! Appuyer sur entrée pour continuer !",
     "ErrorSaveType": "\n=> Type de sauvegarde non valide",
+<<<<<<< HEAD
     "ErrorInput": "\n=> Erreur d'entrée, veuillez recommencer",
+=======
+    "ErrorInput": "\n=> Erreur d'entrée, veuillez recommencer"
+>>>>>>> 9d7c185ff7990489fa44b4208d6ec2848d66d0bd
   },
   "Remove": {
     "Name": "Entrer le nom de la sauvegarde à supprimer",
