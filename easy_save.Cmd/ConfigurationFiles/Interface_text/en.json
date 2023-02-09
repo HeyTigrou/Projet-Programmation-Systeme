@@ -12,11 +12,7 @@
     "ErrorLimit": "\n=> Maximum number of backup processes reached or name already taken, unable to create",
     "Continue": "\n! Press enter to continue !",
     "ErrorSaveType": "\n=> Invalid save type",
-<<<<<<< HEAD
-    "ErrorInput": "\n=> Invalid input, please try again",
-=======
     "ErrorInput": "\n=> Invalid input, please try again"
->>>>>>> 9d7c185ff7990489fa44b4208d6ec2848d66d0bd
   },
   "Remove": {
     "Name": "Enter the name of the backup to delete",

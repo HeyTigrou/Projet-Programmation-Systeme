@@ -15,14 +15,14 @@ namespace easy_save.Lib.Service
         // This method is used to get the number of save works available
         public static int GetSaveProjectnumber()
         {
-            string[] saveWorks = Directory.GetFiles(@"..\..\..\..\easy_save.Lib\ConfigurationFiles\SaveProjects\", "*.json", SearchOption.AllDirectories);
+            string[] saveWorks = Directory.GetFiles(@"..\..\..\..\easy_save.Cmd\ConfigurationFiles\SaveProjects\", "*.json", SearchOption.AllDirectories);
             return saveWorks.Length;
         }
 
         // This method is used to get all the save works
         public static SaveWorkModel[] GetSaveWorks()
         {
-            string[] saveWorks = Directory.GetFiles(@"..\..\..\..\easy_save.Lib\ConfigurationFiles\SaveProjects\", "*.json", SearchOption.AllDirectories);
+            string[] saveWorks = Directory.GetFiles(@"..\..\..\ConfigurationFiles\SaveProjects\", "*.json", SearchOption.AllDirectories);
             SaveWorkModel[] works = new SaveWorkModel[saveWorks.Length];
             int i = 0;
             // We get all the save works and we add them to the save work list
@@ -38,7 +38,7 @@ namespace easy_save.Lib.Service
         // This method is used to create a save work
         public static bool AddSaveWork(SaveWorkModel saveWork)
         {
-            var config = JsonConvert.DeserializeObject<ConfigFileModel>(File.ReadAllText(@"..\..\easy_save.Cmd\ConfigurationFiles\easy_save_config.json"));
+            var config = JsonConvert.DeserializeObject<ConfigFileModel>(File.ReadAllText(@"..\..\..\..\easy_save.Cmd\ConfigurationFiles\easy_save_config.json"));
             // We check if the number of save works is not superior to the maximum number of save works
             if (GetSaveProjectnumber() >= config.Max_number_of_save)
             {
@@ -53,7 +53,7 @@ namespace easy_save.Lib.Service
             else
             {
                 string json = JsonConvert.SerializeObject(saveWork);
-                File.WriteAllText($@"..\..\..\..\easy_save.Lib\ConfigurationFiles\SaveProjects\{saveWork.Name}.json", json);
+                File.WriteAllText($@"..\..\..\ConfigurationFiles\SaveProjects\{saveWork.Name}.json", json);
                 return true;
             }
 
@@ -62,7 +62,7 @@ namespace easy_save.Lib.Service
         // This method is used to delete a save work
         public static bool DeleteSaveWork(string name)
         {
-            string path = $@"..\..\..\..\easy_save.Lib\ConfigurationFiles\SaveProjects\{name}.json";
+            string path = $@"..\..\..\ConfigurationFiles\SaveProjects\{name}.json";
             try
             {
                 // We delete the save work

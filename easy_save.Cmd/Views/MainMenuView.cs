@@ -85,7 +85,8 @@ namespace easy_save.Cmd.Views
                     switch (inputChoice)
                     {
                         // the user wants to create a save work
-                        case "1": 
+                        case "1":
+                            Console.Clear();
                             string name = CheckInput(languageJson.Save.Name.ToString(), languageJson.Save.ErrorInput.ToString());
                             string inputPath = CheckInput(languageJson.Save.PathSave.ToString(), languageJson.Save.ErrorInput.ToString());
                             string outputPath = CheckInput(languageJson.Save.PathDestination.ToString(), languageJson.Save.ErrorInput.ToString());
