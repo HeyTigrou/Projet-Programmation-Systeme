@@ -90,7 +90,7 @@ namespace easy_save.Lib.Service
             if (new FileInfo(DailyLogFile).Length != 0)
             {
                 filetext = File.ReadAllText(DailyLogFile);
-                fileData = JsonConvert.DeserializeObject<List<DailyLoggerModel>>(filetext);
+                fileData = System.Text.Json.JsonSerializer.Deserialize<List<DailyLoggerModel>>(filetext);
             }
             fileData.AddRange(DailyLogs);
 
@@ -99,5 +99,6 @@ namespace easy_save.Lib.Service
             File.WriteAllText(DailyLogFile, DailyLogString);
 
         }
+
     }
 }
