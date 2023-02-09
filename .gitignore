@@ -24,3 +24,6 @@ bld/
 
 # Visual Studio 2015 cache/options directory
 .vs/
+/easy_save.Cmd/ConfigurationFiles/SaveProjects
+/easy_save.Cmd/ViewModels
+/easy_save.Cmd/ConfigurationFiles/easy_save_config.json
