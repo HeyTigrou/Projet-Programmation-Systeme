@@ -24,7 +24,8 @@ namespace easy_save.Lib.ViewModels
                     try
                     {
                         // We launch the save process
-                        FileSaveService.SaveProcess(saveWork);
+                        FileSaveService fileSaveService = new FileSaveService();
+                        fileSaveService.SaveProcess(saveWork);
                         // We return true if the save process is launched
                         return true;
                     }
@@ -50,7 +51,8 @@ namespace easy_save.Lib.ViewModels
                 // We try to launch the save process
                 try
                 {
-                    FileSaveService.SaveProcess(saveWork);
+                    FileSaveService fileSaveService = new FileSaveService();
+                    fileSaveService.SaveProcess(saveWork);
                 }
                 // If there is an error, we increment the error count
                 catch (Exception e) 
