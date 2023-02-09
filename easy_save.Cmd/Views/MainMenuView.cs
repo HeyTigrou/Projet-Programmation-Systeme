@@ -69,7 +69,7 @@ namespace easy_save.Cmd.Views
             while (true) 
             {
                 // this line will get the json file corresponding to the language selected by the user
-                dynamic languageJson = JsonConvert.DeserializeObject(File.ReadAllText($@"..\..\..\..\easy_save.Lib\ConfigurationFiles\Interface_text\{language}.json")); 
+                dynamic languageJson = JsonConvert.DeserializeObject(File.ReadAllText($@"..ConfigurationFiles\Interface_text\{language}.json")); 
 
                 bool inputIsOk;
                 do

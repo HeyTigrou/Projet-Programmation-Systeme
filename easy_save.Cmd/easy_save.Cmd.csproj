@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -8,7 +8,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="ConfigurationFiles\easy_save_config.json" />
+    <None Remove="ConfigurationFiles\Interface_text\en.json" />
+    <None Remove="ConfigurationFiles\Interface_text\fr.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\easy_save.Lib\easy_save.Lib.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="ConfigurationFiles\easy_save_config.json" />
+    <Resource Include="ConfigurationFiles\Interface_text\en.json" />
+    <Resource Include="ConfigurationFiles\Interface_text\fr.json" />
   </ItemGroup>
 
 </Project>

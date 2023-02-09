@@ -38,7 +38,7 @@ namespace easy_save.Lib.Service
         // This method is used to create a save work
         public static bool AddSaveWork(SaveWorkModel saveWork)
         {
-            var config = JsonConvert.DeserializeObject<ConfigFileModel>(File.ReadAllText(@"..\..\..\..\easy_save.Lib\ConfigurationFiles\easy_save_config.json"));
+            var config = JsonConvert.DeserializeObject<ConfigFileModel>(File.ReadAllText(@"..\..\easy_save.Cmd\ConfigurationFiles\easy_save_config.json"));
             // We check if the number of save works is not superior to the maximum number of save works
             if (GetSaveProjectnumber() >= config.Max_number_of_save)
             {

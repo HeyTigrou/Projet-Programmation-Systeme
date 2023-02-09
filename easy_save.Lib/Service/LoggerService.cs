@@ -26,7 +26,7 @@ namespace easy_save.Lib.Service
         public LoggerService(string fileName)
         {
             // We get the JSON config files from the configuration file and we assign the properties
-            var config = JsonConvert.DeserializeObject<ConfigFileModel>(File.ReadAllText(@"..\..\..\..\easy_save.Lib\ConfigurationFiles\easy_save_config.json"));
+            var config = JsonConvert.DeserializeObject<ConfigFileModel>(File.ReadAllText(@"..\..\easy_save.Cmd\ConfigurationFiles\easy_save_config.json"));
             this.FileName = fileName;
             this.DirectoryPath = config.Daily_log_emplacement;
             this.stateLogDirectoryPath = config.Status_log_emplacement;
