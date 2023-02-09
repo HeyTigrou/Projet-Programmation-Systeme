@@ -118,31 +118,42 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AllProcess.Continue" xml:space="preserve">
-    <value>\n! Press enter to continue !</value>
+    <value>
+! Press enter to continue !</value>
   </data>
   <data name="AllProcess.EndProcess" xml:space="preserve">
     <value>=&gt; All backup processes have been launched correctly</value>
   </data>
   <data name="AllProcess.Error" xml:space="preserve">
-    <value>\n backup process could not be started</value>
+    <value>
+backup process could not be started</value>
   </data>
   <data name="AllProcess.StartProcess" xml:space="preserve">
     <value>Start all backup processes</value>
   </data>
   <data name="BackupDetails.Continue" xml:space="preserve">
-    <value>\n! Press enter to continue !</value>
+    <value>
+! Press enter to continue !</value>
   </data>
   <data name="Main.Menu" xml:space="preserve">
-    <value>1| Create a new backup  \n 2| Remove a backup  \n 3| Start a backup  \n 4| Start all available backup processes  \n 5| View backup details  \n 6| Exit</value>
+    <value>1| Create a new backup  
+2| Remove a backup  
+3| Start a backup  
+4| Start all available backup processes  
+5| View backup details  
+6| Exit</value>
   </data>
   <data name="Main.Option" xml:space="preserve">
-    <value>\nEnter an option:</value>
+    <value>
+Enter an option: </value>
   </data>
   <data name="Remove.Continue" xml:space="preserve">
-    <value>\n! Press enter to continue !</value>
+    <value>
+! Press enter to continue !</value>
   </data>
   <data name="Remove.MissingFile" xml:space="preserve">
-    <value>\n=&gt; Backup process not found</value>
+    <value>
+=&gt; Backup process not found</value>
   </data>
   <data name="Remove.Name" xml:space="preserve">
     <value>Enter the name of the backup to delete</value>
@@ -151,37 +162,46 @@
     <value>=&gt; Backup process removed</value>
   </data>
   <data name="Save.Continue" xml:space="preserve">
-    <value>\n! Press enter to continue !</value>
+    <value>
+! Press enter to continue !</value>
   </data>
   <data name="Save.ErroLimit" xml:space="preserve">
-    <value>\n=&gt; Maximum number of backup processes reached or name or name already taken, unable to create</value>
+    <value>
+=&gt; Maximum number of backup processes reached or name or name already taken, unable to create</value>
   </data>
   <data name="Save.ErrorInput" xml:space="preserve">
-    <value>\n=&gt; Invalid input, please try again</value>
+    <value>
+=&gt; Invalid input, please try again</value>
   </data>
   <data name="Save.ErrorSaveType" xml:space="preserve">
-    <value>\n=&gt; Invalid save type</value>
+    <value>
+=&gt; Invalid save type</value>
   </data>
   <data name="Save.Name" xml:space="preserve">
     <value>Enter the name of your save</value>
   </data>
   <data name="Save.PathDestination" xml:space="preserve">
-    <value>\nEnter the path of the destination</value>
+    <value>
+Enter the path of the destination</value>
   </data>
   <data name="Save.PathSave" xml:space="preserve">
-    <value>\nEnter the path of the file to save</value>
+    <value>
+Enter the path of the file to save</value>
   </data>
   <data name="Save.Process" xml:space="preserve">
     <value>=&gt; Backup process created</value>
   </data>
   <data name="Save.SaveType" xml:space="preserve">
-    <value>\nEnter the type of save(0 : All files / 1 : Changed files)</value>
+    <value>
+Enter the type of save(0 : All files / 1 : Changed files)</value>
   </data>
   <data name="StartSave.Continue" xml:space="preserve">
-    <value>\n! Press enter to continue !</value>
+    <value>
+! Press enter to continue !</value>
   </data>
   <data name="StartSave.Error" xml:space="preserve">
-    <value>\n=&gt; Error when launching the save process</value>
+    <value>
+=&gt; Error when launching the save process</value>
   </data>
   <data name="StartSave.Name" xml:space="preserve">
     <value>Enter the name of the backup process to launch</value>

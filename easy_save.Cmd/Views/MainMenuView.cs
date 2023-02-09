@@ -6,7 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using easy_save.Cmd.ConfigurationFiles.Interface_text;
 using easy_save.Lib.ViewModels;
+using easy_save.Lib.Service;
 using Newtonsoft.Json;
 
 namespace easy_save.Cmd.Views
@@ -65,21 +67,24 @@ namespace easy_save.Cmd.Views
             }
             // this loop will be executed while the user input is not valid
             while (!Enum.IsDefined(typeof(Languages), language));
+
             // this loop will be executed until the user wants to quit the program
             while (true) 
             {
                 // this line will get the json file corresponding to the language selected by the user
-                dynamic languageJson = JsonConvert.DeserializeObject(File.ReadAllText($@"..\..\..\ConfigurationFiles\Interface_text\{language}.json")); 
 
+                ChoosenLanguage choosenLanguage = new();
+                choosenLanguage.GetLanguage(language);
                 bool inputIsOk;
                 do
                 {
+                    
                     inputIsOk = true;
 
                     Console.Clear();
                     Console.WriteLine("*** EasySave ***\n ");
-                    Console.WriteLine(languageJson.Main.Menu);
-                    Console.Write(languageJson.Main.Option);
+                    Console.WriteLine(choosenLanguage.Main_Menu);
+                    Console.Write(choosenLanguage.Main_Option);
                     // the user will enter the option he wants to use
                     string inputChoice = Console.ReadLine(); 
                     switch (inputChoice)
@@ -87,13 +92,13 @@ namespace easy_save.Cmd.Views
                         // the user wants to create a save work
                         case "1":
                             Console.Clear();
-                            string name = CheckInput(languageJson.Save.Name.ToString(), languageJson.Save.ErrorInput.ToString());
-                            string inputPath = CheckInput(languageJson.Save.PathSave.ToString(), languageJson.Save.ErrorInput.ToString());
-                            string outputPath = CheckInput(languageJson.Save.PathDestination.ToString(), languageJson.Save.ErrorInput.ToString());
+                            string name = CheckInput(choosenLanguage.Save_Name, choosenLanguage.Save_ErrorInput);
+                            string inputPath = CheckInput(choosenLanguage.Save_PathSave, choosenLanguage.Save_ErrorInput);
+                            string outputPath = CheckInput(choosenLanguage.Save_PathDestination, choosenLanguage.Save_ErrorInput);
                             int saveType;
                             while (true)
                             {
-                                Console.WriteLine(languageJson.Save.SaveType);
+                                Console.WriteLine(choosenLanguage.Save_SaveType);
                                 saveType = int.Parse(Console.ReadLine());
                                 // the user can only choose between 0 and 1 (full or incremental)
                                 if (saveType == 0 || saveType == 1) 
@@ -101,7 +106,7 @@ namespace easy_save.Cmd.Views
                                     break;
                                 }
                                 Console.Clear();
-                                Console.WriteLine(languageJson.Save.ErrorSaveType);
+                                Console.WriteLine(choosenLanguage.Save_ErrorSaveType);
                             }
                             
                             // this method will create the save work via the view model
@@ -109,57 +114,57 @@ namespace easy_save.Cmd.Views
                             if (success)
                             {
                                 // the save work has been created
-                                Console.WriteLine(languageJson.Save.Process); 
+                                Console.WriteLine(choosenLanguage.Save_Process); 
                             }
                             else
                             {
                                 // the user has reached the limit of save works he can create
-                                Console.WriteLine(languageJson.Save.ErrorLimit); 
+                                Console.WriteLine(choosenLanguage.Save_ErroLimit); 
                             }
                             // the user will have to press enter to continue
-                            Console.WriteLine(languageJson.Save.Continue);  
+                            Console.WriteLine(choosenLanguage.Save_Continue);  
                             Console.ReadLine();
                             break;
 
                         // the user wants to delete a save work
                         case "2": 
                             Console.Clear();
-                            string nameToDelete = CheckInput(languageJson.Remove.Name.ToString(), languageJson.Save.ErrorInput.ToString());
+                            string nameToDelete = CheckInput(choosenLanguage.Remove_Name, choosenLanguage.Save_ErrorInput);
                             // this method will delete the save work via the view model
                             bool successDelete = FileSaveViewModel.DeleteSaveWork(nameToDelete); 
                             if (successDelete)
                             {
                                 // the save work has been deleted
-                                Console.WriteLine(languageJson.Remove.SucessRemove); 
+                                Console.WriteLine(choosenLanguage.Remove_SucessRemove); 
                             }
                             else
                             {
                                 // the save work doesn't exist
-                                Console.WriteLine(languageJson.Remove.MissingFile);
+                                Console.WriteLine(choosenLanguage.Remove_MissingFile);
                             }
                             // the user will have to press enter to continue
-                            Console.WriteLine(languageJson.Remove.Continue); 
+                            Console.WriteLine(choosenLanguage.Remove_Continue); 
                             Console.ReadLine();
                             break;
 
                         // the user wants to use a save work
                         case "3": 
                             Console.Clear();
-                            string saveName = CheckInput(languageJson.StartSave.Name.ToString(), languageJson.Save.ErrorInput.ToString());
+                            string saveName = CheckInput(choosenLanguage.StartSave_Name, choosenLanguage.Save_ErrorInput);
                             // this method will use the save work via the view model
                             bool successUse = FileSaveViewModel.Save(saveName); 
                             if (successUse)
                             {
                                 // the save work has been used
-                                Console.WriteLine(languageJson.StartSave.StartProcess); 
+                                Console.WriteLine(choosenLanguage.StartSave_StartProcess); 
                             }
                             else
                             {
                                 // the save work doesn't exist
-                                Console.WriteLine(languageJson.StartSave.Error); 
+                                Console.WriteLine(choosenLanguage.StartSave_Error); 
                             }
                             // the user will have to press enter to continue
-                            Console.WriteLine(languageJson.StartSave.Continue); 
+                            Console.WriteLine(choosenLanguage.StartSave_Continue); 
                             Console.ReadLine();
                             Console.Clear();
                             break;
@@ -167,20 +172,20 @@ namespace easy_save.Cmd.Views
                         // the user wants to use all save works
                         case "4": 
                             Console.Clear();
-                            Console.WriteLine(languageJson.AllProcess.StartProcess);
+                            Console.WriteLine(choosenLanguage.AllProcess_StartProcess);
                             // this method will use all save works via the view model
                             int errors = FileSaveViewModel.AllSave(); 
                             if (errors == 0)
                             {
                                 // all save works have been used
-                                Console.WriteLine(languageJson.AllProcess.EndProcess); 
+                                Console.WriteLine(choosenLanguage.AllProcess_EndProcess); 
                             }
                             else
                             {
                                 // some save works have not been used, the number of errors is displayed
-                                Console.WriteLine("=> " + errors + languageJson.AllProcess.Error); 
+                                Console.WriteLine("=> " + errors + choosenLanguage.AllProcess_Error); 
                             }
-                            Console.WriteLine(languageJson.AllProcess.Continue);
+                            Console.WriteLine(choosenLanguage.AllProcess_Continue);
                             Console.ReadLine();
                             Console.Clear();
                             break;
@@ -194,7 +199,7 @@ namespace easy_save.Cmd.Views
                                 Console.WriteLine("=> " + saveWork);
                             }
                             // the user will have to press enter to continue
-                            Console.WriteLine(languageJson.BackupDetails.Continue); 
+                            Console.WriteLine(choosenLanguage.BackupDetails_Continue); 
                             Console.ReadLine();
                             Console.Clear();
                             break;

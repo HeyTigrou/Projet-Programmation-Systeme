@@ -118,31 +118,42 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AllProcess.Continue" xml:space="preserve">
-    <value>\n! Appuyer sur entrée pour continuer !</value>
+    <value>
+! Appuyer sur entrée pour continuer !</value>
   </data>
   <data name="AllProcess.EndProcess" xml:space="preserve">
     <value>=&gt; Tous les processus de sauvegarde ont été lancés corrêctement</value>
   </data>
   <data name="AllProcess.Error" xml:space="preserve">
-    <value>\n processus de sauvegarde n'a / ont pas pu(s) être lancé(s)</value>
+    <value>
+processus de sauvegarde n'a / ont pas pu(s) être lancé(s)</value>
   </data>
   <data name="AllProcess.StartProcess" xml:space="preserve">
     <value>Lancement de tout les processus de sauvegarde</value>
   </data>
   <data name="BackupDetails.Continue" xml:space="preserve">
-    <value>\n! Appuyer sur entrée pour continuer !</value>
+    <value>
+! Appuyer sur entrée pour continuer !</value>
   </data>
   <data name="Main.Menu" xml:space="preserve">
-    <value>1| Créer un processus de sauvegarde  \n 2| Supprimer une sauvegarde  \n 3| Lancer une sauvegarde  \n 4| Lancer tous les processus de sauvegarde disponible \n 5| Afficher les détails de sauvegarde  \n 6| Quitter</value>
+    <value>1| Créer un processus de sauvegarde  
+2| Supprimer une sauvegarde  
+3| Lancer une sauvegarde  
+4| Lancer tous les processus de sauvegarde disponible 
+5| Afficher les détails de sauvegarde  
+6| Quitter</value>
   </data>
   <data name="Main.Option" xml:space="preserve">
-    <value>\nChoisir une option:</value>
+    <value>
+Choisir une option: </value>
   </data>
   <data name="Remove.Continue" xml:space="preserve">
-    <value>\n! Appuyer sur entrée pour continuer !</value>
+    <value>
+! Appuyer sur entrée pour continuer !</value>
   </data>
   <data name="Remove.MissingFile" xml:space="preserve">
-    <value>\n=&gt; Processus de sauvegarde non trouvé</value>
+    <value>
+=&gt; Processus de sauvegarde non trouvé</value>
   </data>
   <data name="Remove.Name" xml:space="preserve">
     <value>Entrer le nom de la sauvegarde à supprimer</value>
@@ -151,37 +162,46 @@
     <value>=&gt; Processus de sauvegarde supprimé</value>
   </data>
   <data name="Save.Continue" xml:space="preserve">
-    <value>\n! Appuyer sur entrée pour continuer !</value>
+    <value>
+! Appuyer sur entrée pour continuer !</value>
   </data>
   <data name="Save.ErroLimit" xml:space="preserve">
-    <value>\n=&gt; Nombre de processus de sauvegarde maximum atteint ou nom déjà choisi, impossible de créer</value>
+    <value>
+=&gt; Nombre de processus de sauvegarde maximum atteint ou nom déjà choisi, impossible de créer</value>
   </data>
   <data name="Save.ErrorInput" xml:space="preserve">
-    <value>\n=&gt; Erreur d'entrée, veuillez recommencer</value>
+    <value>
+=&gt; Erreur d'entrée, veuillez recommencer</value>
   </data>
   <data name="Save.ErrorSaveType" xml:space="preserve">
-    <value>\n=&gt; Type de sauvegarde non valide</value>
+    <value>
+=&gt; Type de sauvegarde non valide</value>
   </data>
   <data name="Save.Name" xml:space="preserve">
     <value>Entrer le nom de la sauvegarde</value>
   </data>
   <data name="Save.PathDestination" xml:space="preserve">
-    <value>\nEnter le chemin de destination</value>
+    <value>
+Enter le chemin de destination</value>
   </data>
   <data name="Save.PathSave" xml:space="preserve">
-    <value>\nEnter le chemin de la sauvegarde</value>
+    <value>
+Enter le chemin de la sauvegarde</value>
   </data>
   <data name="Save.Process" xml:space="preserve">
     <value>=&gt; Processus de sauvegarde crée</value>
   </data>
   <data name="Save.SaveType" xml:space="preserve">
-    <value>\nEnter le type de sauvegarde (0 =&gt; Tous les fichiers | 1 =&gt; Uniquement les fichiers modifiés)</value>
+    <value>
+Enter le type de sauvegarde (0 =&gt; Tous les fichiers | 1 =&gt; Uniquement les fichiers modifiés)</value>
   </data>
   <data name="StartSave.Continue" xml:space="preserve">
-    <value>\n! Appuyer sur entrée pour continuer !</value>
+    <value>
+! Appuyer sur entrée pour continuer !</value>
   </data>
   <data name="StartSave.Error" xml:space="preserve">
-    <value>\n=&gt; Erreur au moment du lancement du processus de sauvegarde</value>
+    <value>
+=&gt; Erreur au moment du lancement du processus de sauvegarde</value>
   </data>
   <data name="StartSave.Name" xml:space="preserve">
     <value>Entrer le nom du processus de sauvegarde à lancer</value>
