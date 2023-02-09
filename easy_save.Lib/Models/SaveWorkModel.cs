@@ -13,14 +13,5 @@ namespace easy_save.Lib.Models
         public string InputPath { get; set; }
         public string OutputPath { get; set; }
         public int SaveType { get; set; }
-
-        // Constructor
-        public SaveWorkModel(string name, string inputPath, string outputPath, int saveType) 
-        {
-            Name = name;
-            InputPath = inputPath;
-            OutputPath = outputPath;
-            SaveType = saveType;
-        }
     }
 }

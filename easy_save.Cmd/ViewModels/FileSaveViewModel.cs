@@ -68,7 +68,7 @@ namespace easy_save.Lib.ViewModels
         public static bool CreateSaveWork(string inputPath, string outputPath, string name, int saveType) 
         {
             // We create a new save work
-            SaveWorkModel saveWork = new SaveWorkModel(name, inputPath, outputPath, saveType);
+            SaveWorkModel saveWork = new SaveWorkModel { Name = name, InputPath = inputPath, OutputPath = outputPath, SaveType = saveType };
             // We add the save work to the save work list and we return if it's a success or not
             return SaveWorkManagerService.AddSaveWork(saveWork); 
         }
