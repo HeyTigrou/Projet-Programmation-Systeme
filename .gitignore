@@ -27,3 +27,4 @@ bld/
 /easy_save.Cmd/ConfigurationFiles/SaveProjects
 /easy_save.Cmd/ViewModels
 /easy_save.Cmd/ConfigurationFiles/easy_save_config.json
+/easy_save.Cmd/Properties/PublishProfiles
