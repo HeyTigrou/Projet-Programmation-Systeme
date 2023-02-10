@@ -23,7 +23,7 @@ namespace easy_save.Lib.Service
         public void SaveProcess(SaveWorkModel save) 
         {
 
-            LoggerService logger = new("logs");
+            LoggerService logger = new();
 
             // 0 = Complete save
             if (save.SaveType == 0) 
