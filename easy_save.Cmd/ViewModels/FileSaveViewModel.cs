@@ -16,7 +16,8 @@ namespace easy_save.Lib.ViewModels
         public static bool Save(string name) 
         {
             // We get all the save works
-            foreach (var saveWork in SaveWorkManagerService.GetSaveWorks()) 
+            SaveWorkManagerService saveWorkManagerService = new SaveWorkManagerService();
+            foreach (var saveWork in saveWorkManagerService.GetSaveWorks()) 
             {
                 // We check if the name of the save work is the same as the name that we selected
                 if (saveWork.Name == name) 
@@ -44,9 +45,10 @@ namespace easy_save.Lib.ViewModels
         public static int AllSave() 
         {
             // We create a variable to count the number of errors
+            SaveWorkManagerService saveWorkManagerService = new SaveWorkManagerService();
             int errorCount = 0;
             // We get all the save works
-            foreach (var saveWork in SaveWorkManagerService.GetSaveWorks()) 
+            foreach (var saveWork in saveWorkManagerService.GetSaveWorks()) 
             {
                 // We try to launch the save process
                 try
@@ -68,22 +70,24 @@ namespace easy_save.Lib.ViewModels
         public static bool CreateSaveWork(string inputPath, string outputPath, string name, int saveType) 
         {
             // We create a new save work
+            SaveWorkManagerService saveWorkManagerService = new SaveWorkManagerService();
             SaveWorkModel saveWork = new SaveWorkModel { Name = name, InputPath = inputPath, OutputPath = outputPath, SaveType = saveType };
             // We add the save work to the save work list and we return if it's a success or not
-            return SaveWorkManagerService.AddSaveWork(saveWork); 
+            return saveWorkManagerService.AddSaveWork(saveWork); 
         }
 
         // This method is used to delete a save work
         public static bool DeleteSaveWork(string name) 
         {
             // We get all the save works
-            foreach (var saveWork in SaveWorkManagerService.GetSaveWorks()) 
+            SaveWorkManagerService saveWorkManagerService = new SaveWorkManagerService();
+            foreach (var saveWork in saveWorkManagerService.GetSaveWorks()) 
             {
                 // We check if the name of the save work is the same as the name that we selected
                 if (saveWork.Name == name) 
                 {
                     // We delete the save work and we return if it's a success or not
-                    return SaveWorkManagerService.DeleteSaveWork(name); 
+                    return saveWorkManagerService.DeleteSaveWork(name); 
                 }
                 
             }
@@ -92,13 +96,14 @@ namespace easy_save.Lib.ViewModels
         }
 
         // This method is used to get all the save works
-        public static string[] GetAvailableWorks() 
+        public static string[] GetAvailableWorks()
         {
+            SaveWorkManagerService saveWorkManagerService = new SaveWorkManagerService();
             // We create a string array with the number of save works
-            string[] works = new string[SaveWorkManagerService.GetSaveProjectnumber()]; 
+            string[] works = new string[saveWorkManagerService.GetSaveProjectnumber()]; 
             int i = 0;
             // We get all the save works
-            foreach (var saveWork in SaveWorkManagerService.GetSaveWorks()) 
+            foreach (var saveWork in saveWorkManagerService.GetSaveWorks()) 
             {
                 // We add the save work to the string array
                 works[i] = $"Name: {saveWork.Name} | Source: {saveWork.InputPath} | Target: {saveWork.OutputPath} | SaveType: {saveWork.SaveType}"; 

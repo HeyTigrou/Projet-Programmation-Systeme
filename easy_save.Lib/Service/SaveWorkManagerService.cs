@@ -15,7 +15,7 @@ namespace easy_save.Lib.Service
     {
         
         // This method is used to get the number of save works available
-        public static int GetSaveProjectnumber()
+        public int GetSaveProjectnumber()
         {
             if (!Directory.Exists($@"{ConfigurationManager.AppSettings["SaveProjectEmplacement"]}"))
             {
@@ -26,7 +26,7 @@ namespace easy_save.Lib.Service
         }
 
         // This method is used to get all the save works
-        public static SaveWorkModel[] GetSaveWorks()
+        public SaveWorkModel[] GetSaveWorks()
         {
             if (!Directory.Exists($@"{ConfigurationManager.AppSettings["SaveProjectEmplacement"]}"))
             {
@@ -46,15 +46,14 @@ namespace easy_save.Lib.Service
             return works;
         }
         // This method is used to create a save work
-        public static bool AddSaveWork(SaveWorkModel saveWork)
+        public bool AddSaveWork(SaveWorkModel saveWork)
         {
             if (!Directory.Exists($@"{ConfigurationManager.AppSettings["SaveProjectEmplacement"]}"))
             {
                 Directory.CreateDirectory($@"{ConfigurationManager.AppSettings["SaveProjectEmplacement"]}");
             }
-            //var config = JsonConvert.DeserializeObject<ConfigFileModel>(File.ReadAllText(@"..\..\..\..\easy_save.Cmd\ConfigurationFiles\easy_save_config.json"));
+            
             // We check if the number of save works is not superior to the maximum number of save works
-            //config.Max_number_of_save
             if (GetSaveProjectnumber() >= Int32.Parse(ConfigurationManager.AppSettings["MaxNumberOfSave"]))
             {
                 return false;
@@ -75,14 +74,8 @@ namespace easy_save.Lib.Service
         }
 
         // This method is used to delete a save work
-        public static bool DeleteSaveWork(string name)
+        public bool DeleteSaveWork(string name)
         {
-            /*
-            if (!Directory.Exists($@"{ConfigurationManager.AppSettings["SaveProjectEmplacement"]}"))
-            {
-                Directory.CreateDirectory($@"{ConfigurationManager.AppSettings["SaveProjectEmplacement"]}");
-            }
-            */
             string path = $@"{ConfigurationManager.AppSettings["SaveProjectEmplacement"]}{name}.json";
             try
             {
