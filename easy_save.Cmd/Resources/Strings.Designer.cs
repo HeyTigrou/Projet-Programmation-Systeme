@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace easy_save.Cmd.ConfigurationFiles.Interface_text {
+namespace easy_save.Cmd.Resources {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace easy_save.Cmd.ConfigurationFiles.Interface_text {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class en {
+    public class Strings {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal en() {
+        internal Strings() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace easy_save.Cmd.ConfigurationFiles.Interface_text {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("easy_save.Cmd.ConfigurationFiles.Interface_text.en", typeof(en).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("easy_save.Cmd.Resources.Strings", typeof(Strings).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,7 +61,17 @@ namespace easy_save.Cmd.ConfigurationFiles.Interface_text {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à \n! Press enter to continue !.
+        ///   Recherche une chaîne localisée semblable à Launch of all the processes canceled.
+        /// </summary>
+        public static string AllProcess_Cancel {
+            get {
+                return ResourceManager.GetString("AllProcess.Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à 
+        ///! Press enter to continue !.
         /// </summary>
         public static string AllProcess_Continue {
             get {
@@ -79,7 +89,8 @@ namespace easy_save.Cmd.ConfigurationFiles.Interface_text {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à \n backup process could not be started.
+        ///   Recherche une chaîne localisée semblable à 
+        ///backup process could not be started.
         /// </summary>
         public static string AllProcess_Error {
             get {
@@ -88,7 +99,7 @@ namespace easy_save.Cmd.ConfigurationFiles.Interface_text {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Start all backup processes.
+        ///   Recherche une chaîne localisée semblable à Enter [yes] if you want to launch all the save processes, anything other than [yes] will result in a cancel.
         /// </summary>
         public static string AllProcess_StartProcess {
             get {
@@ -97,7 +108,8 @@ namespace easy_save.Cmd.ConfigurationFiles.Interface_text {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à \n! Press enter to continue !.
+        ///   Recherche une chaîne localisée semblable à 
+        ///! Press enter to continue !.
         /// </summary>
         public static string BackupDetails_Continue {
             get {
@@ -106,7 +118,48 @@ namespace easy_save.Cmd.ConfigurationFiles.Interface_text {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à 1| Create a new backup  \n 2| Remove a backup  \n 3| Start a backup  \n 4| Start all available backup processes  \n 5| View backup details  \n 6| Exit.
+        ///   Recherche une chaîne localisée semblable à =&gt; No save work available.
+        /// </summary>
+        public static string BackupDetails_Empty {
+            get {
+                return ResourceManager.GetString("BackupDetails.Empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Here are the available save works :.
+        /// </summary>
+        public static string BackupDetails_Presentation {
+            get {
+                return ResourceManager.GetString("BackupDetails.Presentation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à cancel.
+        /// </summary>
+        public static string CancelWord {
+            get {
+                return ResourceManager.GetString("CancelWord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à yes.
+        /// </summary>
+        public static string ConfirmWord {
+            get {
+                return ResourceManager.GetString("ConfirmWord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à 1| Create a new backup  
+        ///2| Remove a backup  
+        ///3| Start a backup  
+        ///4| Start all available backup processes  
+        ///5| View backup details  
+        ///6| Exit.
         /// </summary>
         public static string Main_Menu {
             get {
@@ -115,7 +168,8 @@ namespace easy_save.Cmd.ConfigurationFiles.Interface_text {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à \nEnter an option:.
+        ///   Recherche une chaîne localisée semblable à 
+        ///Enter an option: .
         /// </summary>
         public static string Main_Option {
             get {
@@ -124,7 +178,44 @@ namespace easy_save.Cmd.ConfigurationFiles.Interface_text {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à \n! Press enter to continue !.
+        ///   Recherche une chaîne localisée semblable à =&gt; These are your input parameters:.
+        /// </summary>
+        public static string ParameterPresentation {
+            get {
+                return ResourceManager.GetString("ParameterPresentation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Deletion cancelled.
+        /// </summary>
+        public static string Remove_Cancel {
+            get {
+                return ResourceManager.GetString("Remove.Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Enter [yes] to confirm the deletion of :.
+        /// </summary>
+        public static string Remove_ConfirmChoice {
+            get {
+                return ResourceManager.GetString("Remove.ConfirmChoice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à , enter [cancel] if you want to cancel the deletion process (leave empty to change name).
+        /// </summary>
+        public static string Remove_ConfirmChoice2 {
+            get {
+                return ResourceManager.GetString("Remove.ConfirmChoice2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à 
+        ///! Press enter to continue !.
         /// </summary>
         public static string Remove_Continue {
             get {
@@ -133,7 +224,8 @@ namespace easy_save.Cmd.ConfigurationFiles.Interface_text {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à \n=&gt; Backup process not found.
+        ///   Recherche une chaîne localisée semblable à 
+        ///=&gt; Backup process not found.
         /// </summary>
         public static string Remove_MissingFile {
             get {
@@ -160,7 +252,26 @@ namespace easy_save.Cmd.ConfigurationFiles.Interface_text {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à \n! Press enter to continue !.
+        ///   Recherche une chaîne localisée semblable à Creation cancelled.
+        /// </summary>
+        public static string Save_Cancel {
+            get {
+                return ResourceManager.GetString("Save.Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Enter [yes] if you want to create the save work, rentrer [cancel] if you want to exit the save processus creation (leave empty to re-enter your process parameters ).
+        /// </summary>
+        public static string Save_ConfirmChoice {
+            get {
+                return ResourceManager.GetString("Save.ConfirmChoice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à 
+        ///! Press enter to continue !.
         /// </summary>
         public static string Save_Continue {
             get {
@@ -169,7 +280,8 @@ namespace easy_save.Cmd.ConfigurationFiles.Interface_text {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à \n=&gt; Maximum number of backup processes reached or name or name already taken, unable to create.
+        ///   Recherche une chaîne localisée semblable à 
+        ///=&gt; Maximum number of backup processes reached or name or name already taken, unable to create.
         /// </summary>
         public static string Save_ErroLimit {
             get {
@@ -178,7 +290,8 @@ namespace easy_save.Cmd.ConfigurationFiles.Interface_text {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à \n=&gt; Invalid input, please try again.
+        ///   Recherche une chaîne localisée semblable à 
+        ///=&gt; Invalid input, please try again.
         /// </summary>
         public static string Save_ErrorInput {
             get {
@@ -187,11 +300,21 @@ namespace easy_save.Cmd.ConfigurationFiles.Interface_text {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à \n=&gt; Invalid save type.
+        ///   Recherche une chaîne localisée semblable à 
+        ///=&gt; Invalid save type.
         /// </summary>
         public static string Save_ErrorSaveType {
             get {
                 return ResourceManager.GetString("Save.ErrorSaveType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Selected entry path: .
+        /// </summary>
+        public static string Save_InputPath {
+            get {
+                return ResourceManager.GetString("Save.InputPath", resourceCulture);
             }
         }
         
@@ -205,7 +328,17 @@ namespace easy_save.Cmd.ConfigurationFiles.Interface_text {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à \nEnter the path of the destination.
+        ///   Recherche une chaîne localisée semblable à Selected destination path:.
+        /// </summary>
+        public static string Save_OutputPath {
+            get {
+                return ResourceManager.GetString("Save.OutputPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à 
+        ///Enter the path of the destination.
         /// </summary>
         public static string Save_PathDestination {
             get {
@@ -214,7 +347,8 @@ namespace easy_save.Cmd.ConfigurationFiles.Interface_text {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à \nEnter the path of the file to save.
+        ///   Recherche une chaîne localisée semblable à 
+        ///Enter the path of the file to save.
         /// </summary>
         public static string Save_PathSave {
             get {
@@ -232,7 +366,17 @@ namespace easy_save.Cmd.ConfigurationFiles.Interface_text {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à \nEnter the type of save(0 : All files / 1 : Changed files).
+        ///   Recherche une chaîne localisée semblable à Name of the save project:.
+        /// </summary>
+        public static string Save_SaveName {
+            get {
+                return ResourceManager.GetString("Save.SaveName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à 
+        ///Enter the type of save(0 : All files / 1 : Changed files).
         /// </summary>
         public static string Save_SaveType {
             get {
@@ -241,7 +385,44 @@ namespace easy_save.Cmd.ConfigurationFiles.Interface_text {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à \n! Press enter to continue !.
+        ///   Recherche une chaîne localisée semblable à Selected save type (0 -&gt; Complete, 1 -&gt; Incremental): .
+        /// </summary>
+        public static string Save_SaveType2 {
+            get {
+                return ResourceManager.GetString("Save.SaveType2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Enter [yes] to confirm the launch of this save process :.
+        /// </summary>
+        public static string SaveStart_ConfirmChoice {
+            get {
+                return ResourceManager.GetString("SaveStart.ConfirmChoice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à , enter [cancel] if you want to cancel the launch of the save process (leave empty to select an other process).
+        /// </summary>
+        public static string SaveStart_ConfirmChoice2 {
+            get {
+                return ResourceManager.GetString("SaveStart.ConfirmChoice2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Launch of the save process canceled.
+        /// </summary>
+        public static string StartSave_Cancel {
+            get {
+                return ResourceManager.GetString("StartSave.Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à 
+        ///! Press enter to continue !.
         /// </summary>
         public static string StartSave_Continue {
             get {
@@ -250,7 +431,8 @@ namespace easy_save.Cmd.ConfigurationFiles.Interface_text {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à \n=&gt; Error when launching the save process.
+        ///   Recherche une chaîne localisée semblable à 
+        ///=&gt; Error when launching the save process.
         /// </summary>
         public static string StartSave_Error {
             get {

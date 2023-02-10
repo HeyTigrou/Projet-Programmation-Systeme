@@ -117,96 +117,150 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AllProcess.Cancel" xml:space="preserve">
+    <value>Launch of all the processes canceled</value>
+  </data>
   <data name="AllProcess.Continue" xml:space="preserve">
     <value>
-! Appuyer sur entrée pour continuer !</value>
+! Press enter to continue !</value>
   </data>
   <data name="AllProcess.EndProcess" xml:space="preserve">
-    <value>=&gt; Tous les processus de sauvegarde ont été lancés corrêctement</value>
+    <value>=&gt; All backup processes have been launched correctly</value>
   </data>
   <data name="AllProcess.Error" xml:space="preserve">
     <value>
-processus de sauvegarde n'a / ont pas pu(s) être lancé(s)</value>
+backup process could not be started</value>
   </data>
   <data name="AllProcess.StartProcess" xml:space="preserve">
-    <value>Lancement de tout les processus de sauvegarde</value>
+    <value>Enter [yes] if you want to launch all the save processes, anything other than [yes] will result in a cancel</value>
   </data>
   <data name="BackupDetails.Continue" xml:space="preserve">
     <value>
-! Appuyer sur entrée pour continuer !</value>
+! Press enter to continue !</value>
+  </data>
+  <data name="BackupDetails.Empty" xml:space="preserve">
+    <value>=&gt; No save work available</value>
+  </data>
+  <data name="BackupDetails.Presentation" xml:space="preserve">
+    <value>Here are the available save works :</value>
+  </data>
+  <data name="CancelWord" xml:space="preserve">
+    <value>cancel</value>
+  </data>
+  <data name="ConfirmWord" xml:space="preserve">
+    <value>yes</value>
   </data>
   <data name="Main.Menu" xml:space="preserve">
-    <value>1| Créer un processus de sauvegarde  
-2| Supprimer une sauvegarde  
-3| Lancer une sauvegarde  
-4| Lancer tous les processus de sauvegarde disponible 
-5| Afficher les détails de sauvegarde  
-6| Quitter</value>
+    <value>1| Create a new backup  
+2| Remove a backup  
+3| Start a backup  
+4| Start all available backup processes  
+5| View backup details  
+6| Exit</value>
   </data>
   <data name="Main.Option" xml:space="preserve">
     <value>
-Choisir une option: </value>
+Enter an option: </value>
+  </data>
+  <data name="ParameterPresentation" xml:space="preserve">
+    <value>=&gt; These are your input parameters:</value>
+  </data>
+  <data name="Remove.Cancel" xml:space="preserve">
+    <value>Deletion cancelled</value>
+  </data>
+  <data name="Remove.ConfirmChoice" xml:space="preserve">
+    <value>Enter [yes] to confirm the deletion of :</value>
+  </data>
+  <data name="Remove.ConfirmChoice2" xml:space="preserve">
+    <value>, enter [cancel] if you want to cancel the deletion process (leave empty to change name)</value>
   </data>
   <data name="Remove.Continue" xml:space="preserve">
     <value>
-! Appuyer sur entrée pour continuer !</value>
+! Press enter to continue !</value>
   </data>
   <data name="Remove.MissingFile" xml:space="preserve">
     <value>
-=&gt; Processus de sauvegarde non trouvé</value>
+=&gt; Backup process not found</value>
   </data>
   <data name="Remove.Name" xml:space="preserve">
-    <value>Entrer le nom de la sauvegarde à supprimer</value>
+    <value>Enter the name of the backup to delete</value>
   </data>
   <data name="Remove.SucessRemove" xml:space="preserve">
-    <value>=&gt; Processus de sauvegarde supprimé</value>
+    <value>=&gt; Backup process removed</value>
+  </data>
+  <data name="Save.Cancel" xml:space="preserve">
+    <value>Creation cancelled</value>
+  </data>
+  <data name="Save.ConfirmChoice" xml:space="preserve">
+    <value>Enter [yes] if you want to create the save work, rentrer [cancel] if you want to exit the save processus creation (leave empty to re-enter your process parameters )</value>
   </data>
   <data name="Save.Continue" xml:space="preserve">
     <value>
-! Appuyer sur entrée pour continuer !</value>
+! Press enter to continue !</value>
   </data>
   <data name="Save.ErroLimit" xml:space="preserve">
     <value>
-=&gt; Nombre de processus de sauvegarde maximum atteint ou nom déjà choisi, impossible de créer</value>
+=&gt; Maximum number of backup processes reached or name or name already taken, unable to create</value>
   </data>
   <data name="Save.ErrorInput" xml:space="preserve">
     <value>
-=&gt; Erreur d'entrée, veuillez recommencer</value>
+=&gt; Invalid input, please try again</value>
   </data>
   <data name="Save.ErrorSaveType" xml:space="preserve">
     <value>
-=&gt; Type de sauvegarde non valide</value>
+=&gt; Invalid save type</value>
+  </data>
+  <data name="Save.InputPath" xml:space="preserve">
+    <value>Selected entry path: </value>
   </data>
   <data name="Save.Name" xml:space="preserve">
-    <value>Entrer le nom de la sauvegarde</value>
+    <value>Enter the name of your save</value>
+  </data>
+  <data name="Save.OutputPath" xml:space="preserve">
+    <value>Selected destination path:</value>
   </data>
   <data name="Save.PathDestination" xml:space="preserve">
     <value>
-Enter le chemin de destination</value>
+Enter the path of the destination</value>
   </data>
   <data name="Save.PathSave" xml:space="preserve">
     <value>
-Enter le chemin de la sauvegarde</value>
+Enter the path of the file to save</value>
   </data>
   <data name="Save.Process" xml:space="preserve">
-    <value>=&gt; Processus de sauvegarde crée</value>
+    <value>=&gt; Backup process created</value>
+  </data>
+  <data name="Save.SaveName" xml:space="preserve">
+    <value>Name of the save project:</value>
   </data>
   <data name="Save.SaveType" xml:space="preserve">
     <value>
-Enter le type de sauvegarde (0 =&gt; Tous les fichiers | 1 =&gt; Uniquement les fichiers modifiés)</value>
+Enter the type of save(0 : All files / 1 : Changed files)</value>
+  </data>
+  <data name="Save.SaveType2" xml:space="preserve">
+    <value>Selected save type (0 -&gt; Complete, 1 -&gt; Incremental): </value>
+  </data>
+  <data name="SaveStart.ConfirmChoice" xml:space="preserve">
+    <value>Enter [yes] to confirm the launch of this save process :</value>
+  </data>
+  <data name="SaveStart.ConfirmChoice2" xml:space="preserve">
+    <value>, enter [cancel] if you want to cancel the launch of the save process (leave empty to select an other process)</value>
+  </data>
+  <data name="StartSave.Cancel" xml:space="preserve">
+    <value>Launch of the save process canceled</value>
   </data>
   <data name="StartSave.Continue" xml:space="preserve">
     <value>
-! Appuyer sur entrée pour continuer !</value>
+! Press enter to continue !</value>
   </data>
   <data name="StartSave.Error" xml:space="preserve">
     <value>
-=&gt; Erreur au moment du lancement du processus de sauvegarde</value>
+=&gt; Error when launching the save process</value>
   </data>
   <data name="StartSave.Name" xml:space="preserve">
-    <value>Entrer le nom du processus de sauvegarde à lancer</value>
+    <value>Enter the name of the backup process to launch</value>
   </data>
   <data name="StartSave.StartProcess" xml:space="preserve">
-    <value>=&gt; Processus de sauvegarde lancé</value>
+    <value>=&gt; Backup process started</value>
   </data>
 </root>

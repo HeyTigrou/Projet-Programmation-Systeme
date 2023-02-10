@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace easy_save.Cmd.ConfigurationFiles.Interface_text {
+namespace easy_save.Cmd.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace easy_save.Cmd.ConfigurationFiles.Interface_text {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("easy_save.Cmd.ConfigurationFiles.Interface_text.fr", typeof(fr).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("easy_save.Cmd.Resources.fr", typeof(fr).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,7 +61,8 @@ namespace easy_save.Cmd.ConfigurationFiles.Interface_text {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à \n! Appuyer sur entrée pour continuer !.
+        ///   Recherche une chaîne localisée semblable à 
+        ///! Appuyer sur entrée pour continuer !.
         /// </summary>
         public static string AllProcess_Continue {
             get {
@@ -79,7 +80,8 @@ namespace easy_save.Cmd.ConfigurationFiles.Interface_text {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à \n processus de sauvegarde n&apos;a / ont pas pu(s) être lancé(s).
+        ///   Recherche une chaîne localisée semblable à 
+        ///processus de sauvegarde n&apos;a / ont pas pu(s) être lancé(s).
         /// </summary>
         public static string AllProcess_Error {
             get {
@@ -97,7 +99,8 @@ namespace easy_save.Cmd.ConfigurationFiles.Interface_text {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à \n! Appuyer sur entrée pour continuer !.
+        ///   Recherche une chaîne localisée semblable à 
+        ///! Appuyer sur entrée pour continuer !.
         /// </summary>
         public static string BackupDetails_Continue {
             get {
@@ -106,7 +109,21 @@ namespace easy_save.Cmd.ConfigurationFiles.Interface_text {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à 1| Créer un processus de sauvegarde  \n 2| Supprimer une sauvegarde  \n 3| Lancer une sauvegarde  \n 4| Lancer tous les processus de sauvegarde disponible \n 5| Afficher les détails de sauvegarde  \n 6| Quitter.
+        ///   Recherche une chaîne localisée semblable à oui.
+        /// </summary>
+        public static string ConfirmWord {
+            get {
+                return ResourceManager.GetString("ConfirmWord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à 1| Créer un processus de sauvegarde  
+        ///2| Supprimer une sauvegarde  
+        ///3| Lancer une sauvegarde  
+        ///4| Lancer tous les processus de sauvegarde disponible 
+        ///5| Afficher les détails de sauvegarde  
+        ///6| Quitter.
         /// </summary>
         public static string Main_Menu {
             get {
@@ -115,7 +132,8 @@ namespace easy_save.Cmd.ConfigurationFiles.Interface_text {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à \nChoisir une option:.
+        ///   Recherche une chaîne localisée semblable à 
+        ///Choisir une option: .
         /// </summary>
         public static string Main_Option {
             get {
@@ -124,7 +142,8 @@ namespace easy_save.Cmd.ConfigurationFiles.Interface_text {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à \n! Appuyer sur entrée pour continuer !.
+        ///   Recherche une chaîne localisée semblable à 
+        ///! Appuyer sur entrée pour continuer !.
         /// </summary>
         public static string Remove_Continue {
             get {
@@ -133,7 +152,8 @@ namespace easy_save.Cmd.ConfigurationFiles.Interface_text {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à \n=&gt; Processus de sauvegarde non trouvé.
+        ///   Recherche une chaîne localisée semblable à 
+        ///=&gt; Processus de sauvegarde non trouvé.
         /// </summary>
         public static string Remove_MissingFile {
             get {
@@ -160,7 +180,17 @@ namespace easy_save.Cmd.ConfigurationFiles.Interface_text {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à \n! Appuyer sur entrée pour continuer !.
+        ///   Recherche une chaîne localisée semblable à Rentrer [oui] si vous voulez créer le travail de sauvegarde.
+        /// </summary>
+        public static string Save_ConfirmChoice {
+            get {
+                return ResourceManager.GetString("Save.ConfirmChoice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à 
+        ///! Appuyer sur entrée pour continuer !.
         /// </summary>
         public static string Save_Continue {
             get {
@@ -169,7 +199,8 @@ namespace easy_save.Cmd.ConfigurationFiles.Interface_text {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à \n=&gt; Nombre de processus de sauvegarde maximum atteint ou nom déjà choisi, impossible de créer.
+        ///   Recherche une chaîne localisée semblable à 
+        ///=&gt; Nombre de processus de sauvegarde maximum atteint ou nom déjà choisi, impossible de créer.
         /// </summary>
         public static string Save_ErroLimit {
             get {
@@ -178,7 +209,8 @@ namespace easy_save.Cmd.ConfigurationFiles.Interface_text {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à \n=&gt; Erreur d&apos;entrée, veuillez recommencer.
+        ///   Recherche une chaîne localisée semblable à 
+        ///=&gt; Erreur d&apos;entrée, veuillez recommencer.
         /// </summary>
         public static string Save_ErrorInput {
             get {
@@ -187,7 +219,8 @@ namespace easy_save.Cmd.ConfigurationFiles.Interface_text {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à \n=&gt; Type de sauvegarde non valide.
+        ///   Recherche une chaîne localisée semblable à 
+        ///=&gt; Type de sauvegarde non valide.
         /// </summary>
         public static string Save_ErrorSaveType {
             get {
@@ -205,7 +238,8 @@ namespace easy_save.Cmd.ConfigurationFiles.Interface_text {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à \nEnter le chemin de destination.
+        ///   Recherche une chaîne localisée semblable à 
+        ///Enter le chemin de destination.
         /// </summary>
         public static string Save_PathDestination {
             get {
@@ -214,7 +248,8 @@ namespace easy_save.Cmd.ConfigurationFiles.Interface_text {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à \nEnter le chemin de la sauvegarde.
+        ///   Recherche une chaîne localisée semblable à 
+        ///Enter le chemin de la sauvegarde.
         /// </summary>
         public static string Save_PathSave {
             get {
@@ -232,7 +267,8 @@ namespace easy_save.Cmd.ConfigurationFiles.Interface_text {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à \nEnter le type de sauvegarde (0 =&gt; Tous les fichiers | 1 =&gt; Uniquement les fichiers modifiés).
+        ///   Recherche une chaîne localisée semblable à 
+        ///Enter le type de sauvegarde (0 =&gt; Tous les fichiers | 1 =&gt; Uniquement les fichiers modifiés).
         /// </summary>
         public static string Save_SaveType {
             get {
@@ -241,7 +277,8 @@ namespace easy_save.Cmd.ConfigurationFiles.Interface_text {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à \n! Appuyer sur entrée pour continuer !.
+        ///   Recherche une chaîne localisée semblable à 
+        ///! Appuyer sur entrée pour continuer !.
         /// </summary>
         public static string StartSave_Continue {
             get {
@@ -250,7 +287,8 @@ namespace easy_save.Cmd.ConfigurationFiles.Interface_text {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à \n=&gt; Erreur au moment du lancement du processus de sauvegarde.
+        ///   Recherche une chaîne localisée semblable à 
+        ///=&gt; Erreur au moment du lancement du processus de sauvegarde.
         /// </summary>
         public static string StartSave_Error {
             get {

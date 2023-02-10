@@ -8,7 +8,7 @@ namespace easy_save.Cmd
         static void Main(string[] args) 
         {
             // Recuperation of the unique instance of the console interface
-            MainMenuView view = MainMenuView.Instance;
+            MainMenuView view = new MainMenuView();
             // Launch of the console interface
             view.Display(); 
         }
