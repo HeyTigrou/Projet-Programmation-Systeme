@@ -141,7 +141,7 @@ processus de sauvegarde n'a / ont pas pu(s) être lancé(s)</value>
   <data name="BackupDetails.Empty" xml:space="preserve">
     <value>=&gt; Aucun processus de sauvegarde disponible </value>
   </data>
-  <data name="BackupDetails.Present" xml:space="preserve">
+  <data name="BackupDetails.Presentation" xml:space="preserve">
     <value>Voici les travaux de sauvegarde disponibles :</value>
   </data>
   <data name="CancelWord" xml:space="preserve">
@@ -172,7 +172,7 @@ Choisir une option: </value>
     <value>Entrer [oui] pour confirmer la supression de :</value>
   </data>
   <data name="Remove.ConfirmChoice2" xml:space="preserve">
-    <value>, entrer [annulation] si vous voulez annuler le processus de supression (laisser vide si vous voulez changer le nom)</value>
+    <value>, entrer [annuler] si vous voulez annuler le processus de supression (laisser vide si vous voulez changer le nom)</value>
   </data>
   <data name="Remove.Continue" xml:space="preserve">
     <value>
@@ -244,7 +244,7 @@ Enter le type de sauvegarde (0 =&gt; Tous les fichiers | 1 =&gt; Uniquement les 
     <value>Entrer [oui] pour confirmer le lancement du processus de sauvegarde suivant :</value>
   </data>
   <data name="SaveStart.ConfirmChoice2" xml:space="preserve">
-    <value>, entrer [annulation] si vous voulez annuler le lancement du processus de sauvegarde (laisser vide si vous voulez séléctionner un autre processus)</value>
+    <value>, entrer [annuler] si vous voulez annuler le lancement du processus de sauvegarde (laisser vide si vous voulez séléctionner un autre processus)</value>
   </data>
   <data name="StartSave.Cancel" xml:space="preserve">
     <value>Lancement du processus de sauvegarde annulé</value>

@@ -68,7 +68,7 @@ namespace easy_save.Lib.Service
             else
             {
                 string json = JsonConvert.SerializeObject(saveWork);
-                File.WriteAllText($@"{ConfigurationManager.AppSettings["SaveProjectEmplacement"]} { saveWork.Name}.json", json);
+                File.WriteAllText($@"{ConfigurationManager.AppSettings["SaveProjectEmplacement"]}{saveWork.Name}.json", json);
                 return true;
             }
 
@@ -77,10 +77,12 @@ namespace easy_save.Lib.Service
         // This method is used to delete a save work
         public static bool DeleteSaveWork(string name)
         {
+            /*
             if (!Directory.Exists($@"{ConfigurationManager.AppSettings["SaveProjectEmplacement"]}"))
             {
                 Directory.CreateDirectory($@"{ConfigurationManager.AppSettings["SaveProjectEmplacement"]}");
             }
+            */
             string path = $@"{ConfigurationManager.AppSettings["SaveProjectEmplacement"]}{name}.json";
             try
             {
