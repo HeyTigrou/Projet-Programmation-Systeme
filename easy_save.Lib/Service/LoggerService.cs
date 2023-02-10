@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System.Xml;
 using System.Xml.Linq;
+using System.Configuration;
 
 namespace easy_save.Lib.Service
 {
@@ -18,21 +19,29 @@ namespace easy_save.Lib.Service
     {
         // The different properties that are used to create the log files
         private string FileName;
-        private string stateLogDirectoryPath;
+        private string StateLogDirectoryPath;
         private string DailyLogFile;
-        private string stateLogFile;
+        private string StateLogFile;
         private string DirectoryPath;
         private List<DailyLoggerModel> DailyLogs = new();
 
         // The constructor of the class
-        public LoggerService(string fileName)
+        public LoggerService()
         {
             // We get the JSON config files from the configuration file and we assign the properties
-            var config = JsonConvert.DeserializeObject<ConfigFileModel>(File.ReadAllText(@"..\..\..\ConfigurationFiles\easy_save_config.json"));
-            this.FileName = fileName;
-            this.DirectoryPath = config.Daily_log_emplacement;
-            this.stateLogDirectoryPath = config.Status_log_emplacement;
 
+            //var config = JsonConvert.DeserializeObject<ConfigFileModel>(File.ReadAllText(@"..\..\..\ConfigurationFiles\easy_save_config.json"));
+            FileName = ConfigurationManager.AppSettings["LogFileName"];
+            DirectoryPath = $@"{ConfigurationManager.AppSettings["DailyLogEmplacement"]}";
+            StateLogDirectoryPath = $@"{ConfigurationManager.AppSettings["StatusLogEmplacement"]}";
+            if(!Directory.Exists(DirectoryPath))
+            {
+                Directory.CreateDirectory(DirectoryPath);
+            }
+            if(!Directory.Exists(StateLogDirectoryPath))
+            {
+                Directory.CreateDirectory(StateLogDirectoryPath);
+            }
         }
 
         // This method is used to create the daily log file
@@ -51,11 +60,11 @@ namespace easy_save.Lib.Service
         // This method is used to create the log file that save the state of the save works
         public void logProcessFile(string processName)
         {
-            stateLogFile = Path.Combine(stateLogDirectoryPath + $"{processName}.json");
+            StateLogFile = Path.Combine(StateLogDirectoryPath + $"{processName}.json");
             // If the file doesn't exist, we create it
-            if (!File.Exists(this.stateLogFile))
+            if (!File.Exists(this.StateLogFile))
             {
-                File.Create(this.stateLogFile).Close();
+                File.Create(this.StateLogFile).Close();
             }
         }
 
@@ -69,7 +78,7 @@ namespace easy_save.Lib.Service
 
             json = System.Text.Json.JsonSerializer.Serialize<StateLoggerModel>(stateLoggerModel);
             // We serialize the object and we write it in the state log file
-            File.WriteAllText(this.stateLogFile, json);
+            File.WriteAllText(this.StateLogFile, json);
         }
 
 
