@@ -376,7 +376,7 @@ namespace easy_save.Cmd.Resources {
         
         /// <summary>
         ///   Recherche une chaîne localisée semblable à 
-        ///Enter the type of save(0 : All files / 1 : Changed files).
+        ///Enter the type of save(0 : All files (chosen by default) / 1 : Changed files).
         /// </summary>
         public static string Save_SaveType {
             get {
@@ -455,6 +455,15 @@ namespace easy_save.Cmd.Resources {
         public static string StartSave_StartProcess {
             get {
                 return ResourceManager.GetString("StartSave.StartProcess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à =&gt; The save process has been completed successfully.
+        /// </summary>
+        public static string StartSave_Sucess {
+            get {
+                return ResourceManager.GetString("StartSave.Sucess", resourceCulture);
             }
         }
     }

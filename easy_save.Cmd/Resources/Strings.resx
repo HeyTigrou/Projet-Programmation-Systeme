@@ -235,7 +235,7 @@ Enter the path of the file to save</value>
   </data>
   <data name="Save.SaveType" xml:space="preserve">
     <value>
-Enter the type of save(0 : All files / 1 : Changed files)</value>
+Enter the type of save(0 : All files (chosen by default) / 1 : Changed files)</value>
   </data>
   <data name="Save.SaveType2" xml:space="preserve">
     <value>Selected save type (0 -&gt; Complete, 1 -&gt; Incremental): </value>
@@ -262,5 +262,8 @@ Enter the type of save(0 : All files / 1 : Changed files)</value>
   </data>
   <data name="StartSave.StartProcess" xml:space="preserve">
     <value>=&gt; Backup process started</value>
+  </data>
+  <data name="StartSave.Sucess" xml:space="preserve">
+    <value>=&gt; The save process has been completed successfully</value>
   </data>
 </root>

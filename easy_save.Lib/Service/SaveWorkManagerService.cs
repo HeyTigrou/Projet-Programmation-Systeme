@@ -21,7 +21,9 @@ namespace easy_save.Lib.Service
             {
                 Directory.CreateDirectory($@"{ConfigurationManager.AppSettings["SaveProjectEmplacement"]}");
             }
+            
             string[] saveWorks = Directory.GetFiles($@"{ConfigurationManager.AppSettings["SaveProjectEmplacement"]}", "*.json", SearchOption.AllDirectories);
+            
             return saveWorks.Length;
         }
 
@@ -34,17 +36,17 @@ namespace easy_save.Lib.Service
             }
             string[] saveWorks = Directory.GetFiles($@"{ConfigurationManager.AppSettings["SaveProjectEmplacement"]}", "*.json", SearchOption.AllDirectories);
             SaveWorkModel[] works = new SaveWorkModel[saveWorks.Length];
-            int i = 0;
-            // We get all the save works and we add them to the save work list
-            foreach (string saveWork in saveWorks)
+
+            for (int i = 0; i < saveWorks.Length; i++)
             {
-                string json = File.ReadAllText(saveWork);
+                string json = File.ReadAllText(saveWorks[i]);
                 SaveWorkModel data = JsonConvert.DeserializeObject<SaveWorkModel>(json);
                 works[i] = data;
-                i++;
             }
+
             return works;
         }
+        
         // This method is used to create a save work
         public bool AddSaveWork(SaveWorkModel saveWork)
         {
@@ -53,17 +55,16 @@ namespace easy_save.Lib.Service
                 Directory.CreateDirectory($@"{ConfigurationManager.AppSettings["SaveProjectEmplacement"]}");
             }
             
-            // We check if the number of save works is not superior to the maximum number of save works
             if (GetSaveProjectnumber() >= Int32.Parse(ConfigurationManager.AppSettings["MaxNumberOfSave"]))
             {
                 return false;
             }
-            //  We check if the name of the save work is already used
+
             else if (GetSaveWorks().Any(x => x.Name == saveWork.Name))
             {
                 return false;
             }
-            //  We create the save work
+
             else
             {
                 string json = JsonConvert.SerializeObject(saveWork);
@@ -79,12 +80,10 @@ namespace easy_save.Lib.Service
             string path = $@"{ConfigurationManager.AppSettings["SaveProjectEmplacement"]}{name}.json";
             try
             {
-                // We delete the save work
                 File.Delete(path);
                 return true;
             }
-            // If an exception is raised when we try to delete the save work, we return false
-            catch (Exception)
+            catch
             {
                 return false;
             }

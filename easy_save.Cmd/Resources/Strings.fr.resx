@@ -235,10 +235,10 @@ Enter le chemin de la sauvegarde</value>
   </data>
   <data name="Save.SaveType" xml:space="preserve">
     <value>
-Enter le type de sauvegarde (0 =&gt; Tous les fichiers | 1 =&gt; Uniquement les fichiers modifiés)</value>
+Enter le type de sauvegarde (0 =&gt; Tous les fichiers (choisi par défaut) / 1 =&gt; Uniquement les fichiers modifiés)</value>
   </data>
   <data name="Save.SaveType2" xml:space="preserve">
-    <value>Type de sauvegarde chosi (0 -&gt; Complète, 1 -&gt; Incrementielle) :</value>
+    <value>Type de sauvegarde choisi (0 -&gt; Complète, 1 -&gt; Incrementielle) :</value>
   </data>
   <data name="SaveStart.ConfirmChoice" xml:space="preserve">
     <value>Entrer [oui] pour confirmer le lancement du processus de sauvegarde suivant :</value>
@@ -262,5 +262,8 @@ Enter le type de sauvegarde (0 =&gt; Tous les fichiers | 1 =&gt; Uniquement les 
   </data>
   <data name="StartSave.StartProcess" xml:space="preserve">
     <value>=&gt; Processus de sauvegarde lancé</value>
+  </data>
+  <data name="StartSave.Sucess" xml:space="preserve">
+    <value>=&gt; Le processus de sauvegarde s'est terminé correctement</value>
   </data>
 </root>

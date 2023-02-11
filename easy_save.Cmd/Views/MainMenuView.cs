@@ -25,8 +25,72 @@ namespace easy_save.Cmd.Views
             Incremental = 1
         }
 
-        public static string CheckInput(string question, string error)
+        // This method will create our display
+        public void Display()
         {
+            Console.InputEncoding = Encoding.Unicode;
+            Console.OutputEncoding = Encoding.Unicode;
+            SetLanguages();
+
+            while (true)
+            {
+                bool inputIsOk;
+                do
+                {
+                    inputIsOk = true;
+
+                    Console.Clear();
+                    Console.WriteLine("*** EasySave ***\n ");
+                    Console.WriteLine(Strings.Main_Menu);
+                    Console.Write(Strings.Main_Option);
+                    string inputChoice = Console.ReadLine();
+                    switch (inputChoice)
+                    {
+                        case "1":
+                            CreateSaveWork();
+                            break;
+
+                        case "2":
+                            DeleteSaveWork();
+                            break;
+
+                        case "3":
+                            LaunchSaveWork();
+                            break;
+
+                        case "4":
+                            LaunchALLSaveWorks();
+                            break;
+
+                        case "5":
+                            Console.Clear();
+                            Console.WriteLine("*** Welcome to EasySave ***\n ");
+                            DisplayAllWorks();
+                            Console.WriteLine(Strings.BackupDetails_Continue);
+                            Console.ReadLine();
+                            break;
+
+                        case "6":
+                            Environment.Exit(0);
+                            break;
+
+                        default:
+                            Console.Clear();
+                            inputIsOk = false;
+                            break;
+                    }
+                }
+                while (!inputIsOk);
+            }
+        }
+
+        // This method is used to check if the input is correct, it will ask which parameter you want to enter and will return the input
+        public string CheckInput(string question, string error, bool display)
+        {
+            if (display) // If display is true, it will display all the save works
+            {
+                DisplayAllWorks();
+            }
             while (true)
             {
                 Console.WriteLine(question);
@@ -40,6 +104,7 @@ namespace easy_save.Cmd.Views
             }
         }
 
+        // This method is used to ask the user which language he wants to use
         private void SetLanguages()
         { 
             string? language;
@@ -57,20 +122,22 @@ namespace easy_save.Cmd.Views
             Strings.Culture = new CultureInfo(language);
         }
 
+        // Create a new save work Display
         private void CreateSaveWork()
         {
             while (true)
             {
                 Console.Clear();
                 Console.WriteLine("*** EasySave ***\n ");
-                string name = CheckInput(Strings.Save_Name, Strings.Save_ErrorInput);
-                string inputPath = CheckInput(Strings.Save_PathSave, Strings.Save_ErrorInput);
-                string outputPath = CheckInput(Strings.Save_PathDestination, Strings.Save_ErrorInput);
+                string name = CheckInput(Strings.Save_Name, Strings.Save_ErrorInput, false);
+                string inputPath = CheckInput(Strings.Save_PathSave, Strings.Save_ErrorInput, false);
+                string outputPath = CheckInput(Strings.Save_PathDestination, Strings.Save_ErrorInput, false);
                 int saveType;
                 while (true)
                 {
                     Console.WriteLine(Strings.Save_SaveType);
-                    saveType = int.Parse(Console.ReadLine());
+                    
+                    int.TryParse(Console.ReadLine(), out saveType);
 
                     if (saveType is (int)SaveChoices.Complete or (int)SaveChoices.Incremental)
                     {
@@ -109,13 +176,15 @@ namespace easy_save.Cmd.Views
             } 
         }
 
+        // Delete a save work Display
         private void DeleteSaveWork()
         {
             while (true)
             {
                 Console.Clear();
                 Console.WriteLine("*** EasySave ***\n ");
-                string nameToDelete = CheckInput(Strings.Remove_Name, Strings.Save_ErrorInput);
+
+                string nameToDelete = CheckInput(Strings.Remove_Name, Strings.Save_ErrorInput, true);
 
                 Console.WriteLine($"{Strings.Remove_ConfirmChoice} {nameToDelete}{Strings.Remove_ConfirmChoice2}");
                 string input = Console.ReadLine();
@@ -142,23 +211,26 @@ namespace easy_save.Cmd.Views
                 }
             } 
         }
-        
+
+        // Launch a save work Display
         private void LaunchSaveWork()
         {
             while (true)
             {
                 Console.Clear();
                 Console.WriteLine("*** EasySave ***\n ");
-                string saveName = CheckInput(Strings.StartSave_Name, Strings.Save_ErrorInput);
+
+                string saveName = CheckInput(Strings.StartSave_Name, Strings.Save_ErrorInput, true);
 
                 Console.WriteLine($"{Strings.SaveStart_ConfirmChoice} {saveName}{Strings.SaveStart_ConfirmChoice2}");
                 string input = Console.ReadLine();
                 if (input == Strings.ConfirmWord)
                 {
+                    Console.WriteLine($"\n{Strings.StartSave_StartProcess}");
                     bool successUse = FileSaveViewModel.Save(saveName);
                     if (successUse)
                     {
-                        Console.WriteLine(Strings.StartSave_StartProcess);
+                        Console.WriteLine(Strings.StartSave_Sucess);
                     }
                     else
                     {
@@ -178,6 +250,7 @@ namespace easy_save.Cmd.Views
             }
         }
 
+        // Launch all save works Display
         private void LaunchALLSaveWorks()
         {
             while (true)
@@ -188,7 +261,6 @@ namespace easy_save.Cmd.Views
                 string input = Console.ReadLine();
                 if (input == Strings.ConfirmWord)
                 {
-                    Console.WriteLine("plop");
                     int errors = FileSaveViewModel.AllSave();
                     if (errors == 0)
                     {
@@ -196,7 +268,7 @@ namespace easy_save.Cmd.Views
                     }
                     else
                     {
-                        Console.WriteLine("=> " + errors + Strings.AllProcess_Error);
+                        Console.WriteLine($"=> {errors} {Strings.AllProcess_Error}");
                     }
                     Console.WriteLine(Strings.AllProcess_Continue);
                     Console.ReadLine();
@@ -212,77 +284,23 @@ namespace easy_save.Cmd.Views
             }
         }
 
+        // Display all save works
         private void DisplayAllWorks()
         {
-            Console.Clear();
             string[] saveWorks = FileSaveViewModel.GetAvailableWorks();
             if (saveWorks.Length != 0)
             {
                 Console.WriteLine(Strings.BackupDetails_Presentation);
                 foreach (var saveWork in saveWorks)
                 {
-                    Console.WriteLine("=> " + saveWork);
+                    Console.WriteLine($"=> {saveWork}");
                 }
             }
             else
             {
                 Console.WriteLine(Strings.BackupDetails_Empty);
             }
-
-            Console.WriteLine(Strings.BackupDetails_Continue);
-            Console.ReadLine();
-        }
-
-        public void Display()
-        {
-            SetLanguages();
-
-            while (true) 
-            {
-                bool inputIsOk;
-                do
-                {
-                    inputIsOk = true;
-
-                    Console.Clear();
-                    Console.WriteLine("*** EasySave ***\n ");
-                    Console.WriteLine(Strings.Main_Menu);
-                    Console.Write(Strings.Main_Option);
-                    string inputChoice = Console.ReadLine(); 
-                    switch (inputChoice)
-                    {
-                        case "1":
-                            CreateSaveWork();
-                            break;
-
-                        case "2":
-                            DeleteSaveWork();
-                            break;
-
-                        case "3":
-                            LaunchSaveWork();
-                            break;
-                        
-                        case "4":
-                            LaunchALLSaveWorks();
-                            break;
-
-                        case "5":
-                            DisplayAllWorks();
-                            break;
-                        
-                        case "6": 
-                            Environment.Exit(0); 
-                            break;
-
-                        default: 
-                            Console.Clear();
-                            inputIsOk = false;
-                            break;
-                    }
-                }
-                while (!inputIsOk); 
-            } 
-        }
+            Console.WriteLine();
+        }  
     }
 }

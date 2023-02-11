@@ -15,7 +15,7 @@ namespace easy_save.Lib.Service
 {
     public class FileSaveService
     {
-        // We create a instance of the logger service
+        // We create an instance of each type of logger
         private readonly StateLoggerModel stateLoggerModel = new ();
         private readonly DailyLoggerModel dailyLoggerModel = new();
 
@@ -25,47 +25,37 @@ namespace easy_save.Lib.Service
 
             LoggerService logger = new();
 
-            // 0 = Complete save
             if (save.SaveType == 0) 
             {
-                // Launch the complete save
                 SaveAllFiles(save, logger); 
             }
-            // 1 = Incremental Save
+
             else if (save.SaveType == 1) 
             {
-                // Launch the incremental save
                 SaveChangedFiles(save, logger); 
             }
         }
 
-        // This method is used to initialise the logger
+        // This method is used to setup the logger models
         private void InitializeLoggerModels(SaveWorkModel save)
         {
-            // Get number of files in the folder and sub folders
-            
-
             long totalFileSize = 0;
-            // Get total file size in the folder and sub folders
+
             string[] files = Directory.GetFiles(save.InputPath, "*.*", SearchOption.AllDirectories);
-            // Get number of files in the folder and sub folders
+
             stateLoggerModel.TotalFileToCopy = files.Length;
 
-            // We're going to collect the size of each file of the directory 
             foreach (string file in files) 
             {
                 FileInfo info = new(file);
-                // Storage of the entire storage 
                 totalFileSize += info.Length; 
             }
+            
             stateLoggerModel.TotalFileSize = totalFileSize;
 
-            // We create a variable to count the number of files left to copy
             stateLoggerModel.NbFilesLeft = stateLoggerModel.TotalFileToCopy;
 
-            // We create a variable to store the state of the process
             stateLoggerModel.State = nameof(StateTypes.Running);
-            // We create a variable to store the progression of the process 
             stateLoggerModel.SourceFilePath = save.InputPath;
             stateLoggerModel.TargetFilePath= save.OutputPath;
             stateLoggerModel.Name = save.Name;
@@ -78,7 +68,6 @@ namespace easy_save.Lib.Service
         // This method is used to reset the state logger once the process is stopped
         private void StateLoggerToDone()
         {
-            // We change all the values to neutral because the process has ended
             stateLoggerModel.State = nameof(StateTypes.Done);
             stateLoggerModel.TotalFileSize = 0;
             stateLoggerModel.NbFilesLeft = 0;
@@ -94,16 +83,13 @@ namespace easy_save.Lib.Service
 
             InitializeLoggerModels(save);
 
-            // We log the process state
             logger.logProcessState(stateLoggerModel);
 
-            // We collect all the different folder and sub-foldes
             foreach (string dirPath in Directory.GetDirectories(save.InputPath, "*", SearchOption.AllDirectories)) 
             {
-                // We create the same folder and sub-folders in the destination folder
                 Directory.CreateDirectory(dirPath.Replace(save.InputPath, save.OutputPath)); 
             }
-            // We collect all the files in the folder and sub-folders
+            
             foreach (string newPath in Directory.GetFiles(save.InputPath, "*.*", SearchOption.AllDirectories)) 
             {
                 DateTime before = DateTime.Now;
@@ -150,7 +136,7 @@ namespace easy_save.Lib.Service
                     destinationDirectoryInfo.Create();
                 }
             }
-            // We collect all the files in the folder and sub-folders
+            
             foreach (string newPath in Directory.GetFiles(save.InputPath, "*.*", SearchOption.AllDirectories))
             {
 
@@ -158,7 +144,6 @@ namespace easy_save.Lib.Service
                 FileInfo destinationFileInfo = new(newPath.Replace(save.InputPath, save.OutputPath));
                 if (!destinationFileInfo.Exists || sourceFileInfo.LastWriteTime > destinationFileInfo.LastWriteTime)
                 {
-                    
                     DateTime before = DateTime.Now;
 
                     logger.logProcessState(stateLoggerModel); 
@@ -166,7 +151,6 @@ namespace easy_save.Lib.Service
                     File.Copy(newPath, newPath.Replace(save.InputPath, save.OutputPath), true);
 
                     DateTime after = DateTime.Now;
-
 
                     FileInfo fileLength = new FileInfo(newPath);
                     dailyLoggerModel.Filesize = fileLength.Length;
