@@ -9,19 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="ConfigurationFiles\easy_save_config.json" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\easy_save.Lib\easy_save.Lib.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="ConfigurationFiles\easy_save_config.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ConfigurationFiles\SaveProjects\" />
   </ItemGroup>
 
   <ItemGroup>
