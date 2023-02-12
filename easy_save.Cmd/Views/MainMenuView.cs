@@ -85,7 +85,7 @@ namespace easy_save.Cmd.Views
         }
 
         // This method is used to check if the input is correct, it will ask which parameter you want to enter and will return the input
-        public string CheckInput(string question, string error, bool display)
+        private string CheckInput(string question, string error, bool display)
         {
             if (display) // If display is true, it will display all the save works
             {
