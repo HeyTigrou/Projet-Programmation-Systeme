@@ -16,23 +16,23 @@ namespace easy_save.Lib.Service
     public class FileSaveService
     {
         // We create an instance of each type of logger
-        private readonly StateLoggerModel stateLoggerModel = new ();
+        private readonly StateLoggerModel stateLoggerModel = new();
         private readonly DailyLoggerModel dailyLoggerModel = new();
 
         // This method is used to select the right method to use : SaveAllFiles (Complete save) or SaveChangedFiles (Incremental Save)
-        public int SaveProcess(SaveWorkModel save) 
+        public int SaveProcess(SaveWorkModel save)
         {
 
             LoggerService logger = new();
 
-            if (save.SaveType == 0) 
+            if (save.SaveType == 0)
             {
-                return SaveAllFiles(save, logger); 
+                return SaveAllFiles(save, logger);
             }
 
-            else if (save.SaveType == 1) 
+            else if (save.SaveType == 1)
             {
-                return SaveChangedFiles(save, logger); 
+                return SaveChangedFiles(save, logger);
             }
 
             return -1;
@@ -47,21 +47,23 @@ namespace easy_save.Lib.Service
 
             stateLoggerModel.TotalFileToCopy = files.Length;
 
-            foreach (string file in files) 
+            foreach (string file in files)
             {
                 FileInfo info = new(file);
-                totalFileSize += info.Length; 
+                totalFileSize += info.Length;
             }
-            
+
             stateLoggerModel.TotalFileSize = totalFileSize;
 
             stateLoggerModel.NbFilesLeft = stateLoggerModel.TotalFileToCopy;
 
             stateLoggerModel.State = nameof(StateTypes.Running);
             stateLoggerModel.SourceFilePath = save.InputPath;
-            stateLoggerModel.TargetFilePath= save.OutputPath;
+            stateLoggerModel.TargetFilePath = save.OutputPath;
             stateLoggerModel.Name = save.Name;
 
+            dailyLoggerModel.SourceFilePath = save.InputPath;
+            dailyLoggerModel.TargetFilePath = save.OutputPath;
             dailyLoggerModel.Name = save.Name;
         }
 
@@ -77,21 +79,21 @@ namespace easy_save.Lib.Service
         }
 
         // This method is used to save all the files from the source folder into the destination folder
-        private int SaveAllFiles(SaveWorkModel save, LoggerService logger) 
+        private int SaveAllFiles(SaveWorkModel save, LoggerService logger)
         {
             logger.logProcessFile(save.Name);
 
             InitializeLoggerModels(save);
 
             logger.logProcessState(stateLoggerModel);
-            
-            foreach (string dirPath in Directory.GetDirectories(save.InputPath, "*", SearchOption.AllDirectories)) 
+
+            foreach (string dirPath in Directory.GetDirectories(save.InputPath, "*", SearchOption.AllDirectories))
             {
-                Directory.CreateDirectory(dirPath.Replace(save.InputPath, save.OutputPath)); 
+                Directory.CreateDirectory(dirPath.Replace(save.InputPath, save.OutputPath));
             }
 
             int errorCount = 0;
-            foreach (string newPath in Directory.GetFiles(save.InputPath, "*.*", SearchOption.AllDirectories)) 
+            foreach (string newPath in Directory.GetFiles(save.InputPath, "*.*", SearchOption.AllDirectories))
             {
                 DateTime before = DateTime.Now;
 
@@ -100,7 +102,6 @@ namespace easy_save.Lib.Service
                 try
                 {
                     File.Copy(newPath, newPath.Replace(save.InputPath, save.OutputPath), true);
-
                     DateTime after = DateTime.Now;
                     dailyLoggerModel.FileTransferTime = after - before;
                     dailyLoggerModel.Time = after.ToString("yyyy/MM/dd HH:mm:ss");
@@ -111,9 +112,6 @@ namespace easy_save.Lib.Service
                     dailyLoggerModel.FileTransferTime = TimeSpan.Zero;
                     dailyLoggerModel.Time = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
                 }
-
-                dailyLoggerModel.SourceFilePath = newPath;
-                dailyLoggerModel.TargetFilePath = newPath.Replace(save.InputPath, save.OutputPath);
 
                 FileInfo fileLength = new FileInfo(newPath);
                 dailyLoggerModel.Filesize = fileLength.Length;
@@ -132,15 +130,15 @@ namespace easy_save.Lib.Service
         }
 
         // This method is used to only save the files that changed in the source folder into the destination folder
-        private int SaveChangedFiles(SaveWorkModel save, LoggerService logger) 
+        private int SaveChangedFiles(SaveWorkModel save, LoggerService logger)
         {
             logger.logProcessFile(save.Name);
 
-            InitializeLoggerModels(save); 
+            InitializeLoggerModels(save);
 
             logger.logProcessState(stateLoggerModel);
 
-            foreach (string dirPath in Directory.GetDirectories(save.InputPath, "*", SearchOption.AllDirectories))  
+            foreach (string dirPath in Directory.GetDirectories(save.InputPath, "*", SearchOption.AllDirectories))
             {
                 DirectoryInfo sourceDirectoryInfo = new DirectoryInfo(dirPath);
                 DirectoryInfo destinationDirectoryInfo = new DirectoryInfo(dirPath.Replace(save.InputPath, save.OutputPath));
@@ -164,9 +162,7 @@ namespace easy_save.Lib.Service
 
                     try
                     {
-
                         File.Copy(newPath, newPath.Replace(save.InputPath, save.OutputPath), true);
-
                         DateTime after = DateTime.Now;
                         dailyLoggerModel.FileTransferTime = after - before;
                         dailyLoggerModel.Time = after.ToString("yyyy/MM/dd HH:mm:ss");
@@ -178,15 +174,12 @@ namespace easy_save.Lib.Service
                         dailyLoggerModel.Time = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
                     }
 
-                    dailyLoggerModel.SourceFilePath = newPath;
-                    dailyLoggerModel.TargetFilePath = newPath.Replace(save.InputPath, save.OutputPath);
-
                     FileInfo fileLength = new FileInfo(newPath);
                     dailyLoggerModel.Filesize = fileLength.Length;
 
                     logger.AddToDailyLogJson(dailyLoggerModel);
                 }
-                else 
+                else
                 {
                     stateLoggerModel.TotalFileToCopy--;
                 }
@@ -198,7 +191,7 @@ namespace easy_save.Lib.Service
             logger.logDailySaves();
 
             logger.logProcessState(stateLoggerModel);
-            
+
             return errorCount;
         }
     }
