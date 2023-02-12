@@ -62,8 +62,6 @@ namespace easy_save.Lib.Service
             stateLoggerModel.TargetFilePath = save.OutputPath;
             stateLoggerModel.Name = save.Name;
 
-            dailyLoggerModel.SourceFilePath = save.InputPath;
-            dailyLoggerModel.TargetFilePath = save.OutputPath;
             dailyLoggerModel.Name = save.Name;
         }
 
@@ -102,6 +100,7 @@ namespace easy_save.Lib.Service
                 try
                 {
                     File.Copy(newPath, newPath.Replace(save.InputPath, save.OutputPath), true);
+
                     DateTime after = DateTime.Now;
                     dailyLoggerModel.FileTransferTime = after - before;
                     dailyLoggerModel.Time = after.ToString("yyyy/MM/dd HH:mm:ss");
@@ -112,6 +111,9 @@ namespace easy_save.Lib.Service
                     dailyLoggerModel.FileTransferTime = TimeSpan.Zero;
                     dailyLoggerModel.Time = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
                 }
+
+                dailyLoggerModel.SourceFilePath = newPath;
+                dailyLoggerModel.TargetFilePath = newPath.Replace(save.InputPath, save.OutputPath);
 
                 FileInfo fileLength = new FileInfo(newPath);
                 dailyLoggerModel.Filesize = fileLength.Length;
@@ -162,7 +164,9 @@ namespace easy_save.Lib.Service
 
                     try
                     {
+
                         File.Copy(newPath, newPath.Replace(save.InputPath, save.OutputPath), true);
+
                         DateTime after = DateTime.Now;
                         dailyLoggerModel.FileTransferTime = after - before;
                         dailyLoggerModel.Time = after.ToString("yyyy/MM/dd HH:mm:ss");
@@ -173,6 +177,9 @@ namespace easy_save.Lib.Service
                         dailyLoggerModel.FileTransferTime = TimeSpan.Zero;
                         dailyLoggerModel.Time = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
                     }
+
+                    dailyLoggerModel.SourceFilePath = newPath;
+                    dailyLoggerModel.TargetFilePath = newPath.Replace(save.InputPath, save.OutputPath);
 
                     FileInfo fileLength = new FileInfo(newPath);
                     dailyLoggerModel.Filesize = fileLength.Length;
