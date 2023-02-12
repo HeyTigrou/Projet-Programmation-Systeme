@@ -99,6 +99,24 @@ namespace easy_save.Cmd.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à File(s) couldn&apos;t be saved.
+        /// </summary>
+        public static string AllProcess_FileError {
+            get {
+                return ResourceManager.GetString("AllProcess.FileError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à All files have been saved.
+        /// </summary>
+        public static string AllProcess_FileSuccess {
+            get {
+                return ResourceManager.GetString("AllProcess.FileSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Enter [yes] if you want to launch all the save processes, anything other than [yes] will result in a cancel.
         /// </summary>
         public static string AllProcess_StartProcess {
@@ -431,8 +449,7 @@ namespace easy_save.Cmd.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à 
-        ///=&gt; Error when launching the save process.
+        ///   Recherche une chaîne localisée semblable à  Error(s) during the save process.
         /// </summary>
         public static string StartSave_Error {
             get {

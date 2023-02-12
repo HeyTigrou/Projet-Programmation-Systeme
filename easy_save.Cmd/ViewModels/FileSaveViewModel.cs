@@ -13,7 +13,7 @@ namespace easy_save.Lib.ViewModels
     public class FileSaveViewModel
     {
         // This method is used to launch a specific save work
-        public static bool Save(string name) 
+        public static int Save(string name) 
         {
             SaveWorkManagerService saveWorkManagerService = new SaveWorkManagerService();
             foreach (var saveWork in saveWorkManagerService.GetSaveWorks()) 
@@ -23,36 +23,35 @@ namespace easy_save.Lib.ViewModels
                     try
                     {
                         FileSaveService fileSaveService = new FileSaveService();
-                        fileSaveService.SaveProcess(saveWork);
                         
-                        return true;
+                        return fileSaveService.SaveProcess(saveWork);
                     }
                     catch
                     {
-                        return false;
+                        return -1;
                     }
                 }
             }
-            return false; 
+            return -1; 
         }
 
         // This method is used to launch all the save works
-        public static int AllSave() 
+        public static int[] AllSave() 
         {
             SaveWorkManagerService saveWorkManagerService = new SaveWorkManagerService();
-            int errorCount = 0;
-            
+
+            int[] errorCount = { 0, 0 }; // errorCount[0] = number of Process launch errors, errorCount[1] = number of files save errors
             foreach (var saveWork in saveWorkManagerService.GetSaveWorks()) 
             {
                 try
                 {
                     FileSaveService fileSaveService = new FileSaveService();
-                    fileSaveService.SaveProcess(saveWork);
+                    errorCount[1] += fileSaveService.SaveProcess(saveWork);
                 }
                 
                 catch
                 {
-                    errorCount++;
+                    errorCount[0]++;
                 }
             }
             

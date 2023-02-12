@@ -131,6 +131,12 @@
     <value>
 backup process could not be started</value>
   </data>
+  <data name="AllProcess.FileError" xml:space="preserve">
+    <value>File(s) couldn't be saved</value>
+  </data>
+  <data name="AllProcess.FileSuccess" xml:space="preserve">
+    <value>All files have been saved</value>
+  </data>
   <data name="AllProcess.StartProcess" xml:space="preserve">
     <value>Enter [yes] if you want to launch all the save processes, anything other than [yes] will result in a cancel</value>
   </data>
@@ -254,8 +260,7 @@ Enter the type of save(0 : All files (chosen by default) / 1 : Changed files)</v
 ! Press enter to continue !</value>
   </data>
   <data name="StartSave.Error" xml:space="preserve">
-    <value>
-=&gt; Error when launching the save process</value>
+    <value> Error(s) during the save process</value>
   </data>
   <data name="StartSave.Name" xml:space="preserve">
     <value>Enter the name of the backup process to launch</value>

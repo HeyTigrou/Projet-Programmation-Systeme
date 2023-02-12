@@ -227,14 +227,14 @@ namespace easy_save.Cmd.Views
                 if (input == Strings.ConfirmWord)
                 {
                     Console.WriteLine($"\n{Strings.StartSave_StartProcess}");
-                    bool successUse = FileSaveViewModel.Save(saveName);
-                    if (successUse)
+                    int errorCount = FileSaveViewModel.Save(saveName);
+                    if (errorCount == 0)
                     {
                         Console.WriteLine(Strings.StartSave_Sucess);
                     }
                     else
                     {
-                        Console.WriteLine(Strings.StartSave_Error);
+                        Console.WriteLine($"\n=> {errorCount} {Strings.StartSave_Error}");
                     }
                     Console.WriteLine(Strings.StartSave_Continue);
                     Console.ReadLine();
@@ -261,15 +261,25 @@ namespace easy_save.Cmd.Views
                 string input = Console.ReadLine();
                 if (input == Strings.ConfirmWord)
                 {
-                    int errors = FileSaveViewModel.AllSave();
-                    if (errors == 0)
+                    int[] errors = FileSaveViewModel.AllSave();
+                    if (errors[0] == 0)
                     {
                         Console.WriteLine(Strings.AllProcess_EndProcess);
                     }
                     else
                     {
-                        Console.WriteLine($"=> {errors} {Strings.AllProcess_Error}");
+                        Console.WriteLine($"=> {errors[0]} {Strings.AllProcess_Error}");
                     }
+
+                    if (errors[1] == 0)
+                    {
+                        Console.WriteLine($"=> {Strings.AllProcess_FileSuccess}");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"=> {errors[1]} {Strings.AllProcess_FileError}");
+                    }
+
                     Console.WriteLine(Strings.AllProcess_Continue);
                     Console.ReadLine();
                     Console.Clear();
