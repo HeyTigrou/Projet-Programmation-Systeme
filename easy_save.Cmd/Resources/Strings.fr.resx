@@ -137,6 +137,9 @@ processus de sauvegarde n'a / ont pas pu(s) être lancé(s)</value>
   <data name="AllProcess.FileSuccess" xml:space="preserve">
     <value>Tout les fichiers ont été sauvegardés</value>
   </data>
+  <data name="AllProcess.ProcessLaunched" xml:space="preserve">
+    <value>Les processus de sauvegarde ont été lancés </value>
+  </data>
   <data name="AllProcess.StartProcess" xml:space="preserve">
     <value>Entrer [oui] si vous voulez lancer tout les processus de sauvegarde, toute autre entrée que [oui] nous donnera une annulation</value>
   </data>
@@ -266,7 +269,7 @@ Enter le type de sauvegarde (0 =&gt; Tous les fichiers (choisi par défaut) / 1 
     <value>Entrer le nom du processus de sauvegarde à lancer</value>
   </data>
   <data name="StartSave.StartProcess" xml:space="preserve">
-    <value>=&gt; Processus de sauvegarde lancé</value>
+    <value>=&gt; Processus de sauvegarde lancé, veuillez attendre</value>
   </data>
   <data name="StartSave.Sucess" xml:space="preserve">
     <value>=&gt; Le processus de sauvegarde s'est terminé correctement</value>

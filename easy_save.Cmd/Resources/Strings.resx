@@ -137,6 +137,9 @@ backup process could not be started</value>
   <data name="AllProcess.FileSuccess" xml:space="preserve">
     <value>All files have been saved</value>
   </data>
+  <data name="AllProcess.ProcessLaunched" xml:space="preserve">
+    <value>The save processes have been launched</value>
+  </data>
   <data name="AllProcess.StartProcess" xml:space="preserve">
     <value>Enter [yes] if you want to launch all the save processes, anything other than [yes] will result in a cancel</value>
   </data>

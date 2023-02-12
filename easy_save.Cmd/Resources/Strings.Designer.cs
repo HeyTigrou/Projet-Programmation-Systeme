@@ -117,6 +117,15 @@ namespace easy_save.Cmd.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à The save processes have been launched.
+        /// </summary>
+        public static string AllProcess_ProcessLaunched {
+            get {
+                return ResourceManager.GetString("AllProcess.ProcessLaunched", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Enter [yes] if you want to launch all the save processes, anything other than [yes] will result in a cancel.
         /// </summary>
         public static string AllProcess_StartProcess {

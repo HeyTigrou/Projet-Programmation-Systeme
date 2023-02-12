@@ -261,6 +261,7 @@ namespace easy_save.Cmd.Views
                 string input = Console.ReadLine();
                 if (input == Strings.ConfirmWord)
                 {
+                    Console.WriteLine($"=> {Strings.AllProcess_ProcessLaunched}");
                     int[] errors = FileSaveViewModel.AllSave();
                     if (errors[0] == 0)
                     {
