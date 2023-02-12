@@ -17,7 +17,6 @@ namespace easy_save.Lib.Service
     {
         // We create an instance of each type of logger
         private readonly StateLoggerModel stateLoggerModel = new();
-        private readonly DailyLoggerModel dailyLoggerModel = new();
 
         // This method is used to select the right method to use : SaveAllFiles (Complete save) or SaveChangedFiles (Incremental Save)
         public int SaveProcess(SaveWorkModel save)
@@ -61,8 +60,6 @@ namespace easy_save.Lib.Service
             stateLoggerModel.SourceFilePath = save.InputPath;
             stateLoggerModel.TargetFilePath = save.OutputPath;
             stateLoggerModel.Name = save.Name;
-
-            dailyLoggerModel.Name = save.Name;
         }
 
         // This method is used to reset the state logger once the process is stopped
@@ -93,6 +90,9 @@ namespace easy_save.Lib.Service
             int errorCount = 0;
             foreach (string newPath in Directory.GetFiles(save.InputPath, "*.*", SearchOption.AllDirectories))
             {
+                DailyLoggerModel dailyLoggerModel = new();
+                dailyLoggerModel.Name = save.Name;
+
                 DateTime before = DateTime.Now;
 
                 logger.logProcessState(stateLoggerModel);
@@ -158,6 +158,9 @@ namespace easy_save.Lib.Service
                 FileInfo destinationFileInfo = new(newPath.Replace(save.InputPath, save.OutputPath));
                 if (!destinationFileInfo.Exists || sourceFileInfo.LastWriteTime > destinationFileInfo.LastWriteTime)
                 {
+                    DailyLoggerModel dailyLoggerModel = new();
+                    dailyLoggerModel.Name = save.Name;
+
                     DateTime before = DateTime.Now;
 
                     logger.logProcessState(stateLoggerModel);
