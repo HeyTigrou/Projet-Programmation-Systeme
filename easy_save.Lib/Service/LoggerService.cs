@@ -30,12 +30,12 @@ namespace easy_save.Lib.Service
             FileName = ConfigurationManager.AppSettings["LogFileName"];
             DirectoryPath = $@"{ConfigurationManager.AppSettings["DailyLogEmplacement"]}";
             StateLogDirectoryPath = $@"{ConfigurationManager.AppSettings["StatusLogEmplacement"]}";
-            
-            if(!Directory.Exists(DirectoryPath))
+
+            if (!Directory.Exists(DirectoryPath))
             {
                 Directory.CreateDirectory(DirectoryPath);
             }
-            if(!Directory.Exists(StateLogDirectoryPath))
+            if (!Directory.Exists(StateLogDirectoryPath))
             {
                 Directory.CreateDirectory(StateLogDirectoryPath);
             }
