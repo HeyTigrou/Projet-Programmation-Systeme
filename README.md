@@ -1,5 +1,5 @@
 ----------------
-# EasySave Project V1.0 (English)
+# EasySave Project V1.1 (English)
 
 Welcome to the System Programming Project of :
 - IRAZOQUI Luken
@@ -20,8 +20,8 @@ Technologies used :
 
 ## Useful information:
 
-### Console Application (V1.0) :
-This console application allows us to create backup jobs, delete them and run them one by one or all in a row. These backup jobs generate log files.
+### Console Application (V1.1) :
+This console application allows us to create backup jobs, delete them and run them one by one or all in a row. These backup jobs generate log json and / or xml files.
 
 #### Documentation :
 The Documentation is located in the "Documentation" directory of this Github, it is divided into several parts: 
@@ -36,7 +36,7 @@ The Documentation is located in the "Documentation" directory of this Github, it
   - The manual for the customer support 
 
 ----------------
-# Projet EasySave V1.0 (Français)
+# Projet EasySave V1.1 (Français)
 
 Bienvenue sur le Projet Programmation Système de :
 - IRAZOQUI Luken
@@ -57,8 +57,8 @@ Technologies utilisées :
 
 ## Infos Utiles :
 
-### Application Console (V1.0) :
-Cette application console nous permet de créer des travaux de sauvegarde, de les supprimer et de les éxécuter un à par un ou tous à la suite. Ces travaux de sauvegarde génère des fichiers de logs.
+### Application Console (V1.1) :
+Cette application console nous permet de créer des travaux de sauvegarde, de les supprimer et de les éxécuter un à par un ou tous à la suite. Ces travaux de sauvegarde génère des fichiers de logs json et / ou xml.
 
 #### Documentation :
 La Documentation se trouve dans le répertoire "Documentation" de ce Github, elle est divisée en plusieurs parties : 
