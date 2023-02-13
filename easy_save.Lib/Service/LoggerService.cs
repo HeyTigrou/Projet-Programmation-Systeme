@@ -48,36 +48,50 @@ namespace easy_save.Lib.Service
         {
             DateTime date = DateTime.Today;
             string currentDate = date.ToString("yyyy-MM-dd");
-            DailyLogJsonFile = Path.Combine(DirectoryPath + $"{currentDate}-{FileName}.json");
-            // If the file doesn't exist, we create it
-            if (!File.Exists(DailyLogJsonFile))
-            {
-                File.Create(DailyLogJsonFile).Close();
-            }
 
-            DailyLogXmlFile = Path.Combine(DirectoryPath + $"{currentDate}-{FileName}.xml");
-            // If the file doesn't exist, we create it
-            if (!File.Exists(DailyLogXmlFile))
+            if (ConfigurationManager.AppSettings["LogsInJson"] == "Y")
             {
-                File.Create(DailyLogXmlFile).Close();
+                DailyLogJsonFile = Path.Combine(DirectoryPath + $"{currentDate}-{FileName}.json");
+                // If the file doesn't exist, we create it
+                if (!File.Exists(DailyLogJsonFile))
+                {
+                    File.Create(DailyLogJsonFile).Close();
+                }
+            }
+               
+
+            if (ConfigurationManager.AppSettings["LogsInXMl"] == "Y")
+            {
+                DailyLogXmlFile = Path.Combine(DirectoryPath + $"{currentDate}-{FileName}.xml");
+                // If the file doesn't exist, we create it
+                if (!File.Exists(DailyLogXmlFile))
+                {
+                    File.Create(DailyLogXmlFile).Close();
+                }
             }
         }
 
         // This method is used to create the log file that save the state of the save works
         public void logProcessFile(string processName)
         {
-            StateLogJsonFile = Path.Combine(StateLogDirectoryPath + $"{processName}.json");
-            // If the file doesn't exist, we create it
-            if (!File.Exists(StateLogJsonFile))
+            if (ConfigurationManager.AppSettings["LogsInJson"] == "Y")
             {
-                File.Create(StateLogJsonFile).Close();
+                StateLogJsonFile = Path.Combine(StateLogDirectoryPath + $"{processName}.json");
+                // If the file doesn't exist, we create it
+                if (!File.Exists(StateLogJsonFile))
+                {
+                    File.Create(StateLogJsonFile).Close();
+                }
             }
 
-            StateLogXmlFile = Path.Combine(StateLogDirectoryPath + $"{processName}.xml");
-            // If the file doesn't exist, we create it
-            if (!File.Exists(StateLogXmlFile))
+            if (ConfigurationManager.AppSettings["LogsInXMl"] == "Y")
             {
-                File.Create(StateLogXmlFile).Close();
+                StateLogXmlFile = Path.Combine(StateLogDirectoryPath + $"{processName}.xml");
+                // If the file doesn't exist, we create it
+                if (!File.Exists(StateLogXmlFile))
+                {
+                    File.Create(StateLogXmlFile).Close();
+                }
             }
         }
 
@@ -88,16 +102,21 @@ namespace easy_save.Lib.Service
 
             // We call the method that will create the log file if it doesn't exist
             SetLogFilePath();
-
-            json = System.Text.Json.JsonSerializer.Serialize<StateLoggerModel>(stateLoggerModel);
-
-            // We serialize the object and we write it in the state log file
-            File.WriteAllText(StateLogJsonFile, json);
-
-            using (TextWriter writer = new StreamWriter(StateLogXmlFile))
+            if (ConfigurationManager.AppSettings["LogsInJson"] == "Y")
             {
-                System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(stateLoggerModel.GetType());
-                x.Serialize(writer, stateLoggerModel);
+                json = System.Text.Json.JsonSerializer.Serialize<StateLoggerModel>(stateLoggerModel);
+
+                // We serialize the object and we write it in the state log file
+                File.WriteAllText(StateLogJsonFile, json);
+            }
+
+            if (ConfigurationManager.AppSettings["LogsInXMl"] == "Y")
+            {
+                using (TextWriter writer = new StreamWriter(StateLogXmlFile))
+                {
+                    System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(stateLoggerModel.GetType());
+                    x.Serialize(writer, stateLoggerModel);
+                }
             }
         }
 
@@ -123,14 +142,20 @@ namespace easy_save.Lib.Service
             }
             fileData.AddRange(DailyLogs);
 
-            DailyLogString = System.Text.Json.JsonSerializer.Serialize(fileData);
-
-            File.WriteAllText(DailyLogJsonFile, DailyLogString);
-
-            using (TextWriter writer = new StreamWriter(DailyLogXmlFile))
+            if (ConfigurationManager.AppSettings["LogsInJson"] == "Y")
             {
-                System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(fileData.GetType());
-                x.Serialize(writer, fileData);
+                DailyLogString = System.Text.Json.JsonSerializer.Serialize(fileData);
+
+                File.WriteAllText(DailyLogJsonFile, DailyLogString);
+            }
+
+            if (ConfigurationManager.AppSettings["LogsInXMl"] == "Y")
+            {
+                using (TextWriter writer = new StreamWriter(DailyLogXmlFile))
+                {
+                    System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(fileData.GetType());
+                    x.Serialize(writer, fileData);
+                }
             }
         }
     }
