@@ -90,17 +90,21 @@ namespace easy_save.Lib.Service
             int errorCount = 0;
             foreach (string newPath in Directory.GetFiles(save.InputPath, "*.*", SearchOption.AllDirectories))
             {
+                
                 DailyLoggerModel dailyLoggerModel = new();
                 dailyLoggerModel.Name = save.Name;
 
                 DateTime before = DateTime.Now;
-
-                logger.logProcessState(stateLoggerModel);
+                
+                try
+                {
+                    logger.logProcessState(stateLoggerModel);
+                }
+                catch { }
 
                 try
                 {
                     File.Copy(newPath, newPath.Replace(save.InputPath, save.OutputPath), true);
-
                     DateTime after = DateTime.Now;
                     dailyLoggerModel.FileTransferTime = after - before;
                     dailyLoggerModel.Time = after.ToString("yyyy/MM/dd HH:mm:ss");
@@ -114,19 +118,27 @@ namespace easy_save.Lib.Service
 
                 dailyLoggerModel.SourceFilePath = newPath;
                 dailyLoggerModel.TargetFilePath = newPath.Replace(save.InputPath, save.OutputPath);
-
                 FileInfo fileLength = new FileInfo(newPath);
                 dailyLoggerModel.Filesize = fileLength.Length;
 
-                logger.AddToDailyLogJson(dailyLoggerModel);
+                try
+                {
+                    logger.AddToDailyLogJson(dailyLoggerModel);
+                }
+                catch { }
+
                 stateLoggerModel.NbFilesLeft--;
             }
 
-            StateLoggerToDone();
+            try
+            {
+                StateLoggerToDone();
 
-            logger.logDailySaves();
+                logger.logDailySaves();
 
-            logger.logProcessState(stateLoggerModel);
+                logger.logProcessState(stateLoggerModel);
+            }
+            catch { }
 
             return errorCount;
         }
@@ -163,13 +175,15 @@ namespace easy_save.Lib.Service
 
                     DateTime before = DateTime.Now;
 
-                    logger.logProcessState(stateLoggerModel);
-
                     try
                     {
-
+                        logger.logProcessState(stateLoggerModel);
+                    }
+                    catch { }
+                    
+                    try
+                    {
                         File.Copy(newPath, newPath.Replace(save.InputPath, save.OutputPath), true);
-
                         DateTime after = DateTime.Now;
                         dailyLoggerModel.FileTransferTime = after - before;
                         dailyLoggerModel.Time = after.ToString("yyyy/MM/dd HH:mm:ss");
@@ -183,11 +197,14 @@ namespace easy_save.Lib.Service
 
                     dailyLoggerModel.SourceFilePath = newPath;
                     dailyLoggerModel.TargetFilePath = newPath.Replace(save.InputPath, save.OutputPath);
-
                     FileInfo fileLength = new FileInfo(newPath);
                     dailyLoggerModel.Filesize = fileLength.Length;
 
-                    logger.AddToDailyLogJson(dailyLoggerModel);
+                    try
+                    {
+                        logger.AddToDailyLogJson(dailyLoggerModel);
+                    }
+                    catch { }
                 }
                 else
                 {
@@ -196,12 +213,16 @@ namespace easy_save.Lib.Service
                 stateLoggerModel.NbFilesLeft--;
             }
 
-            StateLoggerToDone();
+            try
+            {
+                StateLoggerToDone();
 
-            logger.logDailySaves();
+                logger.logDailySaves();
 
-            logger.logProcessState(stateLoggerModel);
-
+                logger.logProcessState(stateLoggerModel);
+            }
+            catch { }
+            
             return errorCount;
         }
     }

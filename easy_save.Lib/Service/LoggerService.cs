@@ -17,7 +17,6 @@ namespace easy_save.Lib.Service
     // This class is used to log the daily saves and the state of the save works
     public class LoggerService
     {
-        // The different properties that are used to create the log files
         private string FileName;
         private string StateLogDirectoryPath;
         private string DailyLogJsonFile;
@@ -33,6 +32,7 @@ namespace easy_save.Lib.Service
             FileName = ConfigurationManager.AppSettings["LogFileName"];
             DirectoryPath = $@"{ConfigurationManager.AppSettings["DailyLogEmplacement"]}";
             StateLogDirectoryPath = $@"{ConfigurationManager.AppSettings["StatusLogEmplacement"]}";
+            
             if (!Directory.Exists(DirectoryPath))
             {
                 Directory.CreateDirectory(DirectoryPath);
