@@ -36,6 +36,8 @@
     <system:String x:Key="Encrypt">Extension à chiffrer :</system:String>
     <system:String x:Key="Generate">Générer une clé de cryptage</system:String>
 
+    
+    <system:String x:Key="LogFileExtension">Sauvegarder</system:String>
     <system:String x:Key="Add">Ajouter</system:String>
     <system:String x:Key="Remove">Supprimer</system:String>
 

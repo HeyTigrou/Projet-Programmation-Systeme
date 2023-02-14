@@ -6,12 +6,85 @@ using System.Text.Json;
 using easy_save.Desktop.Utilities;
 using System.IO;
 using System.Windows;
+using System.Windows.Input;
+using Newtonsoft.Json.Linq;
+using System.Configuration;
+using DetectSoftware;
+using easy_save.Lib.Models;
+using easy_save.Lib.Service;
 
 namespace easy_save.Desktop.MVVM.ViewModel
 {
-    class SettingViewModel
+    internal class SettingViewModel
     {
+        public bool JsonIsSelected { get; set; } = true;
+        public bool XmlIsSelected { get; set; }
+        public bool BothAreSelected { get; set; }
 
+        public ICommand ChangeLogExtension { get; }
+        public ICommand AddExtensionToEncrypt { get; }
+        public ICommand RemoveExtensionToEncrypt { get; }
+
+        public ObservableCollection<string> Extensions { get; } = FileExtensionModel.Instance.Extensions;
+        public ObservableCollection<string> SelectedExtensions { get; } = FileExtensionModel.Instance.SelectedExtensions;
+
+        public SettingViewModel()
+        {
+            ChangeLogExtension = new RelayCommand(x => ChangeLogExtensions());
+            RemoveExtensionToEncrypt = new RelayCommand(x => RemoveExtension(x as string));
+            AddExtensionToEncrypt = new RelayCommand(x => AddExtension(x as string));
+            ChangeLogExtensions();
+        }
+
+        private void RemoveExtension(string extension)
+        {
+            try
+            {
+                Extensions.Add(extension);
+                SelectedExtensions.Remove(extension);
+                FileExtensionModel.Instance.Extensions = Extensions;
+                FileExtensionModel.Instance.SelectedExtensions = SelectedExtensions;
+            }
+            catch { }
+        }
+        private void AddExtension(string extension)
+        {
+            try
+            {
+                Extensions.Remove(extension);
+                SelectedExtensions.Add(extension);
+                FileExtensionModel.Instance.Extensions = Extensions;
+                FileExtensionModel.Instance.SelectedExtensions = SelectedExtensions;
+            }
+            catch { }
+        }
+        private void ChangeLogExtensions()
+        {
+            try
+            {
+                Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+                if (JsonIsSelected)
+                {
+                    configuration.AppSettings.Settings["LogsInXMl"].Value = "Y";
+                    configuration.AppSettings.Settings["LogsInJson"].Value = "N";
+                }
+                else if (XmlIsSelected)
+                {
+                    configuration.AppSettings.Settings["LogsInXMl"].Value = "N";
+                    configuration.AppSettings.Settings["LogsInJson"].Value = "Y";
+                }
+                else
+                {
+                    configuration.AppSettings.Settings["LogsInXMl"].Value = "Y";
+                    configuration.AppSettings.Settings["LogsInJson"].Value = "Y";
+                }
+
+                configuration.Save();
+
+                ConfigurationManager.RefreshSection("appSettings");
+            }
+            catch { }
+        }
     }
-    
 }

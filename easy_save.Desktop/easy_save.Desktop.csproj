@@ -14,6 +14,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\easy_save.Lib\easy_save.Lib.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Asset\Images\bg.png" />
     <Resource Include="Asset\Images\iconTop.png" />
     <Resource Include="Asset\Images\logo.png" />

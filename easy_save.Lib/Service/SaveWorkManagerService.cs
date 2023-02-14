@@ -15,35 +15,35 @@ namespace easy_save.Lib.Service
     public class SaveWorkManagerService
     {
         // This method is used to get all the save works
-        public void GetSaveWorks(ObservableCollection<SaveWorkModel> Processes)
+        public SaveWorkModel[] GetSaveWorks()
         {
-            Processes.Clear();
-
             if (!Directory.Exists($@"{ConfigurationManager.AppSettings["SaveProjectEmplacement"]}"))
             {
                 Directory.CreateDirectory($@"{ConfigurationManager.AppSettings["SaveProjectEmplacement"]}");
             }
-
             string[] saveWorks = Directory.GetFiles($@"{ConfigurationManager.AppSettings["SaveProjectEmplacement"]}", "*.json", SearchOption.AllDirectories);
+            SaveWorkModel[] works = new SaveWorkModel[saveWorks.Length];
 
             for (int i = 0; i < saveWorks.Length; i++)
             {
                 string json = File.ReadAllText(saveWorks[i]);
                 SaveWorkModel data = JsonConvert.DeserializeObject<SaveWorkModel>(json);
-                Processes.Add(data);
+                works[i] = data;
             }
+
+            return works;
         }
 
 
         // This method is used to create a save work
-        public bool AddSaveWork(SaveWorkModel saveWork, ObservableCollection<SaveWorkModel> Processes)
+        public bool AddSaveWork(SaveWorkModel saveWork)
         {
             if (!Directory.Exists($@"{ConfigurationManager.AppSettings["SaveProjectEmplacement"]}"))
             {
                 Directory.CreateDirectory($@"{ConfigurationManager.AppSettings["SaveProjectEmplacement"]}");
             }
 
-            if (Processes.Any(x => x.Name == saveWork.Name))
+            if (GetSaveWorks().Any(x => x.Name == saveWork.Name))
             {
                 return false;
             }

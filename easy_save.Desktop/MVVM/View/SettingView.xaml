@@ -20,12 +20,21 @@
                         Foreground="AliceBlue"
                         Text="{DynamicResource TypeOfLog}" />
 
-                    <ComboBox>
-                        <ComboBoxItem IsSelected="True">Json</ComboBoxItem>
-                        <ComboBoxItem>XML</ComboBoxItem>
-                        <ComboBoxItem>Json &amp; XML</ComboBoxItem>
-                    </ComboBox>
-                </StackPanel>
+                <ComboBox>
+                    <ComboBoxItem IsSelected="{Binding JsonIsSelected}" Content="Json"/>
+                    <ComboBoxItem IsSelected="{Binding XmlIsSelected}" Content="XML"/>
+                    <ComboBoxItem IsSelected="{Binding BothAreSelected}" Content="XML and Json"/>
+                </ComboBox>
+                
+                <Button
+                    Width="70"
+                    Height="30"
+                    HorizontalAlignment="Left"
+                    Margin="0,10,10,0"
+                    Command="{Binding ChangeLogExtension}"
+                    Content="{DynamicResource LogFileExtension}"
+                    FontSize="15" />
+            </StackPanel>
 
                 <StackPanel Margin="30">
 
@@ -38,40 +47,54 @@
 
                     <StackPanel Orientation="Horizontal">
 
-                        <ListBox
-                            x:Name="MyListOfExtension"
-                            Width="180"
-                            Height="90"
-                            ItemsSource="{Binding MyListOfExtension}"
-                            SelectedItem="{Binding ExtensionSelected}" />
+                    <DataGrid
+                        Name="MyListOfExtension"
+                        Width="180"
+                        Height="90"
+                        AutoGenerateColumns="False"
+                        IsReadOnly="True"
+                        
+                        SelectedItem="{Binding ExtensionSelected}" 
+                        ItemsSource="{Binding Extensions}">
 
-                        <StackPanel>
-                            <Button
-                                Width="70"
-                                Height="30"
-                                Margin="10,15,10,0"
-                                Command="{Binding AddExtensionToEncrypt}"
-                                Content="{DynamicResource Add}"
-                                FontSize="15" />
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding}" Header="Extensions" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <StackPanel>
+                        <Button
+                            Width="70"
+                            Height="30"
+                            Margin="10,15,10,0"
+                            Command="{Binding AddExtensionToEncrypt}"
+                            CommandParameter="{Binding ElementName=MyListOfExtension, Path=SelectedItem}"
+                            Content="{DynamicResource Add}"
+                            FontSize="15" />
 
-                            <Button
-                                Width="70"
-                                Height="30"
-                                Margin="10,10,10,0"
-                                Command="{Binding RemoveExtensionToEncrypt}"
-                                Content="{DynamicResource Remove}"
-                                FontSize="15" />
-                        </StackPanel>
-
-                        <ListBox
-                            x:Name="ExtensionToEncrypt"
-                            Width="180"
-                            Height="90"
-                            ItemsSource="{Binding ExtensionToEncrypt}"
-                            SelectedItem="{Binding ExtensionSelected}" />
-
+                        <Button
+                            Width="70"
+                            Height="30"
+                            Margin="10,10,10,0"
+                            Command="{Binding RemoveExtensionToEncrypt}"
+                            CommandParameter="{Binding ElementName=ExtensionToEncrypt, Path=SelectedItem}"
+                            Content="{DynamicResource Remove}"
+                            FontSize="15" />
                     </StackPanel>
 
+                    <DataGrid
+                        Name="ExtensionToEncrypt"
+                        Width="180"
+                        Height="90"
+                        AutoGenerateColumns="False"
+                        IsReadOnly="True"
+                        
+                        SelectedItem="{Binding ExtensionSelected}" 
+                        ItemsSource="{Binding SelectedExtensions}">
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding}" Header="Extensions" Width="*" />
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </StackPanel>
 
                 <Button
@@ -82,7 +105,6 @@
                     FontSize="15" />
 
             </StackPanel>
-
         </Grid>
     </Border>
 </UserControl>

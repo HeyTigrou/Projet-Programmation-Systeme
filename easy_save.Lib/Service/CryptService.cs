@@ -16,6 +16,7 @@ namespace easy_save.Lib.Service
             startInfo.FileName = $@"{ConfigurationManager.AppSettings["CryptosoftPath"]}";
             startInfo.Arguments = $@"""{inputPath}"" ""{outputPath}"" ""{ConfigurationManager.AppSettings["CryptKeyPath"]}""";
             startInfo.UseShellExecute = false;
+            startInfo.CreateNoWindow= true;
 
             try
             {

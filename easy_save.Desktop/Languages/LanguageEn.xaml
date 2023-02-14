@@ -40,5 +40,7 @@
     <system:String x:Key="Add">Add</system:String>
     <system:String x:Key="Remove">Remove</system:String>
 
+    <system:String x:Key="LogFileExtension">Save</system:String>
+
     <system:String x:Key="Search">Browse (optional)</system:String>
 </ResourceDictionary>

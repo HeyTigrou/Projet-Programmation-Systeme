@@ -27,7 +27,8 @@
                 Height="40"
                 Margin="10"
                 HorizontalAlignment="Left"
-                VerticalContentAlignment="Center" />
+                VerticalContentAlignment="Center"
+                Text="{Binding SaveName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
         </StackPanel>
 
         <!--  Source Text  -->
@@ -85,18 +86,19 @@
             x:Name="complete"
             Margin="20,10,10,5"
             Content="{DynamicResource Complete}"
-            Foreground="AliceBlue" />
+            Foreground="AliceBlue"
+            IsChecked="{Binding Path=CompleteIsChecked}"/>
 
         <RadioButton
             x:Name="differential"
             Margin="20,5,10,0"
             Content="{DynamicResource Differential}"
-            Foreground="AliceBlue" />
+            Foreground="AliceBlue"  />
 
 
         <!--  Create Button  -->
         <Button
-            Command="{Binding SaveCommand}"
+            Command="{Binding CreateCommand}"
             Content="{DynamicResource ToCreate}"
             FontSize="14"
             FontWeight="Medium"
