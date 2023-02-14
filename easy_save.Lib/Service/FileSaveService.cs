@@ -109,6 +109,7 @@ namespace easy_save.Lib.Service
                     DateTime after = DateTime.Now;
                     dailyLoggerModel.FileTransferTime = after - before;
                     dailyLoggerModel.Time = after.ToString("yyyy/MM/dd HH:mm:ss");
+                    dailyLoggerModel.CryptTime = returnCode;
                 }
                 catch
                 {
@@ -189,6 +190,7 @@ namespace easy_save.Lib.Service
                         DateTime after = DateTime.Now;
                         dailyLoggerModel.FileTransferTime = after - before;
                         dailyLoggerModel.Time = after.ToString("yyyy/MM/dd HH:mm:ss");
+                        dailyLoggerModel.CryptTime = returnCode;
                     }
                     catch
                     {
