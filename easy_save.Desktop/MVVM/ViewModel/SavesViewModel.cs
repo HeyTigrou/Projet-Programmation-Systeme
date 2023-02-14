@@ -43,43 +43,63 @@ namespace easy_save.Desktop.MVVM.ViewModel
 
         private void Refresh()
         {
-            Processes.Clear();
 
-            foreach(SaveWorkModel saveWork in saveWorkManager.GetSaveWorks())
+            try
             {
-                Processes.Add(saveWork);
+                Processes.Clear();
+
+                foreach (SaveWorkModel saveWork in saveWorkManager.GetSaveWorks())
+                {
+                    Processes.Add(saveWork);
+                }
             }
+            catch { }
         }
 
         private void Remove(SaveWorkModel process)
         {
-            saveWorkManager.DeleteSaveWork(process.Name);
 
-            Refresh();
+            try
+            {
+                saveWorkManager.DeleteSaveWork(process.Name);
+
+                Refresh();
+            }
+            catch { }
         }
         private void LaunchSave(SaveWorkModel process)
         {
-            int errorCount;
-            List<string> extensions = FileExtensionModel.Instance.SelectedExtensions.ToList();
-            FileSaveService fileSaveService = new FileSaveService();
-            errorCount = fileSaveService.SaveProcess(process, extensions);
+
+            try
+            {
+                int errorCount;
+                List<string> extensions = FileExtensionModel.Instance.SelectedExtensions.ToList();
+                FileSaveService fileSaveService = new FileSaveService();
+                errorCount = fileSaveService.SaveProcess(process, extensions);
+            }
+            catch { }
         }
         private void LaunchAllSaves()
         {
-            int[] errorCount = { 0, 0 };
-            List<string> extensions = FileExtensionModel.Instance.SelectedExtensions.ToList();
-            foreach (SaveWorkModel process in Processes)
+
+            try
             {
-                try
+                int[] errorCount = { 0, 0 };
+                List<string> extensions = FileExtensionModel.Instance.SelectedExtensions.ToList();
+                foreach (SaveWorkModel process in Processes)
                 {
-                    FileSaveService fileSaveService = new FileSaveService();
-                    errorCount[1] += fileSaveService.SaveProcess(process, extensions);
-                }
-                catch
-                {
-                    errorCount[0]++;
+                    try
+                    {
+                        FileSaveService fileSaveService = new FileSaveService();
+                        errorCount[1] += fileSaveService.SaveProcess(process, extensions);
+                    }
+                    catch
+                    {
+                        errorCount[0]++;
+                    }
                 }
             }
+            catch { }
         }
     }
 }

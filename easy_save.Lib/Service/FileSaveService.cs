@@ -23,18 +23,22 @@ namespace easy_save.Lib.Service
         // This method is used to select the right method to use : SaveAllFiles (Complete save) or SaveChangedFiles (Incremental Save)
         public int SaveProcess(SaveWorkModel save, List<string> extensions)
         {
-            LoggerService logger = new();
-
-            if (save.SaveType == 0)
+            try
             {
-                return SaveAllFiles(save, logger, extensions);
-            }
+                LoggerService logger = new();
 
-            else if (save.SaveType == 1)
-            {
-                return SaveChangedFiles(save, logger, extensions);
+                if (save.SaveType == 0)
+                {
+                    return SaveAllFiles(save, logger, extensions);
+                }
+
+                else if (save.SaveType == 1)
+                {
+                    return SaveChangedFiles(save, logger, extensions);
+                }
+                return -1;
             }
-            return -1;
+            catch{ }
         }
 
         // This method is used to setup the logger models

@@ -57,23 +57,27 @@ namespace easy_save.Desktop.MVVM.ViewModel
         }   
         private void Create()
         {
-            SaveType= 1;
-            if(CompleteIsChecked)
+            try
             {
-                SaveType = 0;
-            }
-            SaveWorkModel saveWorkModel = new SaveWorkModel
-            {
-                Name= SaveName,
-                InputPath= PathSource,
-                OutputPath= PathDestination,
-                SaveType = SaveType
-            };
-            saveWorkManager.AddSaveWork(saveWorkModel);
+                SaveType = 1;
+                if (CompleteIsChecked)
+                {
+                    SaveType = 0;
+                }
+                SaveWorkModel saveWorkModel = new SaveWorkModel
+                {
+                    Name = SaveName,
+                    InputPath = PathSource,
+                    OutputPath = PathDestination,
+                    SaveType = SaveType
+                };
+                saveWorkManager.AddSaveWork(saveWorkModel);
 
-            SaveName = "";
-            PathSource = "";
-            PathDestination = "";
+                SaveName = "";
+                PathSource = "";
+                PathDestination = "";
+            }
+            catch { }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

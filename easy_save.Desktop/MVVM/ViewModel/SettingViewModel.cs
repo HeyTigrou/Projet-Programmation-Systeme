@@ -38,41 +38,53 @@ namespace easy_save.Desktop.MVVM.ViewModel
 
         private void RemoveExtension(string extension)
         {
-            Extensions.Add(extension);
-            SelectedExtensions.Remove(extension);
-            FileExtensionModel.Instance.Extensions = Extensions;
-            FileExtensionModel.Instance.SelectedExtensions = SelectedExtensions;
+            try
+            {
+                Extensions.Add(extension);
+                SelectedExtensions.Remove(extension);
+                FileExtensionModel.Instance.Extensions = Extensions;
+                FileExtensionModel.Instance.SelectedExtensions = SelectedExtensions;
+            }
+            catch { }
         }
         private void AddExtension(string extension)
         {
-            Extensions.Remove(extension);
-            SelectedExtensions.Add(extension);
-            FileExtensionModel.Instance.Extensions = Extensions;
-            FileExtensionModel.Instance.SelectedExtensions = SelectedExtensions;
+            try
+            {
+                Extensions.Remove(extension);
+                SelectedExtensions.Add(extension);
+                FileExtensionModel.Instance.Extensions = Extensions;
+                FileExtensionModel.Instance.SelectedExtensions = SelectedExtensions;
+            }
+            catch { }
         }
         private void ChangeLogExtensions()
         {
-            Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-        
-            if (JsonIsSelected)
+            try
             {
-                configuration.AppSettings.Settings["LogsInXMl"].Value = "Y";
-                configuration.AppSettings.Settings["LogsInJson"].Value = "N";
-            }
-            else if (XmlIsSelected)
-            {
-                configuration.AppSettings.Settings["LogsInXMl"].Value = "N";
-                configuration.AppSettings.Settings["LogsInJson"].Value = "Y";
-            }
-            else
-            {
-                configuration.AppSettings.Settings["LogsInXMl"].Value = "Y";
-                configuration.AppSettings.Settings["LogsInJson"].Value = "Y";
-            }
+                Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
-            configuration.Save();
+                if (JsonIsSelected)
+                {
+                    configuration.AppSettings.Settings["LogsInXMl"].Value = "Y";
+                    configuration.AppSettings.Settings["LogsInJson"].Value = "N";
+                }
+                else if (XmlIsSelected)
+                {
+                    configuration.AppSettings.Settings["LogsInXMl"].Value = "N";
+                    configuration.AppSettings.Settings["LogsInJson"].Value = "Y";
+                }
+                else
+                {
+                    configuration.AppSettings.Settings["LogsInXMl"].Value = "Y";
+                    configuration.AppSettings.Settings["LogsInJson"].Value = "Y";
+                }
 
-            ConfigurationManager.RefreshSection("appSettings");
+                configuration.Save();
+
+                ConfigurationManager.RefreshSection("appSettings");
+            }
+            catch { }
         }
     }
 }
