@@ -20,7 +20,7 @@
             <Button
                 Command="{Binding RemoveCommand}"
                 CommandParameter="{Binding ElementName=grid, Path=SelectedItem}"
-                Content="remove"
+                Content="Remove"
                 Style="{StaticResource SavesButtonStyle}" />
 
             <Button
@@ -30,13 +30,8 @@
                 Style="{StaticResource SavesButtonStyle}" />
 
             <Button
-                Command="{Binding CreateCommand}"
-                Content="Create"
-                Style="{StaticResource SavesButtonStyle}" />
-
-            <Button
                 Command="{Binding LaunchAllCommand}"
-                Content="LaunchAll"
+                Content="Launch All"
                 Style="{StaticResource SavesButtonStyle}" />
         </StackPanel>
 

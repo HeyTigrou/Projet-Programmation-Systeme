@@ -28,10 +28,19 @@
                     Text="{DynamicResource TypeOfLog}" />
 
                 <ComboBox>
-                    <ComboBoxItem IsSelected="True">Json</ComboBoxItem>
-                    <ComboBoxItem>XML</ComboBoxItem>
-                    <ComboBoxItem>Json &amp; XML</ComboBoxItem>
+                    <ComboBoxItem IsSelected="{Binding JsonIsSelected}" Content="Json"/>
+                    <ComboBoxItem IsSelected="{Binding XmlIsSelected}" Content="XML"/>
+                    <ComboBoxItem IsSelected="{Binding BothAreSelected}" Content="XML and Json"/>
                 </ComboBox>
+                
+                <Button
+                    Width="70"
+                    Height="30"
+                    HorizontalAlignment="Left"
+                    Margin="0,10,10,0"
+                    Command="{Binding ChangeLogExtension}"
+                    Content="{DynamicResource LogFileExtension}"
+                    FontSize="15" />
             </StackPanel>
 
             <StackPanel Grid.Row="1">

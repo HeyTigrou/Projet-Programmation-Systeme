@@ -33,6 +33,7 @@
 
     <system:String x:Key="AddLog">Ajouter</system:String>
     <system:String x:Key="RemoveLog">Supprimer</system:String>
+    <system:String x:Key="LogFileExtension">Sauvegarder</system:String>
 
     <system:String x:Key="Search">Rechercher (optionnel)</system:String>
 </ResourceDictionary>

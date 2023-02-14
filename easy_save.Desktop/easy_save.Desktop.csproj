@@ -7,4 +7,8 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\easy_save.Lib\easy_save.Lib.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -27,7 +27,8 @@
                 Height="40"
                 Margin="10"
                 HorizontalAlignment="Left"
-                VerticalContentAlignment="Center" />
+                VerticalContentAlignment="Center"
+                Text="{Binding SaveName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
         </StackPanel>
 
         <!--  Source Text  -->
@@ -48,38 +49,6 @@
                 HorizontalAlignment="Left"
                 VerticalContentAlignment="Center"
                 Text="{Binding PathSource, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-
-            <Button
-                x:Name="Browse"
-                Command="{Binding BrowseSourceCommand}"
-                Content="{DynamicResource Search}"
-                FontSize="14"
-                FontWeight="Medium"
-                Foreground="AliceBlue">
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="Background" Value="#353340" />
-                        <Setter Property="Cursor" Value="Hand" />
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#FF4C70" />
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border
-                            Width="100"
-                            Height="40"
-                            Background="{TemplateBinding Background}"
-                            CornerRadius="10">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Border>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
         </StackPanel>
 
         <!--  Destination Text  -->
@@ -100,38 +69,6 @@
                 HorizontalAlignment="Left"
                 VerticalContentAlignment="Center"
                 Text="{Binding PathDestination, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-
-            <Button
-                x:Name="Browse2"
-                Command="{Binding BrowseSourceCommand}"
-                Content="{DynamicResource Search}"
-                FontSize="14"
-                FontWeight="Medium"
-                Foreground="AliceBlue">
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="Background" Value="#353340" />
-                        <Setter Property="Cursor" Value="Hand" />
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#FF4C70" />
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border
-                            Width="100"
-                            Height="40"
-                            Background="{TemplateBinding Background}"
-                            CornerRadius="10">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Border>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
         </StackPanel>
 
         <!--  Type of Backup Text  -->
@@ -147,18 +84,19 @@
             x:Name="complete"
             Margin="0,0,10,5"
             Content="{DynamicResource Complete}"
-            Foreground="AliceBlue" />
+            Foreground="AliceBlue"
+            IsChecked="{Binding Path=CompleteIsChecked}"/>
 
         <RadioButton
             x:Name="differential"
             Margin="0,5,10,0"
             Content="{DynamicResource Differential}"
-            Foreground="AliceBlue" />
+            Foreground="AliceBlue"  />
 
 
         <!--  Create Button  -->
         <Button
-            Command="{Binding SaveCommand}"
+            Command="{Binding CreateCommand}"
             Content="{DynamicResource ToCreate}"
             FontSize="14"
             FontWeight="Medium"
