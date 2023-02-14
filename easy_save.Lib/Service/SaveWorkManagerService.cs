@@ -7,55 +7,43 @@ using Newtonsoft.Json;
 using System.IO;
 using easy_save.Lib.Models;
 using System.Configuration;
+using System.Collections.ObjectModel;
 
 namespace easy_save.Lib.Service
 {
     // This class is used to manage every save works
     public class SaveWorkManagerService
     {
-        
-        // This method is used to get the number of save works available
-        public int GetSaveProjectnumber()
-        {
-            if (!Directory.Exists($@"{ConfigurationManager.AppSettings["SaveProjectEmplacement"]}"))
-            {
-                Directory.CreateDirectory($@"{ConfigurationManager.AppSettings["SaveProjectEmplacement"]}");
-            }
-            
-            string[] saveWorks = Directory.GetFiles($@"{ConfigurationManager.AppSettings["SaveProjectEmplacement"]}", "*.json", SearchOption.AllDirectories);
-            
-            return saveWorks.Length;
-        }
-
         // This method is used to get all the save works
-        public SaveWorkModel[] GetSaveWorks()
+        public void GetSaveWorks(ObservableCollection<SaveWorkModel> Processes)
         {
+            Processes.Clear();
+
             if (!Directory.Exists($@"{ConfigurationManager.AppSettings["SaveProjectEmplacement"]}"))
             {
                 Directory.CreateDirectory($@"{ConfigurationManager.AppSettings["SaveProjectEmplacement"]}");
             }
+
             string[] saveWorks = Directory.GetFiles($@"{ConfigurationManager.AppSettings["SaveProjectEmplacement"]}", "*.json", SearchOption.AllDirectories);
-            SaveWorkModel[] works = new SaveWorkModel[saveWorks.Length];
 
             for (int i = 0; i < saveWorks.Length; i++)
             {
                 string json = File.ReadAllText(saveWorks[i]);
                 SaveWorkModel data = JsonConvert.DeserializeObject<SaveWorkModel>(json);
-                works[i] = data;
+                Processes.Add(data);
             }
-
-            return works;
         }
-        
+
+
         // This method is used to create a save work
-        public bool AddSaveWork(SaveWorkModel saveWork)
+        public bool AddSaveWork(SaveWorkModel saveWork, ObservableCollection<SaveWorkModel> Processes)
         {
             if (!Directory.Exists($@"{ConfigurationManager.AppSettings["SaveProjectEmplacement"]}"))
             {
                 Directory.CreateDirectory($@"{ConfigurationManager.AppSettings["SaveProjectEmplacement"]}");
             }
 
-            if (GetSaveWorks().Any(x => x.Name == saveWork.Name))
+            if (Processes.Any(x => x.Name == saveWork.Name))
             {
                 return false;
             }
