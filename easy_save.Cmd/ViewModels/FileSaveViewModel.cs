@@ -12,9 +12,12 @@ namespace easy_save.Lib.ViewModels
 {
     public class FileSaveViewModel
     {
+        
+        
         // This method is used to launch a specific save work
         public static int Save(string name) 
         {
+            List<string> extensions = new List<string> { ".txt"}; // !!! must be deleted
             SaveWorkManagerService saveWorkManagerService = new SaveWorkManagerService();
             foreach (var saveWork in saveWorkManagerService.GetSaveWorks()) 
             {
@@ -24,7 +27,7 @@ namespace easy_save.Lib.ViewModels
                     {
                         FileSaveService fileSaveService = new FileSaveService();
                         
-                        return fileSaveService.SaveProcess(saveWork);
+                        return fileSaveService.SaveProcess(saveWork, extensions);
                     }
                     catch
                     {
@@ -38,6 +41,8 @@ namespace easy_save.Lib.ViewModels
         // This method is used to launch all the save works
         public static int[] AllSave() 
         {
+            List<string> extensions = new List<string>(); // !!! must be deleted
+            
             SaveWorkManagerService saveWorkManagerService = new SaveWorkManagerService();
 
             int[] errorCount = { 0, 0 }; // errorCount[0] = number of Process launch errors, errorCount[1] = number of files save errors
@@ -46,7 +51,7 @@ namespace easy_save.Lib.ViewModels
                 try
                 {
                     FileSaveService fileSaveService = new FileSaveService();
-                    errorCount[1] += fileSaveService.SaveProcess(saveWork);
+                    errorCount[1] += fileSaveService.SaveProcess(saveWork,extensions);
                 }
                 
                 catch

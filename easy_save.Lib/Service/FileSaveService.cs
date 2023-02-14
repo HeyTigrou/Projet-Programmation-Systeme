@@ -10,6 +10,8 @@ using easy_save.Lib.Models;
 using System.Drawing;
 using System.Diagnostics.Metrics;
 using Newtonsoft.Json.Bson;
+using System.Diagnostics;
+using System.Configuration;
 
 namespace easy_save.Lib.Service
 {
@@ -19,21 +21,19 @@ namespace easy_save.Lib.Service
         private readonly StateLoggerModel stateLoggerModel = new();
 
         // This method is used to select the right method to use : SaveAllFiles (Complete save) or SaveChangedFiles (Incremental Save)
-        public int SaveProcess(SaveWorkModel save)
+        public int SaveProcess(SaveWorkModel save, List<string> extensions)
         {
-
             LoggerService logger = new();
 
             if (save.SaveType == 0)
             {
-                return SaveAllFiles(save, logger);
+                return SaveAllFiles(save, logger, extensions);
             }
 
             else if (save.SaveType == 1)
             {
-                return SaveChangedFiles(save, logger);
+                return SaveChangedFiles(save, logger, extensions);
             }
-
             return -1;
         }
 
@@ -74,7 +74,7 @@ namespace easy_save.Lib.Service
         }
 
         // This method is used to save all the files from the source folder into the destination folder
-        private int SaveAllFiles(SaveWorkModel save, LoggerService logger)
+        private int SaveAllFiles(SaveWorkModel save, LoggerService logger, List<string> extensions)
         {
             logger.logProcessFile(save.Name);
 
@@ -104,7 +104,8 @@ namespace easy_save.Lib.Service
 
                 try
                 {
-                    File.Copy(newPath, newPath.Replace(save.InputPath, save.OutputPath), true);
+                    int returnCode = CopyProcess(newPath, save, extensions);
+                    
                     DateTime after = DateTime.Now;
                     dailyLoggerModel.FileTransferTime = after - before;
                     dailyLoggerModel.Time = after.ToString("yyyy/MM/dd HH:mm:ss");
@@ -144,7 +145,7 @@ namespace easy_save.Lib.Service
         }
 
         // This method is used to only save the files that changed in the source folder into the destination folder
-        private int SaveChangedFiles(SaveWorkModel save, LoggerService logger)
+        private int SaveChangedFiles(SaveWorkModel save, LoggerService logger, List<string> extensions)
         {
             logger.logProcessFile(save.Name);
 
@@ -183,7 +184,8 @@ namespace easy_save.Lib.Service
                     
                     try
                     {
-                        File.Copy(newPath, newPath.Replace(save.InputPath, save.OutputPath), true);
+                        int returnCode = CopyProcess(newPath, save, extensions);
+
                         DateTime after = DateTime.Now;
                         dailyLoggerModel.FileTransferTime = after - before;
                         dailyLoggerModel.Time = after.ToString("yyyy/MM/dd HH:mm:ss");
@@ -224,6 +226,59 @@ namespace easy_save.Lib.Service
             catch { }
             
             return errorCount;
+        }
+
+        private int Encrypt(string inputPath, string outputPath)
+        {
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.FileName = $@"{ConfigurationManager.AppSettings["CryptosoftPath"]}";
+            startInfo.Arguments = $@"""{inputPath}"" ""{outputPath}"" ""{ConfigurationManager.AppSettings["CryptKeyPath"]}""";
+            startInfo.UseShellExecute = false;
+            
+            try
+            {
+                var process = new Process();
+                process.StartInfo = startInfo;
+
+                process.Start();
+
+                int code = 0;
+
+                try
+                {
+                    while (!process.WaitForExit(1)) { }
+                    code = process.ExitCode;
+                }
+                finally
+                {
+                    process.Dispose();
+                }
+
+                return code;
+            } 
+            catch 
+            {
+                return -1;
+            }
+        }
+
+        private int CopyProcess(string inPath, SaveWorkModel save ,List<string> extensions)
+        {
+            FileInfo fileInfo = new FileInfo(inPath);
+
+            string destinationPath = inPath.Replace(save.InputPath, save.OutputPath);
+            int returnCode = 0;
+            if (extensions.Contains(fileInfo.Extension))
+            {
+                returnCode = Encrypt(inPath, destinationPath);
+            }
+
+            else
+            {
+                File.Copy(inPath, destinationPath, true);
+            }
+
+            return returnCode;
         }
     }
 }
