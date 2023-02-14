@@ -28,11 +28,16 @@
     <system:String x:Key="Differential">Fichiers modifiés</system:String>
     <system:String x:Key="ToCreate">Créer</system:String>
 
-    <system:String x:Key="TypeOfLog">Type de journal (log) :</system:String>
-    <system:String x:Key="Encrypt">Extension à crypter :</system:String>
+    <system:String x:Key="Refresh">Rafraichir</system:String>
+    <system:String x:Key="Launch">Lancer</system:String>
+    <system:String x:Key="LaunchAll">Tous lancer</system:String>
 
-    <system:String x:Key="AddLog">Ajouter</system:String>
-    <system:String x:Key="RemoveLog">Supprimer</system:String>
+    <system:String x:Key="TypeOfLog">Type de journal (log) :</system:String>
+    <system:String x:Key="Encrypt">Extension à chiffrer :</system:String>
+    <system:String x:Key="Generate">Générer une clé de cryptage</system:String>
+
+    <system:String x:Key="Add">Ajouter</system:String>
+    <system:String x:Key="Remove">Supprimer</system:String>
 
     <system:String x:Key="Search">Rechercher (optionnel)</system:String>
 </ResourceDictionary>

@@ -14,29 +14,24 @@
 
             <Button
                 Command="{Binding RefreshCommand}"
-                Content="Refresh"
+                Content="{DynamicResource Refresh}"
                 Style="{StaticResource SavesButtonStyle}" />
 
             <Button
                 Command="{Binding RemoveCommand}"
                 CommandParameter="{Binding ElementName=grid, Path=SelectedItem}"
-                Content="remove"
+                Content="{DynamicResource Remove}"
                 Style="{StaticResource SavesButtonStyle}" />
 
             <Button
                 Command="{Binding LaunchCommand}"
                 CommandParameter="{Binding ElementName=grid, Path=SelectedItem}"
-                Content="Launch"
-                Style="{StaticResource SavesButtonStyle}" />
-
-            <Button
-                Command="{Binding CreateCommand}"
-                Content="Create"
+                Content="{DynamicResource Launch}"
                 Style="{StaticResource SavesButtonStyle}" />
 
             <Button
                 Command="{Binding LaunchAllCommand}"
-                Content="LaunchAll"
+                Content="{DynamicResource LaunchAll}"
                 Style="{StaticResource SavesButtonStyle}" />
         </StackPanel>
 

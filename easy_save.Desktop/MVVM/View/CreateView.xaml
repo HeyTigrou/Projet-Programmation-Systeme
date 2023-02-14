@@ -9,7 +9,7 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
 
-    <StackPanel>
+    <StackPanel HorizontalAlignment="Center">
 
         <!--  Name Text  -->
         <TextBlock
@@ -49,37 +49,6 @@
                 VerticalContentAlignment="Center"
                 Text="{Binding PathSource, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
-            <Button
-                x:Name="Browse"
-                Command="{Binding BrowseSourceCommand}"
-                Content="{DynamicResource Search}"
-                FontSize="14"
-                FontWeight="Medium"
-                Foreground="AliceBlue">
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="Background" Value="#353340" />
-                        <Setter Property="Cursor" Value="Hand" />
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#FF4C70" />
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border
-                            Width="100"
-                            Height="40"
-                            Background="{TemplateBinding Background}"
-                            CornerRadius="10">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Border>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
         </StackPanel>
 
         <!--  Destination Text  -->
@@ -101,37 +70,6 @@
                 VerticalContentAlignment="Center"
                 Text="{Binding PathDestination, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
-            <Button
-                x:Name="Browse2"
-                Command="{Binding BrowseSourceCommand}"
-                Content="{DynamicResource Search}"
-                FontSize="14"
-                FontWeight="Medium"
-                Foreground="AliceBlue">
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="Background" Value="#353340" />
-                        <Setter Property="Cursor" Value="Hand" />
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#FF4C70" />
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border
-                            Width="100"
-                            Height="40"
-                            Background="{TemplateBinding Background}"
-                            CornerRadius="10">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Border>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
         </StackPanel>
 
         <!--  Type of Backup Text  -->
@@ -145,13 +83,13 @@
         <!--  Type of Backup  -->
         <RadioButton
             x:Name="complete"
-            Margin="0,0,10,5"
+            Margin="20,10,10,5"
             Content="{DynamicResource Complete}"
             Foreground="AliceBlue" />
 
         <RadioButton
             x:Name="differential"
-            Margin="0,5,10,0"
+            Margin="20,5,10,0"
             Content="{DynamicResource Differential}"
             Foreground="AliceBlue" />
 
@@ -189,6 +127,7 @@
                 </ControlTemplate>
             </Button.Template>
         </Button>
+
     </StackPanel>
 
 </UserControl>

@@ -11,7 +11,7 @@
     MinHeight="550"
     MaxWidth="900"
     MaxHeight="550"
-    Icon="C:\Users\Utilisateur\Documents\CESI\Annee_2022-2023\Semestre_5\Programmation_systeme\Projet\Test_WPF\iconTop.png"
+    Icon="Asset/Images/iconTop.png"
     mc:Ignorable="d">
 
     <Window.DataContext>
@@ -29,8 +29,8 @@
 
     <Border CornerRadius="10">
         <Border.Background>
-            <ImageBrush ImageSource="C:\Users\Utilisateur\Documents\CESI\Annee_2022-2023\Semestre_5\Programmation_systeme\Projet\Test_WPF\bg.png" Stretch="Fill" />
-            <!--<ImageBrush ImageSource="Asset/Images/bg.png" Stretch="Fill" />-->
+            <ImageBrush ImageSource="Asset/Images/bg.png" Stretch="Fill" />
+
         </Border.Background>
 
         <Grid>
@@ -44,9 +44,7 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
 
-            <Image Width="150" Source="C:\Users\Utilisateur\Documents\CESI\Annee_2022-2023\Semestre_5\Programmation_systeme\Projet\Test_WPF\Logo.png" />
-            <!--<Image Width="150" Source="Asset/Images/logo.png" />-->
-
+            <Image Width="150" Source="Asset/Images/logo.png" />
 
             <!--  Menu  -->
 

@@ -9,78 +9,77 @@
     mc:Ignorable="d">
 
     <Border Margin="30">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
+        <Grid HorizontalAlignment="Center">
 
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
+            <StackPanel>
+                <StackPanel Margin="20">
+                    <TextBlock
+                        Margin="20,10,0,0"
+                        HorizontalAlignment="Left"
+                        FontSize="14"
+                        Foreground="AliceBlue"
+                        Text="{DynamicResource TypeOfLog}" />
 
-            <StackPanel Grid.Row="0">
-                <TextBlock
-                    Margin="20,10,0,0"
-                    HorizontalAlignment="Left"
-                    FontSize="14"
-                    Foreground="AliceBlue"
-                    Text="{DynamicResource TypeOfLog}" />
+                    <ComboBox>
+                        <ComboBoxItem IsSelected="True">Json</ComboBoxItem>
+                        <ComboBoxItem>XML</ComboBoxItem>
+                        <ComboBoxItem>Json &amp; XML</ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
 
-                <ComboBox>
-                    <ComboBoxItem IsSelected="True">Json</ComboBoxItem>
-                    <ComboBoxItem>XML</ComboBoxItem>
-                    <ComboBoxItem>Json &amp; XML</ComboBoxItem>
-                </ComboBox>
-            </StackPanel>
+                <StackPanel Margin="30">
 
-            <StackPanel Grid.Row="1">
+                    <TextBlock
+                        Margin="20,10,0,0"
+                        HorizontalAlignment="Left"
+                        FontSize="14"
+                        Foreground="AliceBlue"
+                        Text="{DynamicResource Encrypt}" />
 
-                <TextBlock
-                    Margin="20,10,0,0"
-                    HorizontalAlignment="Left"
-                    FontSize="14"
-                    Foreground="AliceBlue"
-                    Text="{DynamicResource Encrypt}" />
+                    <StackPanel Orientation="Horizontal">
 
-                <StackPanel
-                    Grid.Row="1"
-                    Grid.Column="1"
-                    Orientation="Horizontal">
+                        <ListBox
+                            x:Name="MyListOfExtension"
+                            Width="180"
+                            Height="90"
+                            ItemsSource="{Binding MyListOfExtension}"
+                            SelectedItem="{Binding ExtensionSelected}" />
 
-                    <ListBox
-                        x:Name="MyListOfExtension"
-                        Width="180"
-                        Height="90"
-                        ItemsSource="{Binding MyListOfExtension}"
-                        SelectedItem="{Binding ExtensionSelected}" />
+                        <StackPanel>
+                            <Button
+                                Width="70"
+                                Height="30"
+                                Margin="10,15,10,0"
+                                Command="{Binding AddExtensionToEncrypt}"
+                                Content="{DynamicResource Add}"
+                                FontSize="15" />
 
-                    <StackPanel>
-                        <Button
-                            Width="70"
-                            Height="30"
-                            Margin="10,15,10,0"
-                            Command="{Binding AddExtensionToEncrypt}"
-                            Content="{DynamicResource AddLog}"
-                            FontSize="15" />
+                            <Button
+                                Width="70"
+                                Height="30"
+                                Margin="10,10,10,0"
+                                Command="{Binding RemoveExtensionToEncrypt}"
+                                Content="{DynamicResource Remove}"
+                                FontSize="15" />
+                        </StackPanel>
 
-                        <Button
-                            Width="70"
-                            Height="30"
-                            Margin="10,10,10,0"
-                            Command="{Binding RemoveExtensionToEncrypt}"
-                            Content="{DynamicResource RemoveLog}"
-                            FontSize="15" />
+                        <ListBox
+                            x:Name="ExtensionToEncrypt"
+                            Width="180"
+                            Height="90"
+                            ItemsSource="{Binding ExtensionToEncrypt}"
+                            SelectedItem="{Binding ExtensionSelected}" />
+
                     </StackPanel>
 
-                    <ListBox
-                        x:Name="ExtensionToEncrypt"
-                        Width="180"
-                        Height="90"
-                        ItemsSource="{Binding ExtensionToEncrypt}"
-                        SelectedItem="{Binding ExtensionSelected}" />
-
                 </StackPanel>
+
+                <Button
+                    Width="300"
+                    Height="30"
+                    Margin="20"
+                    Content="{DynamicResource Generate}"
+                    FontSize="15" />
 
             </StackPanel>
 

@@ -28,11 +28,17 @@
     <system:String x:Key="Differential">Changed Files</system:String>
     <system:String x:Key="ToCreate">Create</system:String>
 
+    <system:String x:Key="Refresh">Refresh</system:String>
+    <system:String x:Key="Launch">Launch</system:String>
+    <system:String x:Key="LaunchAll">LaunchAll</system:String>
+
     <system:String x:Key="TypeOfLog">Type of log :</system:String>
     <system:String x:Key="Encrypt">Extension to Encrypt :</system:String>
+    <system:String x:Key="Generate">Generate an encryption key</system:String>
 
-    <system:String x:Key="AddLog">Add</system:String>
-    <system:String x:Key="RemoveLog">Remove</system:String>
+
+    <system:String x:Key="Add">Add</system:String>
+    <system:String x:Key="Remove">Remove</system:String>
 
     <system:String x:Key="Search">Browse (optional)</system:String>
 </ResourceDictionary>
