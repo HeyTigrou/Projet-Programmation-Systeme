@@ -116,6 +116,7 @@ namespace easy_save.Lib.Service
                     errorCount++;
                     dailyLoggerModel.FileTransferTime = TimeSpan.Zero;
                     dailyLoggerModel.Time = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+                    dailyLoggerModel.CryptTime = -1;
                 }
 
                 dailyLoggerModel.SourceFilePath = newPath;
@@ -183,6 +184,7 @@ namespace easy_save.Lib.Service
                     }
                     catch { }
                     
+
                     try
                     {
                         int returnCode = CopyProcess(newPath, save, extensions);
@@ -197,6 +199,7 @@ namespace easy_save.Lib.Service
                         errorCount++;
                         dailyLoggerModel.FileTransferTime = TimeSpan.Zero;
                         dailyLoggerModel.Time = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+                        dailyLoggerModel.CryptTime = -1;
                     }
 
                     dailyLoggerModel.SourceFilePath = newPath;
@@ -230,40 +233,6 @@ namespace easy_save.Lib.Service
             return errorCount;
         }
 
-        private int Encrypt(string inputPath, string outputPath)
-        {
-            ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.FileName = $@"{ConfigurationManager.AppSettings["CryptosoftPath"]}";
-            startInfo.Arguments = $@"""{inputPath}"" ""{outputPath}"" ""{ConfigurationManager.AppSettings["CryptKeyPath"]}""";
-            startInfo.UseShellExecute = false;
-            
-            try
-            {
-                var process = new Process();
-                process.StartInfo = startInfo;
-
-                process.Start();
-
-                int code = 0;
-
-                try
-                {
-                    while (!process.WaitForExit(1)) { }
-                    code = process.ExitCode;
-                }
-                finally
-                {
-                    process.Dispose();
-                }
-
-                return code;
-            } 
-            catch 
-            {
-                return -1;
-            }
-        }
-
         private int CopyProcess(string inPath, SaveWorkModel save ,List<string> extensions)
         {
             FileInfo fileInfo = new FileInfo(inPath);
@@ -272,7 +241,8 @@ namespace easy_save.Lib.Service
             int returnCode = 0;
             if (extensions.Contains(fileInfo.Extension))
             {
-                returnCode = Encrypt(inPath, destinationPath);
+                CryptService crypt = new CryptService();
+                returnCode = crypt.Crypt(inPath, destinationPath);
             }
 
             else
