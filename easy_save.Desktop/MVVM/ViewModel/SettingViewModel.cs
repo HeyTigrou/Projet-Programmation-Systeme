@@ -66,13 +66,13 @@ namespace easy_save.Desktop.MVVM.ViewModel
 
                 if (JsonIsSelected)
                 {
-                    configuration.AppSettings.Settings["LogsInXMl"].Value = "Y";
-                    configuration.AppSettings.Settings["LogsInJson"].Value = "N";
+                    configuration.AppSettings.Settings["LogsInXMl"].Value = "N";
+                    configuration.AppSettings.Settings["LogsInJson"].Value = "Y";
                 }
                 else if (XmlIsSelected)
                 {
-                    configuration.AppSettings.Settings["LogsInXMl"].Value = "N";
-                    configuration.AppSettings.Settings["LogsInJson"].Value = "Y";
+                    configuration.AppSettings.Settings["LogsInXMl"].Value = "Y";
+                    configuration.AppSettings.Settings["LogsInJson"].Value = "N";
                 }
                 else
                 {

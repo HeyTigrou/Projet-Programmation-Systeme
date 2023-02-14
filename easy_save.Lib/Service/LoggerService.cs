@@ -11,6 +11,7 @@ using Newtonsoft.Json.Serialization;
 using System.Xml;
 using System.Xml.Linq;
 using System.Configuration;
+using System.Xml.Serialization;
 
 namespace easy_save.Lib.Service
 {
@@ -134,17 +135,31 @@ namespace easy_save.Lib.Service
             string DailyLogString;
             string filetext;
 
-            List<DailyLoggerModel> fileData = new List<DailyLoggerModel>();
-            if (new FileInfo(DailyLogJsonFile).Length != 0)
+            List<DailyLoggerModel> fileDataJson = new List<DailyLoggerModel>();
+            List<DailyLoggerModel> fileDataXml = new List<DailyLoggerModel>();
+            if (ConfigurationManager.AppSettings["LogsInJson"] == "Y")
             {
-                filetext = File.ReadAllText(DailyLogJsonFile);
-                fileData = System.Text.Json.JsonSerializer.Deserialize<List<DailyLoggerModel>>(filetext);
+                if (new FileInfo(DailyLogJsonFile).Length != 0)
+                {
+                    filetext = File.ReadAllText(DailyLogJsonFile);
+                    fileDataJson = System.Text.Json.JsonSerializer.Deserialize<List<DailyLoggerModel>>(filetext);
+                }
+                fileDataJson.AddRange(DailyLogs);
             }
-            fileData.AddRange(DailyLogs);
+            if (ConfigurationManager.AppSettings["LogsInXMl"] == "Y")
+            {
+                if (new FileInfo(DailyLogXmlFile).Length != 0)
+                {
+                    string xmlFileText = File.ReadAllText(DailyLogXmlFile);
+
+                    fileDataXml = (List<DailyLoggerModel>)ConvertXmlStringtoObject<List<DailyLoggerModel>>(xmlFileText);
+                }
+                fileDataXml.AddRange(DailyLogs);
+            }
 
             if (ConfigurationManager.AppSettings["LogsInJson"] == "Y")
             {
-                DailyLogString = System.Text.Json.JsonSerializer.Serialize(fileData);
+                DailyLogString = System.Text.Json.JsonSerializer.Serialize(fileDataJson);
 
                 File.WriteAllText(DailyLogJsonFile, DailyLogString);
             }
@@ -153,10 +168,22 @@ namespace easy_save.Lib.Service
             {
                 using (TextWriter writer = new StreamWriter(DailyLogXmlFile))
                 {
-                    System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(fileData.GetType());
-                    x.Serialize(writer, fileData);
+                    System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(fileDataXml.GetType());
+                    x.Serialize(writer, fileDataXml);
                 }
             }
+        }
+
+        private static T ConvertXmlStringtoObject<T>(string xmlString)
+        {
+            T classObject;
+
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
+            using (StringReader stringReader = new StringReader(xmlString))
+            {
+                classObject = (T)xmlSerializer.Deserialize(stringReader);
+            }
+            return classObject;
         }
     }
 }
