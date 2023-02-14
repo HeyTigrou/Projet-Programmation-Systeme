@@ -14,11 +14,9 @@
     <system:String x:Key="English">Anglais</system:String>
 
     <system:String x:Key="HomeTitle">Bienvenue dans EasySave</system:String>
-    <system:String x:Key="Description">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris id consectetur enim, tincidunt semper ex.
-        Nunc pharetra nunc eu convallis semper. Cras tristique nibh sit amet posuere lacinia. Fusce ullamcorper efficitur nisi.
-        Aliquam convallis ornare justo rhoncus finibus. Nam vel pulvinar mi. Donec scelerisque sodales elementum.
-    </system:String>
+    <system:String x:Key="Description1">EasySave est une application qui vous permettra de sauvegarder vos données de manière sécurisée à l'aide de méthodes de chiffrement mis en place.</system:String>
+    <system:String x:Key="Description2">Vous aurez la possibilité de choisir les formats de fichiers que vous voulez chiffrer.</system:String>
+    <system:String x:Key="Description3">L'application vous permet aussi de réaliser plusieurs processus de sauvegarde en simultanée.</system:String>
 
     <system:String x:Key="Name">Nom :</system:String>
     <system:String x:Key="Source">Chemin du fichier à sauvegarder :</system:String>

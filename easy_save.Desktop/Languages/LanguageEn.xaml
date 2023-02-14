@@ -14,11 +14,9 @@
     <system:String x:Key="English">English</system:String>
 
     <system:String x:Key="HomeTitle">Welcome in EasySave</system:String>
-    <system:String x:Key="Description">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris id consectetur enim, tincidunt semper ex.
-        Nunc pharetra nunc eu convallis semper. Cras tristique nibh sit amet posuere lacinia. Fusce ullamcorper efficitur nisi.
-        Aliquam convallis ornare justo rhoncus finibus. Nam vel pulvinar mi. Donec scelerisque sodales elementum.
-    </system:String>
+    <system:String x:Key="Description1">EasySave is an application that will allow you to save your data in a secure way using encryption methods set up.</system:String>
+    <system:String x:Key="Description2">You will be able to choose the file formats you want to encrypt.</system:String>
+    <system:String x:Key="Description3">The application also allows you to perform several backup processes simultaneously.</system:String>
 
     <system:String x:Key="Name">Name :</system:String>
     <system:String x:Key="Source">Path File to Save :</system:String>
