@@ -1,0 +1,23 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:view="clr-namespace:easy_save.Desktop.MVVM.View"
+    xmlns:vm="clr-namespace:easy_save.Desktop.MVVM.ViewModel">
+
+    <DataTemplate DataType="{x:Type vm:HomeViewModel}">
+        <view:HomeView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:CreateViewModel}">
+        <view:CreateView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:SavesViewModel}">
+        <view:SavesView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:SettingViewModel}">
+        <view:SettingView />
+    </DataTemplate>
+
+</ResourceDictionary>

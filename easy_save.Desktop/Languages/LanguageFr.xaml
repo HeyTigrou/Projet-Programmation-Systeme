@@ -1,0 +1,38 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=System.Runtime">
+
+    <system:String x:Key="Home">ACCUEIL</system:String>
+    <system:String x:Key="Create">NOUVEAU</system:String>
+    <system:String x:Key="Detail">SAUVEGARDES</system:String>
+    <system:String x:Key="Setting">PARAMETRE</system:String>
+    <system:String x:Key="Exit">QUITTER</system:String>
+
+    <system:String x:Key="Langage">Language</system:String>
+    <system:String x:Key="French">Français</system:String>
+    <system:String x:Key="English">Anglais</system:String>
+
+    <system:String x:Key="HomeTitle">Bienvenue dans EasySave</system:String>
+    <system:String x:Key="Description">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris id consectetur enim, tincidunt semper ex.
+        Nunc pharetra nunc eu convallis semper. Cras tristique nibh sit amet posuere lacinia. Fusce ullamcorper efficitur nisi.
+        Aliquam convallis ornare justo rhoncus finibus. Nam vel pulvinar mi. Donec scelerisque sodales elementum.
+    </system:String>
+
+    <system:String x:Key="Name">Nom :</system:String>
+    <system:String x:Key="Source">Chemin du fichier à sauvegarder :</system:String>
+    <system:String x:Key="Destination">Chemin du fichier de destination :</system:String>
+    <system:String x:Key="TypeOfBackup">Type de sauvegarde :</system:String>
+    <system:String x:Key="Complete">Tous les fichiers</system:String>
+    <system:String x:Key="Differential">Fichiers modifiés</system:String>
+    <system:String x:Key="ToCreate">Créer</system:String>
+
+    <system:String x:Key="TypeOfLog">Type de journal (log) :</system:String>
+    <system:String x:Key="Encrypt">Extension à crypter :</system:String>
+
+    <system:String x:Key="AddLog">Ajouter</system:String>
+    <system:String x:Key="RemoveLog">Supprimer</system:String>
+
+    <system:String x:Key="Search">Rechercher (optionnel)</system:String>
+</ResourceDictionary>
