@@ -30,7 +30,7 @@ namespace DetectSoftware
                     instance = new FileExtensionModel();
                     instance.Extensions = new ObservableCollection<string>()
         {
-            ".txt",
+                        ".txt",
                         ".doc",
                         ".docx",
                         ".pdf",

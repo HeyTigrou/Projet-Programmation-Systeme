@@ -17,7 +17,6 @@ namespace easy_save.Desktop.MVVM.ViewModel
 {
     internal class SettingViewModel
     {
-
         public bool JsonIsSelected { get; set; } = true;
         public bool XmlIsSelected { get; set; }
         public bool BothAreSelected { get; set; }

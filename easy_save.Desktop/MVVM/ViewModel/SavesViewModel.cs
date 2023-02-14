@@ -15,6 +15,7 @@ using easy_save.Lib.Models;
 using easy_save.Lib.Service;
 using Newtonsoft.Json;
 using System.Configuration;
+using DetectSoftware;
 
 namespace easy_save.Desktop.MVVM.ViewModel
 {
@@ -58,16 +59,16 @@ namespace easy_save.Desktop.MVVM.ViewModel
         }
         private void LaunchSave(SaveWorkModel process)
         {
-            int temp;
-            List<string> extensions = new List<string> { ".txt" }; // !!! must be deleted
+            int errorCount;
+            List<string> extensions = FileExtensionModel.Instance.SelectedExtensions.ToList();
             FileSaveService fileSaveService = new FileSaveService();
-            temp = fileSaveService.SaveProcess(process, extensions);
+            errorCount = fileSaveService.SaveProcess(process, extensions);
         }
         private void LaunchAllSaves()
         {
             int[] errorCount = { 0, 0 };
-            List<string> extensions = new List<string>();
-            foreach(SaveWorkModel process in Processes)
+            List<string> extensions = FileExtensionModel.Instance.SelectedExtensions.ToList();
+            foreach (SaveWorkModel process in Processes)
             {
                 try
                 {
@@ -80,7 +81,5 @@ namespace easy_save.Desktop.MVVM.ViewModel
                 }
             }
         }
-
     }
-
 }
