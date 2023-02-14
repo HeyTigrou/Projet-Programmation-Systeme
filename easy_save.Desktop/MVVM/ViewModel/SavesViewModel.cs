@@ -16,6 +16,7 @@ using easy_save.Lib.Service;
 using Newtonsoft.Json;
 using System.Configuration;
 using DetectSoftware;
+using easy_save.Desktop.MVVM.View;
 
 namespace easy_save.Desktop.MVVM.ViewModel
 {
@@ -74,8 +75,19 @@ namespace easy_save.Desktop.MVVM.ViewModel
             {
                 int errorCount;
                 List<string> extensions = FileExtensionModel.Instance.SelectedExtensions.ToList();
-                FileSaveService fileSaveService = new FileSaveService();
-                errorCount = fileSaveService.SaveProcess(process, extensions);
+
+                ProcessStateService service = new ProcessStateService();
+                if (service.GetProcessState(ConfigurationManager.AppSettings["WorkProcessName"]))
+                {
+                    PopupProcessRunningView popup = new PopupProcessRunningView();
+                    popup.ShowDialog();
+                }
+                else
+                {
+                    FileSaveService fileSaveService = new FileSaveService();
+                    errorCount = fileSaveService.SaveProcess(process, extensions);
+                }
+                    
             }
             catch { }
         }
@@ -90,8 +102,17 @@ namespace easy_save.Desktop.MVVM.ViewModel
                 {
                     try
                     {
-                        FileSaveService fileSaveService = new FileSaveService();
-                        errorCount[1] += fileSaveService.SaveProcess(process, extensions);
+                        ProcessStateService service = new ProcessStateService();
+                        if (service.GetProcessState(ConfigurationManager.AppSettings["WorkProcessName"]))
+                        {
+                            PopupProcessRunningView popup = new PopupProcessRunningView();
+                            popup.ShowDialog();
+                        }
+                        else
+                        {
+                            FileSaveService fileSaveService = new FileSaveService();
+                            errorCount[1] += fileSaveService.SaveProcess(process, extensions);
+                        }
                     }
                     catch
                     {

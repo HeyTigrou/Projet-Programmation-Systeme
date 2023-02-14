@@ -25,11 +25,14 @@ namespace easy_save.Desktop.MVVM.ViewModel
         public ICommand AddExtensionToEncrypt { get; }
         public ICommand RemoveExtensionToEncrypt { get; }
 
+        public ICommand GenerateKey { get; }
+
         public ObservableCollection<string> Extensions { get; } = FileExtensionModel.Instance.Extensions;
         public ObservableCollection<string> SelectedExtensions { get; } = FileExtensionModel.Instance.SelectedExtensions;
 
         public SettingViewModel()
         {
+            GenerateKey = new RelayCommand(x => Generate64BitKey());
             ChangeLogExtension = new RelayCommand(x => ChangeLogExtensions());
             RemoveExtensionToEncrypt = new RelayCommand(x => RemoveExtension(x as string));
             AddExtensionToEncrypt = new RelayCommand(x => AddExtension(x as string));
@@ -85,6 +88,16 @@ namespace easy_save.Desktop.MVVM.ViewModel
                 ConfigurationManager.RefreshSection("appSettings");
             }
             catch { }
+        }
+
+        private void Generate64BitKey()
+        {
+            try
+            {
+                CryptService cryptService = new CryptService();
+                bool key = cryptService.Generate();
+            }
+            catch {}
         }
     }
 }

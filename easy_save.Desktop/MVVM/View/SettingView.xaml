@@ -101,6 +101,7 @@
                     Width="300"
                     Height="30"
                     Margin="20"
+                    Command="{Binding GenerateKey}"
                     Content="{DynamicResource Generate}"
                     FontSize="15" />
                 </StackPanel>

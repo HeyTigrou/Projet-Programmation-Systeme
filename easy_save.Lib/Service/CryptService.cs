@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace easy_save.Lib.Service
 {
-    internal class CryptService
+    public class CryptService
     {
         public int Crypt(string inputPath, string outputPath)
         {
@@ -51,7 +51,7 @@ namespace easy_save.Lib.Service
                 }
                 return true;
             }
-            catch (Exception e)
+            catch 
             {
                 return false;
             }
