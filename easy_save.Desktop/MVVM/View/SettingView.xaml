@@ -50,6 +50,7 @@
                     HorizontalAlignment="Left"
                     FontSize="14"
                     Foreground="AliceBlue"
+                    
                     Text="{DynamicResource Encrypt}" />
 
                 <StackPanel
@@ -57,19 +58,27 @@
                     Grid.Column="1"
                     Orientation="Horizontal">
 
-                    <ListBox
-                        x:Name="MyListOfExtension"
+                    <DataGrid
+                        Name="MyListOfExtension"
                         Width="180"
                         Height="90"
-                        ItemsSource="{Binding  Extensions}"
-                        SelectedItem="{Binding ExtensionSelected}" />
+                        AutoGenerateColumns="False"
+                        IsReadOnly="True"
+                        
+                        SelectedItem="{Binding ExtensionSelected}" 
+                        ItemsSource="{Binding Extensions}">
 
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding}" Header="Extensions" />
+                        </DataGrid.Columns>
+                    </DataGrid>
                     <StackPanel>
                         <Button
                             Width="70"
                             Height="30"
                             Margin="10,15,10,0"
                             Command="{Binding AddExtensionToEncrypt}"
+                            CommandParameter="{Binding ElementName=MyListOfExtension, Path=SelectedItem}"
                             Content="{DynamicResource AddLog}"
                             FontSize="15" />
 
@@ -78,20 +87,27 @@
                             Height="30"
                             Margin="10,10,10,0"
                             Command="{Binding RemoveExtensionToEncrypt}"
+                            CommandParameter="{Binding ElementName=ExtensionToEncrypt, Path=SelectedItem}"
                             Content="{DynamicResource RemoveLog}"
                             FontSize="15" />
                     </StackPanel>
 
-                    <ListBox
-                        x:Name="ExtensionToEncrypt"
+                    <DataGrid
+                        Name="ExtensionToEncrypt"
                         Width="180"
                         Height="90"
-                        ItemsSource="{Binding SelectedExtensions}"
-                        SelectedItem="{Binding ExtensionSelected}" />
+                        AutoGenerateColumns="False"
+                        IsReadOnly="True"
+                        
+                        SelectedItem="{Binding ExtensionSelected}" 
+                        ItemsSource="{Binding SelectedExtensions}">
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding}" Header="Extensions" />
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </StackPanel>
-
             </StackPanel>
-
         </Grid>
     </Border>
 </UserControl>
