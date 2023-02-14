@@ -15,5 +15,6 @@ namespace easy_save.Lib.Models
         public long Filesize { set; get; }
         public TimeSpan FileTransferTime { set; get; }
         public string Time { set; get; }
+        public int CryptTime { set; get; }
     }
 }
