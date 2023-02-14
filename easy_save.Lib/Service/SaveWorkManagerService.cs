@@ -54,13 +54,8 @@ namespace easy_save.Lib.Service
             {
                 Directory.CreateDirectory($@"{ConfigurationManager.AppSettings["SaveProjectEmplacement"]}");
             }
-            
-            if (GetSaveProjectnumber() >= Int32.Parse(ConfigurationManager.AppSettings["MaxNumberOfSave"]))
-            {
-                return false;
-            }
 
-            else if (GetSaveWorks().Any(x => x.Name == saveWork.Name))
+            if (GetSaveWorks().Any(x => x.Name == saveWork.Name))
             {
                 return false;
             }
