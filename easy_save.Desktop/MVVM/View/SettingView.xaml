@@ -61,7 +61,7 @@
                         x:Name="MyListOfExtension"
                         Width="180"
                         Height="90"
-                        ItemsSource="{Binding MyListOfExtension}"
+                        ItemsSource="{Binding  Extensions}"
                         SelectedItem="{Binding ExtensionSelected}" />
 
                     <StackPanel>
@@ -86,9 +86,8 @@
                         x:Name="ExtensionToEncrypt"
                         Width="180"
                         Height="90"
-                        ItemsSource="{Binding ExtensionToEncrypt}"
+                        ItemsSource="{Binding SelectedExtensions}"
                         SelectedItem="{Binding ExtensionSelected}" />
-
                 </StackPanel>
 
             </StackPanel>

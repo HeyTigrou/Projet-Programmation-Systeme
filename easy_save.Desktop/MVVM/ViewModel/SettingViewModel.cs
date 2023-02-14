@@ -9,6 +9,9 @@ using System.Windows;
 using System.Windows.Input;
 using Newtonsoft.Json.Linq;
 using System.Configuration;
+using DetectSoftware;
+using easy_save.Lib.Models;
+using easy_save.Lib.Service;
 
 namespace easy_save.Desktop.MVVM.ViewModel
 {
@@ -21,10 +24,9 @@ namespace easy_save.Desktop.MVVM.ViewModel
 
         public ICommand ChangeLogExtension { get; }
         
-
+        public FileExtensionModel Instance = FileExtensionModel.Instance;
         public SettingViewModel()
         {
-
             ChangeLogExtension = new RelayCommand(x => ChangeLogExtensions());
             ChangeLogExtensions();
         }
