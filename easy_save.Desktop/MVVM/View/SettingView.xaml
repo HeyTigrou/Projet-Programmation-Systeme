@@ -69,7 +69,7 @@
                         ItemsSource="{Binding Extensions}">
 
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding}" Header="Extensions" />
+                            <DataGridTextColumn Binding="{Binding}" Header="Extensions" Width="*"/>
                         </DataGrid.Columns>
                     </DataGrid>
                     <StackPanel>
@@ -103,7 +103,7 @@
                         ItemsSource="{Binding SelectedExtensions}">
 
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding}" Header="Extensions" />
+                            <DataGridTextColumn Binding="{Binding}" Header="Extensions" Width="*" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>

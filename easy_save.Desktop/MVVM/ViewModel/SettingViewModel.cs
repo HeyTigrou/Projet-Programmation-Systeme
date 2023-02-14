@@ -26,40 +26,8 @@ namespace easy_save.Desktop.MVVM.ViewModel
         public ICommand AddExtensionToEncrypt { get; }
         public ICommand RemoveExtensionToEncrypt { get; }
 
-        public ObservableCollection<string> Extensions { get; } = new ObservableCollection<string>()
-        {
-            ".txt",
-                        ".doc",
-                        ".docx",
-                        ".pdf",
-                        ".xls",
-                        ".xlsx",
-                        ".ppt",
-                        ".pptx",
-                        ".jpg",
-                        ".jpeg",
-                        ".png",
-                        ".gif",
-                        ".bmp",
-                        ".mp3",
-                        ".wav",
-                        ".mp4",
-                        ".avi",
-                        ".wmv",
-                        ".mov",
-                        ".zip",
-                        ".rar",
-                        ".7z",
-                        ".exe",
-                        ".dll",
-                        ".iso",
-                        ".bat",
-                        ".cmd"
-        };
-        public ObservableCollection<string> SelectedExtensions { get; } = new ObservableCollection<string>()
-        {
-            
-        };
+        public ObservableCollection<string> Extensions { get; } = FileExtensionModel.Instance.Extensions;
+        public ObservableCollection<string> SelectedExtensions { get; } = FileExtensionModel.Instance.SelectedExtensions;
 
         public SettingViewModel()
         {
@@ -73,11 +41,15 @@ namespace easy_save.Desktop.MVVM.ViewModel
         {
             Extensions.Add(extension);
             SelectedExtensions.Remove(extension);
+            FileExtensionModel.Instance.Extensions = Extensions;
+            FileExtensionModel.Instance.SelectedExtensions = SelectedExtensions;
         }
         private void AddExtension(string extension)
         {
             Extensions.Remove(extension);
             SelectedExtensions.Add(extension);
+            FileExtensionModel.Instance.Extensions = Extensions;
+            FileExtensionModel.Instance.SelectedExtensions = SelectedExtensions;
         }
         private void ChangeLogExtensions()
         {
