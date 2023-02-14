@@ -11,7 +11,7 @@
     MinHeight="550"
     MaxWidth="900"
     MaxHeight="550"
-    Icon="C:\Users\luken\Source\Repos\HeyTigrou\Projet-Programmation-Systeme\easy_save.Desktop\Asset\Images\iconTop.png"
+    Icon="Asset/Images/iconTop.png"
     mc:Ignorable="d">
 
     <Window.DataContext>
@@ -29,8 +29,8 @@
 
     <Border CornerRadius="10">
         <Border.Background>
-            <ImageBrush ImageSource="C:\Users\luken\Source\Repos\HeyTigrou\Projet-Programmation-Systeme\easy_save.Desktop\Asset\Images\bg.png" Stretch="Fill" />
-            <!--<ImageBrush ImageSource="Asset/Images/bg.png" Stretch="Fill" />-->
+            <!--<ImageBrush ImageSource="C:\Users\luken\Source\Repos\HeyTigrou\Projet-Programmation-Systeme\easy_save.Desktop\Asset\Images\bg.png" Stretch="Fill" />-->
+            <ImageBrush ImageSource="Asset/Images/bg.png" Stretch="Fill" />
         </Border.Background>
 
         <Grid>
@@ -44,8 +44,8 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
 
-            <Image Width="150" Source="C:\Users\luken\Source\Repos\HeyTigrou\Projet-Programmation-Systeme\easy_save.Desktop\Asset\Images\Logo.png" />
-            <!--<Image Width="150" Source="Asset/Images/logo.png" />-->
+            <!--<Image Width="150" Source="C:\Users\luken\Source\Repos\HeyTigrou\Projet-Programmation-Systeme\easy_save.Desktop\Asset\Images\Logo.png" />-->
+            <Image Width="150" Source="Asset/Images/logo.png" />
 
 
             <!--  Menu  -->
