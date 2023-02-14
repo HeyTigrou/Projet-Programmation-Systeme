@@ -23,14 +23,62 @@ namespace easy_save.Desktop.MVVM.ViewModel
         public bool BothAreSelected { get; set; }
 
         public ICommand ChangeLogExtension { get; }
-        
-        public FileExtensionModel Instance = FileExtensionModel.Instance;
+        public ICommand AddExtensionToEncrypt { get; }
+        public ICommand RemoveExtensionToEncrypt { get; }
+
+        public ObservableCollection<string> Extensions { get; } = new ObservableCollection<string>()
+        {
+            ".txt",
+                        ".doc",
+                        ".docx",
+                        ".pdf",
+                        ".xls",
+                        ".xlsx",
+                        ".ppt",
+                        ".pptx",
+                        ".jpg",
+                        ".jpeg",
+                        ".png",
+                        ".gif",
+                        ".bmp",
+                        ".mp3",
+                        ".wav",
+                        ".mp4",
+                        ".avi",
+                        ".wmv",
+                        ".mov",
+                        ".zip",
+                        ".rar",
+                        ".7z",
+                        ".exe",
+                        ".dll",
+                        ".iso",
+                        ".bat",
+                        ".cmd"
+        };
+        public ObservableCollection<string> SelectedExtensions { get; } = new ObservableCollection<string>()
+        {
+            
+        };
+
         public SettingViewModel()
         {
             ChangeLogExtension = new RelayCommand(x => ChangeLogExtensions());
+            RemoveExtensionToEncrypt = new RelayCommand(x => RemoveExtension(x as string));
+            AddExtensionToEncrypt = new RelayCommand(x => AddExtension(x as string));
             ChangeLogExtensions();
         }
 
+        private void RemoveExtension(string extension)
+        {
+            Extensions.Add(extension);
+            SelectedExtensions.Remove(extension);
+        }
+        private void AddExtension(string extension)
+        {
+            Extensions.Remove(extension);
+            SelectedExtensions.Add(extension);
+        }
         private void ChangeLogExtensions()
         {
             Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
