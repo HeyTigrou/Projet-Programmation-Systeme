@@ -107,7 +107,8 @@
                     Checked="EnglishButton_Checked"
                     Command="{Binding SwitchLanguageEN}"
                     Content="{DynamicResource English}"
-                    Foreground="AliceBlue" />
+                    Foreground="AliceBlue"
+                    IsChecked="True" />
 
             </StackPanel>
 

@@ -5,20 +5,24 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:easy_save.Desktop.MVVM.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="PopupProcessRunningView"
-    Width="500"
-    Height="195"
+    Title="Error can't start save process"
+    Width="320"
+    Height="125"
     mc:Ignorable="d">
-    <Grid Margin="0,0,-41,-30">
+    <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="375*" />
-            <ColumnDefinition Width="16*" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Label>Business software running, unable to start save process</Label>
+
+        <Label>
+            <TextBlock>
+                Business software running, unable to start save process.<LineBreak /><LineBreak />
+                Please shutdown the business process.</TextBlock>
+        </Label>
         <Button
             Width="50"
             Height="20"
-            Margin="375,90,45,45"
+            Margin="255,70,15,15"
             Click="Button_Click"
             Content="Fermer" />
     </Grid>
