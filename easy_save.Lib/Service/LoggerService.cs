@@ -73,7 +73,7 @@ namespace easy_save.Lib.Service
         }
 
         // This method is used to create the log file that save the state of the save works
-        public void logProcessFile(string processName)
+        public void LogProcessFile(string processName)
         {
             if (ConfigurationManager.AppSettings["LogsInJson"] == "Y")
             {
@@ -97,7 +97,7 @@ namespace easy_save.Lib.Service
         }
 
         // This method is used to log the state of the save works
-        public void logProcessState(StateLoggerModel stateLoggerModel)
+        public void LogProcessState(StateLoggerModel stateLoggerModel)
         {
             string json;
 
@@ -128,7 +128,7 @@ namespace easy_save.Lib.Service
         }
 
         // This method is used to log the daily saves
-        public void logDailySaves()
+        public void LogDailySaves()
         {
             // We call the method that will create the log file if it doesn't exist
             SetLogFilePath();

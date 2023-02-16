@@ -76,11 +76,11 @@ namespace easy_save.Lib.Service
         // This method is used to save all the files from the source folder into the destination folder
         private int SaveAllFiles(SaveWorkModel save, LoggerService logger, List<string> extensions)
         {
-            logger.logProcessFile(save.Name);
+            logger.LogProcessFile(save.Name);
 
             InitializeLoggerModels(save);
 
-            logger.logProcessState(stateLoggerModel);
+            logger.LogProcessState(stateLoggerModel);
 
             foreach (string dirPath in Directory.GetDirectories(save.InputPath, "*", SearchOption.AllDirectories))
             {
@@ -98,7 +98,7 @@ namespace easy_save.Lib.Service
                 
                 try
                 {
-                    logger.logProcessState(stateLoggerModel);
+                    logger.LogProcessState(stateLoggerModel);
                 }
                 catch { }
 
@@ -137,9 +137,9 @@ namespace easy_save.Lib.Service
             {
                 StateLoggerToDone();
 
-                logger.logDailySaves();
+                logger.LogDailySaves();
 
-                logger.logProcessState(stateLoggerModel);
+                logger.LogProcessState(stateLoggerModel);
             }
             catch { }
 
@@ -149,11 +149,11 @@ namespace easy_save.Lib.Service
         // This method is used to only save the files that changed in the source folder into the destination folder
         private int SaveChangedFiles(SaveWorkModel save, LoggerService logger, List<string> extensions)
         {
-            logger.logProcessFile(save.Name);
+            logger.LogProcessFile(save.Name);
 
             InitializeLoggerModels(save);
 
-            logger.logProcessState(stateLoggerModel);
+            logger.LogProcessState(stateLoggerModel);
 
             foreach (string dirPath in Directory.GetDirectories(save.InputPath, "*", SearchOption.AllDirectories))
             {
@@ -180,7 +180,7 @@ namespace easy_save.Lib.Service
 
                     try
                     {
-                        logger.logProcessState(stateLoggerModel);
+                        logger.LogProcessState(stateLoggerModel);
                     }
                     catch { }
                     
@@ -224,9 +224,9 @@ namespace easy_save.Lib.Service
             {
                 StateLoggerToDone();
 
-                logger.logDailySaves();
+                logger.LogDailySaves();
 
-                logger.logProcessState(stateLoggerModel);
+                logger.LogProcessState(stateLoggerModel);
             }
             catch { }
             
