@@ -10,6 +10,12 @@ namespace easy_save.Lib.Service
 {
     public class CryptService
     {
+        /// <summary>
+        /// Crypts the given file and saves the crypted file in the given output path.
+        /// </summary>
+        /// <param name="inputPath"></param>
+        /// <param name="outputPath"></param>
+        /// <returns></returns>
         public int Crypt(string inputPath, string outputPath)
         {
             ProcessStartInfo startInfo = new ProcessStartInfo();
@@ -37,7 +43,11 @@ namespace easy_save.Lib.Service
                 return -1;
             }
         }
-        
+
+        /// <summary>
+        /// Generates a crypt key.
+        /// </summary>
+        /// <returns></returns>
         public bool Generate ()
         {
             var random = new Random();

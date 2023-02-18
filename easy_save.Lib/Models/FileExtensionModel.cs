@@ -14,6 +14,9 @@ namespace DetectSoftware
 
         public ObservableCollection<string> SelectedExtensions { get; set; }
 
+        /// <summary>
+        /// Creates a singleton of the model.
+        /// </summary>
         private static FileExtensionModel instance;
 
         private FileExtensionModel()
@@ -21,6 +24,9 @@ namespace DetectSoftware
 
         }
 
+        /// <summary>
+        /// This constructor adds all the existing extensions to the Extensions ObservableCollection, and initiates the selesctedExtensions ObservableCollection a empty.
+        /// </summary>
         public static FileExtensionModel Instance
         {
             get

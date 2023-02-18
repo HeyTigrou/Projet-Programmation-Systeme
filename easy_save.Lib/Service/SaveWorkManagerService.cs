@@ -11,10 +11,15 @@ using System.Text.Json;
 
 namespace easy_save.Lib.Service
 {
-    // This class is used to manage every save works
+    /// <summary>
+    /// This class is used to manage every save works
+    /// </summary>
     public class SaveWorkManagerService
     {
-        // This method is used to get all the save works
+        /// <summary>
+        /// This method is used to get all the save works
+        /// </summary>
+        /// <returns></returns>
         public SaveWorkModel[] GetSaveWorks()
         {
             if (!Directory.Exists($@"{ConfigurationManager.AppSettings["SaveProjectEmplacement"]}"))
@@ -36,7 +41,11 @@ namespace easy_save.Lib.Service
         }
 
 
-        // This method is used to create a save work
+        /// <summary>
+        /// This method is used to create a save work
+        /// </summary>
+        /// <param name="saveWork"></param>
+        /// <returns></returns>
         public bool AddSaveWork(SaveWorkModel saveWork)
         {
             if (!Directory.Exists($@"{ConfigurationManager.AppSettings["SaveProjectEmplacement"]}"))
@@ -58,7 +67,11 @@ namespace easy_save.Lib.Service
 
         }
 
-        // This method is used to delete a save work
+        /// <summary>
+        /// This method is used to delete a save work
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public bool DeleteSaveWork(string name)
         {
             string path = $@"{ConfigurationManager.AppSettings["SaveProjectEmplacement"]}{name}.json";

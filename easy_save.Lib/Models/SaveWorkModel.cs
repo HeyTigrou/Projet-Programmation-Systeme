@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace easy_save.Lib.Models
 {
-    // This Model is used to manage the save works
+    /// <summary>
+    /// This Model is used to manage the save works
+    /// </summary>
     public class SaveWorkModel 
     {
         public string Name { get; set; }

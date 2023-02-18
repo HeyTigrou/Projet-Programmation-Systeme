@@ -29,8 +29,16 @@ namespace easy_save.Desktop.MVVM.ViewModel
         public ICommand LaunchAllCommand { get; }
 
         private SaveWorkManagerService SaveWorkManager = new SaveWorkManagerService();
+
+        /// <summary>
+        /// This observable collection contains all the processes on the selected folder. It is binded to a datagrid in the view.
+        /// </summary>
         public ObservableCollection<SaveWorkModel> Processes { get; } = new ObservableCollection<SaveWorkModel>();
 
+
+        /// <summary>
+        /// Binds the methods with button, and adds the existing save works to the observable collection.
+        /// </summary>
         public SavesViewModel()
         {
             RefreshCommand = new RelayCommand(x => Refresh());
@@ -40,6 +48,9 @@ namespace easy_save.Desktop.MVVM.ViewModel
             Refresh();
         }
 
+        /// <summary>
+        /// Refreshes the observable collection, clears it and adds the save works.
+        /// </summary>
         private void Refresh()
         {
 
@@ -55,6 +66,10 @@ namespace easy_save.Desktop.MVVM.ViewModel
             catch { }
         }
 
+        /// <summary>
+        /// Removes the selected save work.
+        /// </summary>
+        /// <param name="process"></param>
         private void Remove(SaveWorkModel process)
         {
 
@@ -66,7 +81,11 @@ namespace easy_save.Desktop.MVVM.ViewModel
             }
             catch { }
         }
-        
+
+        /// <summary>
+        /// Launches the selected save work.
+        /// </summary>
+        /// <param name="process"></param>
         private void LaunchSave(SaveWorkModel process)
         {
 
@@ -90,7 +109,10 @@ namespace easy_save.Desktop.MVVM.ViewModel
             }
             catch { }
         }
-        
+
+        /// <summary>
+        /// Launches all the save works.
+        /// </summary>
         private void LaunchAllSaves()
         {
 
