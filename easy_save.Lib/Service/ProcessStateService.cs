@@ -20,14 +20,5 @@ namespace easy_save.Lib.Service
             }
             return isRunning;
         }
-
-        public bool IsProcessClosed(string processName)
-        {
-            Process process = new Process();
-            process = Process.GetProcessesByName(processName)[0];
-            process.WaitForExit();
-            
-            return true;
-        }
     }
 }

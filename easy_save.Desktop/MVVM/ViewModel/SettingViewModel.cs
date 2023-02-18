@@ -24,7 +24,6 @@ namespace easy_save.Desktop.MVVM.ViewModel
         public ICommand ChangeLogExtension { get; }
         public ICommand AddExtensionToEncrypt { get; }
         public ICommand RemoveExtensionToEncrypt { get; }
-
         public ICommand GenerateKey { get; }
 
         public ObservableCollection<string> Extensions { get; } = FileExtensionModel.Instance.Extensions;
@@ -50,6 +49,7 @@ namespace easy_save.Desktop.MVVM.ViewModel
             }
             catch { }
         }
+        
         private void AddExtension(string extension)
         {
             try
@@ -61,6 +61,7 @@ namespace easy_save.Desktop.MVVM.ViewModel
             }
             catch { }
         }
+        
         private void ChangeLogExtensions()
         {
             try

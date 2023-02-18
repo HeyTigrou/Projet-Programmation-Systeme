@@ -49,6 +49,8 @@ namespace easy_save.Desktop.MVVM.ViewModel
         public int SaveType { get; set; }
         public ICommand CreateCommand { get; }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         private SaveWorkManagerService saveWorkManager = new SaveWorkManagerService();
 
         public CreateViewModel() 
@@ -79,8 +81,6 @@ namespace easy_save.Desktop.MVVM.ViewModel
             }
             catch { }
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         private void SetProperty([CallerMemberName] string name = null)
         {

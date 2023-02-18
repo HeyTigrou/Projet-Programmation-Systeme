@@ -29,7 +29,7 @@ namespace easy_save.Desktop.MVVM.ViewModel
         public ICommand LaunchCommand { get; }
         public ICommand LaunchAllCommand { get; }
 
-        private SaveWorkManagerService saveWorkManager = new SaveWorkManagerService();
+        private SaveWorkManagerService SaveWorkManager = new SaveWorkManagerService();
         public ObservableCollection<SaveWorkModel> Processes { get; } = new ObservableCollection<SaveWorkModel>();
 
         public SavesViewModel()
@@ -41,7 +41,6 @@ namespace easy_save.Desktop.MVVM.ViewModel
             Refresh();
         }
 
-
         private void Refresh()
         {
 
@@ -49,7 +48,7 @@ namespace easy_save.Desktop.MVVM.ViewModel
             {
                 Processes.Clear();
 
-                foreach (SaveWorkModel saveWork in saveWorkManager.GetSaveWorks())
+                foreach (SaveWorkModel saveWork in SaveWorkManager.GetSaveWorks())
                 {
                     Processes.Add(saveWork);
                 }
@@ -62,12 +61,13 @@ namespace easy_save.Desktop.MVVM.ViewModel
 
             try
             {
-                saveWorkManager.DeleteSaveWork(process.Name);
+                SaveWorkManager.DeleteSaveWork(process.Name);
 
                 Refresh();
             }
             catch { }
         }
+        
         private void LaunchSave(SaveWorkModel process)
         {
 
@@ -91,6 +91,7 @@ namespace easy_save.Desktop.MVVM.ViewModel
             }
             catch { }
         }
+        
         private void LaunchAllSaves()
         {
 
