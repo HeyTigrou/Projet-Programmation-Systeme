@@ -28,3 +28,6 @@ bld/
 /easy_save.Cmd/ViewModels
 /easy_save.Cmd/ConfigurationFiles/easy_save_config.json
 /easy_save.Cmd/Properties/PublishProfiles
+/easy_save.Desktop/MVVM/View/PopupProcessRunningView.xaml
+/easy_save.Desktop/MVVM/View/PopupProcessRunningView.xaml
+/easy_save.Desktop/MVVM/View/PopupProcessRunningView.xaml.cs
