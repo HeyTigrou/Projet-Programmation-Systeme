@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using System.IO;
 using easy_save.Lib.Models;
 using System.Configuration;
 using System.Collections.ObjectModel;
+using System.Text.Json;
 
 namespace easy_save.Lib.Service
 {
@@ -26,8 +26,9 @@ namespace easy_save.Lib.Service
 
             for (int i = 0; i < saveWorks.Length; i++)
             {
+                
                 string json = File.ReadAllText(saveWorks[i]);
-                SaveWorkModel data = JsonConvert.DeserializeObject<SaveWorkModel>(json);
+                SaveWorkModel data = JsonSerializer.Deserialize<SaveWorkModel>(json);
                 works[i] = data;
             }
 
@@ -50,7 +51,7 @@ namespace easy_save.Lib.Service
 
             else
             {
-                string json = JsonConvert.SerializeObject(saveWork);
+                string json = JsonSerializer.Serialize(saveWork);
                 File.WriteAllText($@"{ConfigurationManager.AppSettings["SaveProjectEmplacement"]}{saveWork.Name}.json", json);
                 return true;
             }

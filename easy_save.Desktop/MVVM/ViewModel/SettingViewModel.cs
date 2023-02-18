@@ -7,7 +7,6 @@ using easy_save.Desktop.Utilities;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
-using Newtonsoft.Json.Linq;
 using System.Configuration;
 using DetectSoftware;
 using easy_save.Lib.Models;

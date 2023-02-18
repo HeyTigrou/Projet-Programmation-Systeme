@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 
 using System.IO.Enumeration;
 using easy_save.Lib.Models;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using System.Xml;
 using System.Xml.Linq;
 using System.Configuration;

@@ -13,7 +13,6 @@ using System.Windows.Input;
 using System.Xml.Linq;
 using easy_save.Lib.Models;
 using easy_save.Lib.Service;
-using Newtonsoft.Json;
 using System.Configuration;
 using DetectSoftware;
 using easy_save.Desktop.MVVM.View;
