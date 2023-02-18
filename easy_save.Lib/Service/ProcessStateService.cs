@@ -11,14 +11,11 @@ namespace easy_save.Lib.Service
     {
         public bool GetProcessState(string processName)
         {
-            bool isRunning = false;
 
             Process[] process = Process.GetProcessesByName(processName);
-            if (process.Length > 0)
-            {
-                isRunning = true;
-            }
-            return isRunning;
+
+            return process.Length > 0;
         }
+
     }
 }

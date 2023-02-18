@@ -79,8 +79,8 @@ namespace easy_save.Desktop.MVVM.ViewModel
                 ProcessStateService service = new ProcessStateService();
                 if (service.GetProcessState(ConfigurationManager.AppSettings["WorkProcessName"]))
                 {
-                    PopupProcessRunningView popup = new PopupProcessRunningView();
-                    popup.ShowDialog();
+                    PopupProcessCannotStartView failurePopup = new PopupProcessCannotStartView();
+                    failurePopup.ShowDialog();
                 }
                 else
                 {
@@ -106,8 +106,8 @@ namespace easy_save.Desktop.MVVM.ViewModel
                         ProcessStateService service = new ProcessStateService();
                         if (service.GetProcessState(ConfigurationManager.AppSettings["WorkProcessName"]))
                         {
-                            PopupProcessRunningView popup = new PopupProcessRunningView();
-                            popup.ShowDialog();
+                            PopupProcessCannotStartView failurePopup = new PopupProcessCannotStartView();
+                            failurePopup.ShowDialog();
                         }
                         else
                         {
