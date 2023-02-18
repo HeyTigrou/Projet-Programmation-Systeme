@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 namespace easy_save.Desktop.MVVM.View
 {
     /// <summary>
-    /// Logique d'interaction pour PopupProcessRunningView.xaml
+    /// Popup displayed when a process cannot be started
     /// </summary>
     public partial class PopupProcessCannotStartView : Window
     {
