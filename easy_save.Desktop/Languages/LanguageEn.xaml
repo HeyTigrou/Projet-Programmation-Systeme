@@ -41,4 +41,5 @@
     <system:String x:Key="LogFileExtension">Save</system:String>
 
     <system:String x:Key="Search">Browse (optional)</system:String>
+    <system:String x:Key="RemoveThread">Delete thread</system:String>
 </ResourceDictionary>

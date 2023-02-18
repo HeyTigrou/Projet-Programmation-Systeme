@@ -10,6 +10,12 @@ namespace easy_save.Lib.Service
 {
     public class CryptService
     {
+        /// <summary>
+        /// Crypts the given file and saves the crypted file in the given output path.
+        /// </summary>
+        /// <param name="inputPath"></param>
+        /// <param name="outputPath"></param>
+        /// <returns></returns>
         public int Crypt(string inputPath, string outputPath)
         {
             ProcessStartInfo startInfo = new ProcessStartInfo();
@@ -38,13 +44,19 @@ namespace easy_save.Lib.Service
             }
         }
         
+        /// <summary>
+        /// Generates a crypt key.
+        /// </summary>
+        /// <returns></returns>
         public bool Generate ()
         {
+            // Chosses a random 64 bit number.
             var random = new Random();
             ulong key = (ulong)random.Next() << 32 | (ulong)random.Next();
             string keyPath = $@"{ConfigurationManager.AppSettings["CryptKeyPath"]}";
             try
             {
+                // Writes it to the key file.
                 using (StreamWriter sw = new StreamWriter(keyPath))
                 {
                     sw.WriteLine(key.ToString());

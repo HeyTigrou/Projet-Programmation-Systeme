@@ -14,6 +14,7 @@ namespace easy_save.Desktop.MVVM.ViewModel
 {
     internal class CreateViewModel : INotifyPropertyChanged
     {
+
         private string saveName;
         public string SaveName
         {
@@ -53,10 +54,17 @@ namespace easy_save.Desktop.MVVM.ViewModel
 
         private SaveWorkManagerService saveWorkManager = new SaveWorkManagerService();
 
+        /// <summary>
+        /// Binds the button with the Create method.
+        /// </summary>
         public CreateViewModel() 
         {
             CreateCommand = new RelayCommand(x => Create());
         }   
+
+        /// <summary>
+        /// Creates a save work with the entered name and paths.
+        /// </summary>
         private void Create()
         {
             try

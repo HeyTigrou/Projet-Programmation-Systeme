@@ -12,7 +12,9 @@ namespace easy_save.Lib.Models
         Running,
         Done
     }
-    // This Model is used to create the state log
+    /// <summary>
+    /// This Model is used to create the state log
+    /// </summary>
     public class StateLoggerModel 
     {
         

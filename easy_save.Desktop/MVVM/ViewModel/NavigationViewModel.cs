@@ -27,6 +27,9 @@ namespace easy_save.Desktop.MVVM.ViewModel
         private void Saves(object obj) => CurrentView = new SavesViewModel();
         private void Setting(object obj) => CurrentView = new SettingViewModel();
 
+        /// <summary>
+        /// Binds the Buttons to the methods, which create new views.
+        /// </summary>
         public NavigationViewModel()
         {
             HomeCommand = new RelayCommand(Home);

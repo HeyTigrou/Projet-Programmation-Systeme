@@ -17,6 +17,8 @@ using Newtonsoft.Json;
 using System.Configuration;
 using DetectSoftware;
 using easy_save.Desktop.MVVM.View;
+using System.Threading;
+using System.Diagnostics;
 
 namespace easy_save.Desktop.MVVM.ViewModel
 {
@@ -28,26 +30,63 @@ namespace easy_save.Desktop.MVVM.ViewModel
 
         public ICommand LaunchCommand { get; }
         public ICommand LaunchAllCommand { get; }
+        public ICommand RemoveThreadCommand { get; }
 
         private SaveWorkManagerService SaveWorkManager = new SaveWorkManagerService();
-        public ObservableCollection<SaveWorkModel> Processes { get; } = new ObservableCollection<SaveWorkModel>();
 
+        /// <summary>
+        /// This observable collection contains all the processes on the selected folder. It is binded to a datagrid in the view.
+        /// </summary>
+        public ObservableCollection<SaveWorkModel> Processes { get; } = new ObservableCollection<SaveWorkModel>();
+        public ObservableCollection<Thread> Threads { get; } = new ObservableCollection<Thread>();
+        /// <summary>
+        /// Binds the methods with button, and adds the existing save works to the observable collection.
+        /// </summary>
         public SavesViewModel()
         {
+
+            // Binds the Button with the methods.
             RefreshCommand = new RelayCommand(x => Refresh());
             RemoveCommand = new RelayCommand(x => Remove(x as SaveWorkModel));
             LaunchCommand = new RelayCommand(x => LaunchSave(x as SaveWorkModel));
+            RemoveThreadCommand = new RelayCommand(x => RemoveThread(x as Thread));
             LaunchAllCommand = new RelayCommand(x => LaunchAllSaves());
+
+            // Adds the existing saveworks to be shown in the view.
             Refresh();
+
+            new Thread(_ =>
+            {
+                while (true)
+                {
+                    foreach(Thread thread in Threads) 
+                    { 
+                        if(!thread.IsAlive)
+                        {
+                            Threads.Remove(thread);
+                        }
+                    }
+                }
+            });
         }
 
+        private void RemoveThread(Thread thread)
+        {
+            thread.Interrupt();
+        }
+
+        /// <summary>
+        /// Refreshes the observable collection, clears it and adds the save works.
+        /// </summary>
         private void Refresh()
         {
 
             try
             {
+                // Clears the observable collection.
                 Processes.Clear();
 
+                // Refreshes it.
                 foreach (SaveWorkModel saveWork in SaveWorkManager.GetSaveWorks())
                 {
                     Processes.Add(saveWork);
@@ -56,18 +95,28 @@ namespace easy_save.Desktop.MVVM.ViewModel
             catch { }
         }
 
+        /// <summary>
+        /// Removes the selected save work.
+        /// </summary>
+        /// <param name="process"></param>
         private void Remove(SaveWorkModel process)
         {
 
             try
             {
+                // Deletes the selected save work.
                 SaveWorkManager.DeleteSaveWork(process.Name);
 
+                // Refreshes the observable collection.
                 Refresh();
             }
             catch { }
         }
-        
+
+        /// <summary>
+        /// Launches the selected save work.
+        /// </summary>
+        /// <param name="process"></param>
         private void LaunchSave(SaveWorkModel process)
         {
 
@@ -76,22 +125,40 @@ namespace easy_save.Desktop.MVVM.ViewModel
                 int errorCount;
                 List<string> extensions = FileExtensionModel.Instance.SelectedExtensions.ToList();
 
+                // Returns if the 
                 ProcessStateService service = new ProcessStateService();
                 if (service.GetProcessState(ConfigurationManager.AppSettings["WorkProcessName"]))
                 {
+                    // Shows failure popup if an application is running.
                     PopupProcessCannotStartView failurePopup = new PopupProcessCannotStartView();
                     failurePopup.ShowDialog();
                 }
                 else
                 {
-                    FileSaveService fileSaveService = new FileSaveService();
-                    errorCount = fileSaveService.SaveProcess(process, extensions);
+                    // launches the save work in a thread.
+                    var thread = new Thread(() => saveWork(process, extensions));
+                    thread.Name= process.Name;
+                    thread.Start();
+
+
+                    Threads.Add(thread);
                 }
                     
             }
             catch { }
         }
         
+        private void saveWork(SaveWorkModel process, List<string> extensions)
+        {
+
+            int errorCount;
+            FileSaveService fileSaveService = new FileSaveService();
+            errorCount = fileSaveService.SaveProcess(process, extensions);
+        }
+
+        /// <summary>
+        /// Launches all the save works.
+        /// </summary>
         private void LaunchAllSaves()
         {
 
@@ -99,6 +166,8 @@ namespace easy_save.Desktop.MVVM.ViewModel
             {
                 int[] errorCount = { 0, 0 };
                 List<string> extensions = FileExtensionModel.Instance.SelectedExtensions.ToList();
+
+                // Tries to launch all the save works.
                 foreach (SaveWorkModel process in Processes)
                 {
                     try
@@ -106,13 +175,18 @@ namespace easy_save.Desktop.MVVM.ViewModel
                         ProcessStateService service = new ProcessStateService();
                         if (service.GetProcessState(ConfigurationManager.AppSettings["WorkProcessName"]))
                         {
+                            // Shows failure popup if an application is running.
                             PopupProcessCannotStartView failurePopup = new PopupProcessCannotStartView();
                             failurePopup.ShowDialog();
                         }
                         else
                         {
-                            FileSaveService fileSaveService = new FileSaveService();
-                            errorCount[1] += fileSaveService.SaveProcess(process, extensions);
+                            // launches the save work in a thread.
+                            new Thread(_ =>
+                            {
+                                FileSaveService fileSaveService = new FileSaveService();
+                                errorCount[1] += fileSaveService.SaveProcess(process, extensions);
+                            }).Start();
                         }
                     }
                     catch

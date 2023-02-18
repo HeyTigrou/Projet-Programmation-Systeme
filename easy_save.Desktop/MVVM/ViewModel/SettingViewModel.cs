@@ -29,6 +29,9 @@ namespace easy_save.Desktop.MVVM.ViewModel
         public ObservableCollection<string> Extensions { get; } = FileExtensionModel.Instance.Extensions;
         public ObservableCollection<string> SelectedExtensions { get; } = FileExtensionModel.Instance.SelectedExtensions;
 
+        /// <summary>
+        /// Binds the buttons with the methods.
+        /// </summary>
         public SettingViewModel()
         {
             GenerateKey = new RelayCommand(x => Generate64BitKey());
@@ -38,6 +41,10 @@ namespace easy_save.Desktop.MVVM.ViewModel
             ChangeLogExtensions();
         }
 
+        /// <summary>
+        /// Removes the extension from the observable collection.
+        /// </summary>
+        /// <param name="extension"></param>
         private void RemoveExtension(string extension)
         {
             try
@@ -50,6 +57,10 @@ namespace easy_save.Desktop.MVVM.ViewModel
             catch { }
         }
         
+        /// <summary>
+        /// Adds the extension to the observable collection.
+        /// </summary>
+        /// <param name="extension"></param>
         private void AddExtension(string extension)
         {
             try
@@ -62,6 +73,9 @@ namespace easy_save.Desktop.MVVM.ViewModel
             catch { }
         }
         
+        /// <summary>
+        /// Changes the log file extension depending on the choosen
+        /// </summary>
         private void ChangeLogExtensions()
         {
             try
@@ -91,6 +105,9 @@ namespace easy_save.Desktop.MVVM.ViewModel
             catch { }
         }
 
+        /// <summary>
+        /// Generates a cryp key.
+        /// </summary>
         private void Generate64BitKey()
         {
             try

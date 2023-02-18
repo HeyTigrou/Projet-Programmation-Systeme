@@ -33,9 +33,14 @@
                 Command="{Binding LaunchAllCommand}"
                 Content="{DynamicResource LaunchAll}"
                 Style="{StaticResource SavesButtonStyle}" />
+            <Button
+                Command="{Binding RemoveThreadCommand}"
+                CommandParameter="{Binding ElementName=Threads, Path=SelectedItem}"
+                Content="{DynamicResource RemoveThread}"
+                Style="{StaticResource SavesButtonStyle}" />
         </StackPanel>
-
-        <DataGrid
+        <StackPanel  Orientation="Vertical">
+            <DataGrid
             Name="grid"
             Margin="5"
             AutoGenerateColumns="False"
@@ -49,6 +54,20 @@
                 <DataGridTextColumn Binding="{Binding SaveType}" Header="Save Type" />
             </DataGrid.Columns>
         </DataGrid>
+        <DataGrid
+            Name="Threads"
+            Margin="5"
+            AutoGenerateColumns="False"
+            IsReadOnly="True"
+            ItemsSource="{Binding Threads}">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Name}" Header="Name" />
+                    <DataGridTextColumn Binding="{Binding IsAlive}" Header="Is Alive" />
+                    <DataGridTextColumn Binding="{Binding ThreadState}" Header="State" />
+                </DataGrid.Columns>
+        </DataGrid>
+        </StackPanel>
     </DockPanel>
 
 

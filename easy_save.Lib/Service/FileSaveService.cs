@@ -17,14 +17,22 @@ namespace easy_save.Lib.Service
 {
     public class FileSaveService
     {
-        // We create an instance of each type of logger
+        /// <summary>
+        /// We create an instance of each type of logger
+        /// </summary>
         private readonly StateLoggerModel stateLoggerModel = new();
 
-        // This method is used to select the right method to use : SaveAllFiles (Complete save) or SaveChangedFiles (Incremental Save)
+        /// <summary>
+        /// This method is used to select the right method to use : SaveAllFiles (Complete save) or SaveChangedFiles (Incremental Save)
+        /// </summary>
+        /// <param name="save"></param>
+        /// <param name="extensions"></param>
+        /// <returns></returns>
         public int SaveProcess(SaveWorkModel save, List<string> extensions)
         {
                 LoggerService logger = new();
 
+                // Checks save type and launchs the corresponding method.
                 if (save.SaveType == 0)
                 {
                     return SaveAllFiles(save, logger, extensions);
@@ -37,15 +45,20 @@ namespace easy_save.Lib.Service
                 return -1;
         }
 
-        // This method is used to setup the logger models
+        /// <summary>
+        /// This method is used to setup the logger models
+        /// </summary>
+        /// <param name="save"></param>
         private void InitializeLoggerModels(SaveWorkModel save)
         {
             long totalFileSize = 0;
 
+            
             string[] files = Directory.GetFiles(save.InputPath, "*.*", SearchOption.AllDirectories);
 
             stateLoggerModel.TotalFileToCopy = files.Length;
 
+            // Gets the total size of files.
             foreach (string file in files)
             {
                 FileInfo info = new(file);
@@ -62,7 +75,9 @@ namespace easy_save.Lib.Service
             stateLoggerModel.Name = save.Name;
         }
 
-        // This method is used to reset the state logger once the process is stopped
+        /// <summary>
+        /// This method is used to reset the state logger once the process is stopped
+        /// </summary>
         private void StateLoggerToDone()
         {
             stateLoggerModel.State = nameof(StateTypes.Done);
@@ -73,7 +88,13 @@ namespace easy_save.Lib.Service
             stateLoggerModel.TargetFilePath = "";
         }
 
-        // This method is used to save all the files from the source folder into the destination folder
+        /// <summary>
+        /// This method is used to save all the files from the source folder into the destination folder
+        /// </summary>
+        /// <param name="save"></param>
+        /// <param name="logger"></param>
+        /// <param name="extensions"></param>
+        /// <returns></returns>
         private int SaveAllFiles(SaveWorkModel save, LoggerService logger, List<string> extensions)
         {
             logger.LogProcessFile(save.Name);
@@ -82,12 +103,14 @@ namespace easy_save.Lib.Service
 
             logger.LogProcessState(stateLoggerModel);
 
+            // Creates directories in the destination directory to reproduce the architecture of the source directory.
             foreach (string dirPath in Directory.GetDirectories(save.InputPath, "*", SearchOption.AllDirectories))
             {
                 Directory.CreateDirectory(dirPath.Replace(save.InputPath, save.OutputPath));
             }
 
             int errorCount = 0;
+            // Copies each file to the destionation path.
             foreach (string newPath in Directory.GetFiles(save.InputPath, "*.*", SearchOption.AllDirectories))
             {
                 
@@ -126,7 +149,7 @@ namespace easy_save.Lib.Service
 
                 try
                 {
-                    logger.AddToDailyLogJson(dailyLoggerModel);
+                    logger.AddToDailyLog(dailyLoggerModel);
                 }
                 catch { }
 
@@ -146,7 +169,13 @@ namespace easy_save.Lib.Service
             return errorCount;
         }
 
-        // This method is used to only save the files that changed in the source folder into the destination folder
+        /// <summary>
+        /// This method is used to only save the files that changed in the source folder into the destination folder
+        /// </summary>
+        /// <param name="save"></param>
+        /// <param name="logger"></param>
+        /// <param name="extensions"></param>
+        /// <returns></returns>
         private int SaveChangedFiles(SaveWorkModel save, LoggerService logger, List<string> extensions)
         {
             logger.LogProcessFile(save.Name);
@@ -155,6 +184,7 @@ namespace easy_save.Lib.Service
 
             logger.LogProcessState(stateLoggerModel);
 
+            // Creates directories in the destination directory to reproduce the architecture of the source directory, if it does not exist.
             foreach (string dirPath in Directory.GetDirectories(save.InputPath, "*", SearchOption.AllDirectories))
             {
                 DirectoryInfo sourceDirectoryInfo = new DirectoryInfo(dirPath);
@@ -166,6 +196,7 @@ namespace easy_save.Lib.Service
             }
 
             int errorCount = 0;
+            // Copies modified files to the destionation path.
             foreach (string newPath in Directory.GetFiles(save.InputPath, "*.*", SearchOption.AllDirectories))
             {
 
@@ -209,7 +240,7 @@ namespace easy_save.Lib.Service
 
                     try
                     {
-                        logger.AddToDailyLogJson(dailyLoggerModel);
+                        logger.AddToDailyLog(dailyLoggerModel);
                     }
                     catch { }
                 }
@@ -233,20 +264,32 @@ namespace easy_save.Lib.Service
             return errorCount;
         }
 
+        /// <summary>
+        /// This method is used in both saves processes to crypt and comy the file.
+        /// </summary>
+        /// <param name="inPath"></param>
+        /// <param name="save"></param>
+        /// <param name="extensions"></param>
+        /// <returns></returns>
         private int CopyProcess(string inPath, SaveWorkModel save ,List<string> extensions)
         {
             FileInfo fileInfo = new FileInfo(inPath);
 
+            // Creates the destination path, by keeping the file name and changing the folder path.
             string destinationPath = inPath.Replace(save.InputPath, save.OutputPath);
             int returnCode = 0;
+
+            // If the extension list is not empty
             if (extensions.Contains(fileInfo.Extension))
             {
+                // Crypts the files with the selected extensions.
                 CryptService crypt = new CryptService();
                 returnCode = crypt.Crypt(inPath, destinationPath);
             }
 
             else
             {
+                // If the list is empty copies the file without encrypting them.    
                 File.Copy(inPath, destinationPath, true);
             }
 

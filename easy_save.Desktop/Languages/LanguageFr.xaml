@@ -40,4 +40,7 @@
     <system:String x:Key="Remove">Supprimer</system:String>
 
     <system:String x:Key="Search">Rechercher (optionnel)</system:String>
+    
+    <system:String x:Key="RemoveThread"> Supprimer thread</system:String>
+    
 </ResourceDictionary>

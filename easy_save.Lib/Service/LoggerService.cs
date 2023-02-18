@@ -15,7 +15,9 @@ using System.Xml.Serialization;
 
 namespace easy_save.Lib.Service
 {
-    // This class is used to log the daily saves and the state of the save works
+    /// <summary>
+    /// This class is used to log the daily saves and the state of the save works
+    /// </summary>
     public class LoggerService
     {
         private string FileName;
@@ -44,7 +46,9 @@ namespace easy_save.Lib.Service
             }
         }
 
-        // This method is used to create the daily log file
+        /// <summary>
+        /// This method is used to create the daily log file
+        /// </summary>
         private void SetLogFilePath()
         {
             DateTime date = DateTime.Today;
@@ -72,7 +76,10 @@ namespace easy_save.Lib.Service
             }
         }
 
-        // This method is used to create the log file that save the state of the save works
+        /// <summary>
+        /// This method is used to create the log file that save the state of the save works
+        /// </summary>
+        /// <param name="processName"></param>
         public void LogProcessFile(string processName)
         {
             if (ConfigurationManager.AppSettings["LogsInJson"] == "Y")
@@ -96,7 +103,10 @@ namespace easy_save.Lib.Service
             }
         }
 
-        // This method is used to log the state of the save works
+        /// <summary>
+        /// This method is used to log the state of the save works
+        /// </summary>
+        /// <param name="stateLoggerModel"></param>
         public void LogProcessState(StateLoggerModel stateLoggerModel)
         {
             string json;
@@ -122,12 +132,18 @@ namespace easy_save.Lib.Service
         }
 
 
-        public void AddToDailyLogJson(DailyLoggerModel dailyLoggerModel)
+        /// <summary>
+        /// Adds the logger model to the list.
+        /// </summary>
+        /// <param name="dailyLoggerModel"></param>
+        public void AddToDailyLog(DailyLoggerModel dailyLoggerModel)
         {
             DailyLogs.Add(dailyLoggerModel);
         }
 
-        // This method is used to log the daily saves
+        /// <summary>
+        /// This method is used to log the daily logger list, it deserializes the existing log file to a list and adds the DailyLogs list to the end.
+        /// </summary>
         public void LogDailySaves()
         {
             // We call the method that will create the log file if it doesn't exist
@@ -137,35 +153,38 @@ namespace easy_save.Lib.Service
 
             List<DailyLoggerModel> fileDataJson = new List<DailyLoggerModel>();
             List<DailyLoggerModel> fileDataXml = new List<DailyLoggerModel>();
+
             if (ConfigurationManager.AppSettings["LogsInJson"] == "Y")
             {
+                // Gets the file text if its not empty and deserializes it into a list of DailyLoggerModel.
                 if (new FileInfo(DailyLogJsonFile).Length != 0)
                 {
                     filetext = File.ReadAllText(DailyLogJsonFile);
                     fileDataJson = System.Text.Json.JsonSerializer.Deserialize<List<DailyLoggerModel>>(filetext);
                 }
+
+                // Adds the DailyLogs list to the end, this list is the list of model containing the information on the saves of this process.
                 fileDataJson.AddRange(DailyLogs);
+
+
+                // Serializes the list and writes it on the file.
+                DailyLogString = System.Text.Json.JsonSerializer.Serialize(fileDataJson);
+                File.WriteAllText(DailyLogJsonFile, DailyLogString);
             }
+
             if (ConfigurationManager.AppSettings["LogsInXMl"] == "Y")
             {
+                // Gets the file text if its not empty and deserializes it into a list of DailyLoggerModel.
                 if (new FileInfo(DailyLogXmlFile).Length != 0)
                 {
                     string xmlFileText = File.ReadAllText(DailyLogXmlFile);
 
                     fileDataXml = (List<DailyLoggerModel>)ConvertXmlStringtoObject<List<DailyLoggerModel>>(xmlFileText);
                 }
+
                 fileDataXml.AddRange(DailyLogs);
-            }
 
-            if (ConfigurationManager.AppSettings["LogsInJson"] == "Y")
-            {
-                DailyLogString = System.Text.Json.JsonSerializer.Serialize(fileDataJson);
-
-                File.WriteAllText(DailyLogJsonFile, DailyLogString);
-            }
-
-            if (ConfigurationManager.AppSettings["LogsInXMl"] == "Y")
-            {
+                // Serializes the list and writes it on the file.
                 using (TextWriter writer = new StreamWriter(DailyLogXmlFile))
                 {
                     System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(fileDataXml.GetType());
@@ -174,6 +193,12 @@ namespace easy_save.Lib.Service
             }
         }
 
+        /// <summary>
+        /// This method is used to deserialize the xml log file.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="xmlString"></param>
+        /// <returns></returns>
         private static T ConvertXmlStringtoObject<T>(string xmlString)
         {
             T classObject;
