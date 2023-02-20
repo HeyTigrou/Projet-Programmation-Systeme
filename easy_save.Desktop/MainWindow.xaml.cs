@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,10 +18,19 @@ namespace easy_save.Desktop
 {
     public partial class MainWindow : Window
     {
+        private static Mutex mutex = new Mutex(false);
         public MainWindow()
         {
-            InitializeComponent();
-            SwitchLanguage("en");
+            if (mutex.WaitOne(TimeSpan.Zero, true))
+            {
+
+                InitializeComponent();
+                SwitchLanguage("en");
+            }
+            else {
+
+                Environment.Exit(0);
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
