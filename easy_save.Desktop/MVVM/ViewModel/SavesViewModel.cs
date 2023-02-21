@@ -40,8 +40,7 @@ namespace easy_save.Desktop.MVVM.ViewModel
         /// </summary>
         public ObservableCollection<SaveWorkModel> Processes { get; } = new ObservableCollection<SaveWorkModel>();
         public ObservableCollection<Thread> Threads { get; } = new ObservableCollection<Thread>();
-        public Dictionary<string, ManualResetEvent> ManualResetEvents { get; } = new Dictionary<string, ManualResetEvent>();
-        public Dictionary<string, QuitThreadModel> QuitThreadModels { get; } = new Dictionary<string, QuitThreadModel>();
+        public Dictionary<string, ThreadManagementModel> ThreadManagementModels { get; } = new Dictionary<string, ThreadManagementModel>();
         /// <summary>
         /// Binds the methods with button, and adds the existing save works to the observable collection.
         /// </summary>
@@ -62,22 +61,21 @@ namespace easy_save.Desktop.MVVM.ViewModel
         }
         private void RemoveThread(Thread thread)
         {
-            QuitThreadModels[thread.Name].QuitThread = true;
-            ManualResetEvents[thread.Name].Set();
+            ThreadManagementModels[thread.Name].QuitThread = true;
+            ThreadManagementModels[thread.Name].ResetEvent.Set();
             Threads.Remove(thread);
 
-            QuitThreadModels.Remove(thread.Name);
-            ManualResetEvents.Remove(thread.Name);
+            ThreadManagementModels.Remove(thread.Name);
         }
 
         private void PauseThread(Thread thread)
         {
-            ManualResetEvents[thread.Name].Reset();
+            ThreadManagementModels[thread.Name].ResetEvent.Reset();
         }
 
         private void ResumeThread(Thread thread)
         {
-            ManualResetEvents[thread.Name].Set();
+            ThreadManagementModels[thread.Name].ResetEvent.Set();
         }
 
         /// <summary>
@@ -142,16 +140,14 @@ namespace easy_save.Desktop.MVVM.ViewModel
                 {
                     // launches the save work in a thread.
 
-                    ManualResetEvent resetEvent = new ManualResetEvent(false);
-                    ManualResetEvents.Add(process.Name, resetEvent);
 
-                    QuitThreadModel quitThread = new QuitThreadModel();
-                    QuitThreadModels.Add(process.Name, quitThread);
+                    ThreadManagementModel threadManagementModel = new ThreadManagementModel();
+                    ThreadManagementModels.Add(process.Name, threadManagementModel);
 
-                    var thread = new Thread(() => saveWork(process, extensions, resetEvent, quitThread));
+                    var thread = new Thread(() => saveWork(process, extensions, threadManagementModel));
                     thread.Name= process.Name;
                     thread.Start();
-                    resetEvent.Set();
+                    threadManagementModel.ResetEvent.Set();
 
 
                     Threads.Add(thread);
@@ -161,12 +157,12 @@ namespace easy_save.Desktop.MVVM.ViewModel
             catch { }
         }
         
-        private void saveWork(SaveWorkModel process, List<string> extensions, ManualResetEvent resetEvent, QuitThreadModel quitThread)
+        private void saveWork(SaveWorkModel process, List<string> extensions, ThreadManagementModel threadManagementModel)
         {
 
             int errorCount;
             FileSaveService fileSaveService = new FileSaveService();
-            errorCount = fileSaveService.SaveProcess(process, extensions, resetEvent, quitThread);
+            errorCount = fileSaveService.SaveProcess(process, extensions, threadManagementModel);
         }
     }
 }

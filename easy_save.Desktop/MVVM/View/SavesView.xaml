@@ -11,14 +11,14 @@
     <DockPanel LastChildFill="True">
 
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
-
+ 
             <Button
                 Command="{Binding RefreshCommand}"
                 Content="{DynamicResource Refresh}"
                 Style="{StaticResource SavesButtonStyle}" />
 
             <Button
-                Command="{Binding RemoveCommand}"
+                Command="{Binding RemoveCommand}"  
                 CommandParameter="{Binding ElementName=grid, Path=SelectedItem}"
                 Content="{DynamicResource Remove}"
                 Style="{StaticResource SavesButtonStyle}" />
