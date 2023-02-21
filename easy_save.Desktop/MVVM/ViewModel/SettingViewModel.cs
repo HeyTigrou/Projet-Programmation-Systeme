@@ -26,8 +26,8 @@ namespace easy_save.Desktop.MVVM.ViewModel
         public ICommand RemoveExtensionToEncrypt { get; }
         public ICommand GenerateKey { get; }
 
-        public ObservableCollection<string> Extensions { get; } = FileExtensionModel.Instance.Extensions;
-        public ObservableCollection<string> SelectedExtensions { get; } = FileExtensionModel.Instance.SelectedExtensions;
+        public ObservableCollection<string> Extensions { get; } = FileExtensionModel.ExtensionInstance.CryptingExtensions;
+        public ObservableCollection<string> SelectedExtensions { get; } = FileExtensionModel.ExtensionInstance.SelectedCryptingExtensions;
 
         /// <summary>
         /// Binds the buttons with the methods.
@@ -51,8 +51,8 @@ namespace easy_save.Desktop.MVVM.ViewModel
             {
                 Extensions.Add(extension);
                 SelectedExtensions.Remove(extension);
-                FileExtensionModel.Instance.Extensions = Extensions;
-                FileExtensionModel.Instance.SelectedExtensions = SelectedExtensions;
+                FileExtensionModel.ExtensionInstance.CryptingExtensions = Extensions;
+                FileExtensionModel.ExtensionInstance.SelectedCryptingExtensions = SelectedExtensions;
             }
             catch { }
         }
@@ -67,8 +67,8 @@ namespace easy_save.Desktop.MVVM.ViewModel
             {
                 Extensions.Remove(extension);
                 SelectedExtensions.Add(extension);
-                FileExtensionModel.Instance.Extensions = Extensions;
-                FileExtensionModel.Instance.SelectedExtensions = SelectedExtensions;
+                FileExtensionModel.ExtensionInstance.CryptingExtensions = Extensions;
+                FileExtensionModel.ExtensionInstance.SelectedCryptingExtensions = SelectedExtensions;
             }
             catch { }
         }

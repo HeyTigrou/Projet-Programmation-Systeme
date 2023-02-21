@@ -123,7 +123,7 @@ namespace easy_save.Desktop.MVVM.ViewModel
             try
             {
                 int errorCount;
-                List<string> extensions = FileExtensionModel.Instance.SelectedExtensions.ToList();
+                List<string> extensions = FileExtensionModel.ExtensionInstance.SelectedCryptingExtensions.ToList();
 
                 // Returns if the 
                 ProcessStateService service = new ProcessStateService();
@@ -165,7 +165,7 @@ namespace easy_save.Desktop.MVVM.ViewModel
             try
             {
                 int[] errorCount = { 0, 0 };
-                List<string> extensions = FileExtensionModel.Instance.SelectedExtensions.ToList();
+                List<string> extensions = FileExtensionModel.ExtensionInstance.SelectedCryptingExtensions.ToList();
 
                 // Tries to launch all the save works.
                 foreach (SaveWorkModel process in Processes)

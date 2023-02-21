@@ -12,17 +12,13 @@ namespace easy_save.Desktop
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            const string appName = "easy_save.Desktop";
-            bool createdNew;
-
-            _mutex = new Mutex(true, appName, out createdNew);
+            _mutex = new Mutex(true, "EasySave", out bool createdNew);
 
             if (!createdNew)
             {
-                MessageBox.Show("Error you can't launch two instances of EasySave");
+                MessageBox.Show("Error EasySave is already running");
                 Application.Current.Shutdown(); 
             }
-
             base.OnStartup(e);
         }
     }

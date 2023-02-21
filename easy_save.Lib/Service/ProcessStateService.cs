@@ -16,9 +16,7 @@ namespace easy_save.Lib.Service
         /// <returns></returns>
         public bool GetProcessState(string processName)
         {
-
             Process[] process = Process.GetProcessesByName(processName);
-
             return process.Length > 0;
         }
 
