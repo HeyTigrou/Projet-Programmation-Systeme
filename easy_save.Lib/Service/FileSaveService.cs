@@ -21,28 +21,31 @@ namespace easy_save.Lib.Service
         /// We create an instance of each type of logger
         /// </summary>
         private readonly StateLoggerModel stateLoggerModel = new();
-
+        private ManualResetEvent ResetEvent;
+        private QuitThreadModel QuitThread;
         /// <summary>
         /// This method is used to select the right method to use : SaveAllFiles (Complete save) or SaveChangedFiles (Incremental Save)
         /// </summary>
         /// <param name="save"></param>
         /// <param name="extensions"></param>
         /// <returns></returns>
-        public int SaveProcess(SaveWorkModel save, List<string> extensions)
+        public int SaveProcess(SaveWorkModel save, List<string> extensions, ManualResetEvent resetEvent, QuitThreadModel quitThread)
         {
-                LoggerService logger = new();
+            LoggerService logger = new();
+            ResetEvent = resetEvent;
+            QuitThread = quitThread;
+                
+            // Checks save type and launchs the corresponding method.
+            if (save.SaveType == 0)
+            {
+                return SaveAllFiles(save, logger, extensions);
+            }
 
-                // Checks save type and launchs the corresponding method.
-                if (save.SaveType == 0)
-                {
-                    return SaveAllFiles(save, logger, extensions);
-                }
-
-                else if (save.SaveType == 1)
-                {
-                    return SaveChangedFiles(save, logger, extensions);
-                }
-                return -1;
+            else if (save.SaveType == 1)
+            {
+                return SaveChangedFiles(save, logger, extensions);
+            }
+            return -1;
         }
 
         /// <summary>
@@ -106,6 +109,12 @@ namespace easy_save.Lib.Service
             // Creates directories in the destination directory to reproduce the architecture of the source directory.
             foreach (string dirPath in Directory.GetDirectories(save.InputPath, "*", SearchOption.AllDirectories))
             {
+                ResetEvent.WaitOne();
+                if(QuitThread.QuitThread == true)
+                {
+                    return 10;
+                }
+
                 Directory.CreateDirectory(dirPath.Replace(save.InputPath, save.OutputPath));
             }
 
@@ -113,7 +122,12 @@ namespace easy_save.Lib.Service
             // Copies each file to the destionation path.
             foreach (string newPath in Directory.GetFiles(save.InputPath, "*.*", SearchOption.AllDirectories))
             {
-                
+                ResetEvent.WaitOne();
+                if (QuitThread.QuitThread == true)
+                {
+                    return 10;
+                }
+
                 DailyLoggerModel dailyLoggerModel = new();
                 dailyLoggerModel.Name = save.Name;
 
@@ -187,6 +201,12 @@ namespace easy_save.Lib.Service
             // Creates directories in the destination directory to reproduce the architecture of the source directory, if it does not exist.
             foreach (string dirPath in Directory.GetDirectories(save.InputPath, "*", SearchOption.AllDirectories))
             {
+                ResetEvent.WaitOne();
+                if (QuitThread.QuitThread == true)
+                {
+                    return 10;
+                }
+
                 DirectoryInfo sourceDirectoryInfo = new DirectoryInfo(dirPath);
                 DirectoryInfo destinationDirectoryInfo = new DirectoryInfo(dirPath.Replace(save.InputPath, save.OutputPath));
                 if (!destinationDirectoryInfo.Exists)
@@ -199,6 +219,11 @@ namespace easy_save.Lib.Service
             // Copies modified files to the destionation path.
             foreach (string newPath in Directory.GetFiles(save.InputPath, "*.*", SearchOption.AllDirectories))
             {
+                ResetEvent.WaitOne();
+                if (QuitThread.QuitThread == true)
+                {
+                    return 10;
+                }
 
                 FileInfo sourceFileInfo = new(newPath);
                 FileInfo destinationFileInfo = new(newPath.Replace(save.InputPath, save.OutputPath));
