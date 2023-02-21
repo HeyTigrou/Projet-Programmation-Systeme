@@ -126,7 +126,7 @@ namespace easy_save.Lib.Service
         /// <param name="logger"></param>
         /// <param name="extensions"></param>
         /// <returns></returns>
-        private int SaveAllFiles(LoggerService logger, List<string> extensions)
+        private void SaveAllFiles(LoggerService logger, List<string> extensions)
         {
             logger.LogProcessFile(Save.Name);
 
@@ -140,7 +140,7 @@ namespace easy_save.Lib.Service
                 ResetEvent.WaitOne();
                 if(QuitThread == true)
                 {
-                    return 10;
+                    return;
                 }
 
                 Directory.CreateDirectory(dirPath.Replace(Save.InputPath, Save.OutputPath));
@@ -148,14 +148,13 @@ namespace easy_save.Lib.Service
 
             List<string> Files = PriorityProcess(Save.InputPath);
 
-            int errorCount = 0;
             // Copies each file to the destionation path.
             foreach (string newPath in Files)
             {
                 ResetEvent.WaitOne();
                 if (QuitThread == true)
                 {
-                    return 10;
+                    return;
                 }
 
                 DailyLoggerModel dailyLoggerModel = new();
@@ -176,7 +175,6 @@ namespace easy_save.Lib.Service
                 }
                 catch
                 {
-                    errorCount++;
                     dailyLoggerModel.FileTransferTime = TimeSpan.Zero;
                     dailyLoggerModel.Time = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
                     dailyLoggerModel.CryptTime = -1;
@@ -198,8 +196,6 @@ namespace easy_save.Lib.Service
             logger.LogDailySaves();
 
             logger.LogProcessState(stateLoggerModel);
-
-            return errorCount;
         }
 
         /// <summary>
@@ -209,7 +205,7 @@ namespace easy_save.Lib.Service
         /// <param name="logger"></param>
         /// <param name="extensions"></param>
         /// <returns></returns>
-        private int SaveChangedFiles(LoggerService logger, List<string> extensions)
+        private void SaveChangedFiles(LoggerService logger, List<string> extensions)
         {
             logger.LogProcessFile(Save.Name);
 
@@ -223,7 +219,7 @@ namespace easy_save.Lib.Service
                 ResetEvent.WaitOne();
                 if (QuitThread == true)
                 {
-                    return 10;
+                    return;
                 }
 
                 DirectoryInfo sourceDirectoryInfo = new DirectoryInfo(dirPath);
@@ -236,14 +232,13 @@ namespace easy_save.Lib.Service
 
             List<string> Files = PriorityProcess(Save.InputPath);
 
-            int errorCount = 0;
             // Copies modified files to the destionation path.
             foreach (string newPath in Files)
             {
                 ResetEvent.WaitOne();
                 if (QuitThread == true)
                 {
-                    return 10;
+                    return;
                 }
 
                 FileInfo sourceFileInfo = new(newPath);
@@ -269,7 +264,6 @@ namespace easy_save.Lib.Service
                     }
                     catch
                     {
-                        errorCount++;
                         dailyLoggerModel.FileTransferTime = TimeSpan.Zero;
                         dailyLoggerModel.Time = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
                         dailyLoggerModel.CryptTime = -1;
@@ -295,8 +289,6 @@ namespace easy_save.Lib.Service
             logger.LogDailySaves();
 
             logger.LogProcessState(stateLoggerModel);
-
-            return errorCount;
         }
 
         /// <summary>
