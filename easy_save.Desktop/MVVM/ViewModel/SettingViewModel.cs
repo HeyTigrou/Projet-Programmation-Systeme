@@ -14,7 +14,7 @@ using easy_save.Lib.Models;
 using easy_save.Lib.Service;
 
 namespace easy_save.Desktop.MVVM.ViewModel
-{
+{ 
     internal class SettingViewModel
     {
         public bool JsonIsSelected { get; set; } = true;
@@ -23,7 +23,7 @@ namespace easy_save.Desktop.MVVM.ViewModel
 
         public ICommand ChangeLogExtension { get; }
         public ICommand AddExtensionToEncrypt { get; }
-        public ICommand RemoveExtensionToEncrypt { get; }
+        public ICommand RemoveExtensionToEncrypt { get; } 
         public ICommand GenerateKey { get; }
 
         public ObservableCollection<string> Extensions { get; } = FileExtensionModel.ExtensionInstance.CryptingExtensions;

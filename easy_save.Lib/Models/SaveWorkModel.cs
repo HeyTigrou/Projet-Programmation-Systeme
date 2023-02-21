@@ -17,8 +17,5 @@ namespace easy_save.Lib.Models
         public string InputPath { get; set; }
         public string OutputPath { get; set; }
         public int SaveType { get; set; }
-
-        [JsonIgnore]
-        public string Progression { get; set; } = "";
     }
 }

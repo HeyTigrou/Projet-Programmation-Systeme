@@ -11,14 +11,14 @@
     <DockPanel LastChildFill="True">
 
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
-
+ 
             <Button
                 Command="{Binding RefreshCommand}"
                 Content="{DynamicResource Refresh}"
                 Style="{StaticResource SavesButtonStyle}" />
 
             <Button
-                Command="{Binding RemoveCommand}"
+                Command="{Binding RemoveCommand}"  
                 CommandParameter="{Binding ElementName=grid, Path=SelectedItem}"
                 Content="{DynamicResource Remove}"
                 Style="{StaticResource SavesButtonStyle}" />
@@ -29,15 +29,7 @@
                 Content="{DynamicResource Launch}"
                 Style="{StaticResource SavesButtonStyle}" />
 
-            <Button
-                Command="{Binding LaunchAllCommand}"
-                Content="{DynamicResource LaunchAll}"
-                Style="{StaticResource SavesButtonStyle}" />
-            <Button
-                Command="{Binding RemoveThreadCommand}"
-                CommandParameter="{Binding ElementName=Threads, Path=SelectedItem}"
-                Content="{DynamicResource RemoveThread}"
-                Style="{StaticResource SavesButtonStyle}" />
+            
         </StackPanel>
         <StackPanel  Orientation="Vertical">
             <DataGrid
@@ -47,14 +39,34 @@
             IsReadOnly="True"
             ItemsSource="{Binding Processes}">
 
-            <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Name}" Header="Name" />
-                <DataGridTextColumn Binding="{Binding InputPath}" Header="Input Path" />
-                <DataGridTextColumn Binding="{Binding OutputPath}" Header="Output Path" />
-                <DataGridTextColumn Binding="{Binding SaveType}" Header="Save Type" />
-            </DataGrid.Columns>
-        </DataGrid>
-        <DataGrid
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Name}" Header="Name" />
+                    <DataGridTextColumn Binding="{Binding InputPath}" Header="Input Path" />
+                    <DataGridTextColumn Binding="{Binding OutputPath}" Header="Output Path" />
+                    <DataGridTextColumn Binding="{Binding SaveType}" Header="Save Type" />
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                
+                <Button
+                    Command="{Binding RemoveThreadCommand}"
+                    CommandParameter="{Binding ElementName=Threads, Path=SelectedItem}"
+                    Content="{DynamicResource RemoveThread}"
+                    Style="{StaticResource SavesButtonStyle}" />
+                <Button
+                    Command="{Binding PauseThreadCommand}"
+                    CommandParameter="{Binding ElementName=Threads, Path=SelectedItem}"
+                    Content="{DynamicResource PauseThread}"
+                    Style="{StaticResource SavesButtonStyle}" />
+                <Button
+                    Command="{Binding ResumeThreadCommand}"
+                    CommandParameter="{Binding ElementName=Threads, Path=SelectedItem}"
+                    Content="{DynamicResource ResumeThread}"
+                    Style="{StaticResource SavesButtonStyle}" />
+            </StackPanel>
+                
+            <DataGrid
             Name="Threads"
             Margin="5"
             AutoGenerateColumns="False"

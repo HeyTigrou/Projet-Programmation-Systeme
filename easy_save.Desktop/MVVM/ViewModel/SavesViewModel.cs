@@ -29,8 +29,9 @@ namespace easy_save.Desktop.MVVM.ViewModel
         public ICommand RefreshCommand { get; }
 
         public ICommand LaunchCommand { get; }
-        public ICommand LaunchAllCommand { get; }
         public ICommand RemoveThreadCommand { get; }
+        public ICommand PauseThreadCommand { get; }
+        public ICommand ResumeThreadCommand { get; }
 
         private SaveWorkManagerService SaveWorkManager = new SaveWorkManagerService();
 
@@ -39,6 +40,7 @@ namespace easy_save.Desktop.MVVM.ViewModel
         /// </summary>
         public ObservableCollection<SaveWorkModel> Processes { get; } = new ObservableCollection<SaveWorkModel>();
         public ObservableCollection<Thread> Threads { get; } = new ObservableCollection<Thread>();
+        public Dictionary<string, ThreadManagementModel> ThreadManagementModels { get; } = new Dictionary<string, ThreadManagementModel>();
         /// <summary>
         /// Binds the methods with button, and adds the existing save works to the observable collection.
         /// </summary>
@@ -49,30 +51,31 @@ namespace easy_save.Desktop.MVVM.ViewModel
             RefreshCommand = new RelayCommand(x => Refresh());
             RemoveCommand = new RelayCommand(x => Remove(x as SaveWorkModel));
             LaunchCommand = new RelayCommand(x => LaunchSave(x as SaveWorkModel));
+
             RemoveThreadCommand = new RelayCommand(x => RemoveThread(x as Thread));
-            LaunchAllCommand = new RelayCommand(x => LaunchAllSaves());
+            PauseThreadCommand = new RelayCommand(x => PauseThread(x as Thread));
+            ResumeThreadCommand = new RelayCommand(x => ResumeThread(x as Thread));
 
             // Adds the existing saveworks to be shown in the view.
             Refresh();
-
-            new Thread(_ =>
-            {
-                while (true)
-                {
-                    foreach(Thread thread in Threads) 
-                    { 
-                        if(!thread.IsAlive)
-                        {
-                            Threads.Remove(thread);
-                        }
-                    }
-                }
-            });
         }
-
         private void RemoveThread(Thread thread)
         {
-            thread.Interrupt();
+            ThreadManagementModels[thread.Name].QuitThread = true;
+            ThreadManagementModels[thread.Name].ResetEvent.Set();
+            Threads.Remove(thread);
+
+            ThreadManagementModels.Remove(thread.Name);
+        }
+
+        private void PauseThread(Thread thread)
+        {
+            ThreadManagementModels[thread.Name].ResetEvent.Reset();
+        }
+
+        private void ResumeThread(Thread thread)
+        {
+            ThreadManagementModels[thread.Name].ResetEvent.Set();
         }
 
         /// <summary>
@@ -135,67 +138,30 @@ namespace easy_save.Desktop.MVVM.ViewModel
                 }
                 else
                 {
-                    // launches the save work in a thread.
-                    var thread = new Thread(() => saveWork(process, extensions));
-                    thread.Name= process.Name;
-                    thread.Start();
+                    if(!(Threads.Any(p => p.Name == process.Name)))
+                    {
+                        // launches the save work in a thread.
+                        ThreadManagementModel threadManagementModel = new ThreadManagementModel();
+                        ThreadManagementModels.Add(process.Name, threadManagementModel);
 
+                        var thread = new Thread(() => saveWork(process, extensions, threadManagementModel));
+                        thread.Name = process.Name;
+                        thread.Start();
+                        threadManagementModel.ResetEvent.Set();
 
-                    Threads.Add(thread);
+                        Threads.Add(thread);
+                    }
                 }
-                    
             }
             catch { }
         }
         
-        private void saveWork(SaveWorkModel process, List<string> extensions)
+        private void saveWork(SaveWorkModel process, List<string> extensions, ThreadManagementModel threadManagementModel)
         {
 
             int errorCount;
             FileSaveService fileSaveService = new FileSaveService();
-            errorCount = fileSaveService.SaveProcess(process, extensions);
-        }
-
-        /// <summary>
-        /// Launches all the save works.
-        /// </summary>
-        private void LaunchAllSaves()
-        {
-
-            try
-            {
-                int[] errorCount = { 0, 0 };
-                List<string> extensions = FileExtensionModel.ExtensionInstance.SelectedCryptingExtensions.ToList();
-
-                // Tries to launch all the save works.
-                foreach (SaveWorkModel process in Processes)
-                {
-                    try
-                    {
-                        ProcessStateService service = new ProcessStateService();
-                        if (service.GetProcessState(ConfigurationManager.AppSettings["WorkProcessName"]))
-                        {
-                            // Shows failure popup if an application is running.
-                            PopupProcessCannotStartView failurePopup = new PopupProcessCannotStartView();
-                            failurePopup.ShowDialog();
-                        }
-                        else
-                        {
-                            // launches the save work in a thread.
-                            new Thread(_ =>
-                            {
-                                FileSaveService fileSaveService = new FileSaveService();
-                                errorCount[1] += fileSaveService.SaveProcess(process, extensions);
-                            }).Start();
-                        }
-                    }
-                    catch
-                    {
-                        errorCount[0]++;
-                    }
-                }
-            }
-            catch { }
+            errorCount = fileSaveService.SaveProcess(process, extensions, threadManagementModel);
         }
     }
 }
