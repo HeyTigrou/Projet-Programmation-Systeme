@@ -22,12 +22,19 @@ namespace easy_save.Desktop.MVVM.ViewModel
         public bool BothAreSelected { get; set; }
 
         public ICommand ChangeLogExtension { get; }
-        public ICommand AddExtensionToEncrypt { get; }
-        public ICommand RemoveExtensionToEncrypt { get; } 
         public ICommand GenerateKey { get; }
 
-        public ObservableCollection<string> Extensions { get; } = FileExtensionModel.ExtensionInstance.CryptingExtensions;
-        public ObservableCollection<string> SelectedExtensions { get; } = FileExtensionModel.ExtensionInstance.SelectedCryptingExtensions;
+        public ICommand AddExtensionToEncrypt { get; }
+        public ICommand RemoveExtensionToEncrypt { get; }
+
+        public ICommand AddExtensionPriority { get; }
+        public ICommand RemoveExtensionPriority { get; }
+
+        public ObservableCollection<string> EncryptionExtensions { get; } = FileExtensionModel.ExtensionInstance.CryptingExtensions;
+        public ObservableCollection<string> SelectedEncryptionExtensions { get; } = FileExtensionModel.ExtensionInstance.SelectedCryptingExtensions;
+
+        public ObservableCollection<string> PriorityExtensions { get; } = FileExtensionModel.PriorityInstance.PriorityExtensions;
+        public ObservableCollection<string> SelectedPriorityExtensions { get; } = FileExtensionModel.PriorityInstance.SelectedPriorityExtensions;
 
         /// <summary>
         /// Binds the buttons with the methods.
@@ -36,8 +43,12 @@ namespace easy_save.Desktop.MVVM.ViewModel
         {
             GenerateKey = new RelayCommand(x => Generate64BitKey());
             ChangeLogExtension = new RelayCommand(x => ChangeLogExtensions());
-            RemoveExtensionToEncrypt = new RelayCommand(x => RemoveExtension(x as string));
-            AddExtensionToEncrypt = new RelayCommand(x => AddExtension(x as string));
+            
+            RemoveExtensionToEncrypt = new RelayCommand(x => RemoveEncryptionExtension(x as string));
+            AddExtensionToEncrypt = new RelayCommand(x => AddEncryptionExtension(x as string));
+
+            RemoveExtensionPriority = new RelayCommand(x => RemovePriorityExtension(x as string));
+            AddExtensionPriority = new RelayCommand(x => AddPriorityExtension(x as string));
             ChangeLogExtensions();
         }
 
@@ -45,14 +56,14 @@ namespace easy_save.Desktop.MVVM.ViewModel
         /// Removes the extension from the observable collection.
         /// </summary>
         /// <param name="extension"></param>
-        private void RemoveExtension(string extension)
+        private void RemoveEncryptionExtension(string extension)
         {
             try
             {
-                Extensions.Add(extension);
-                SelectedExtensions.Remove(extension);
-                FileExtensionModel.ExtensionInstance.CryptingExtensions = Extensions;
-                FileExtensionModel.ExtensionInstance.SelectedCryptingExtensions = SelectedExtensions;
+                EncryptionExtensions.Add(extension);
+                SelectedEncryptionExtensions.Remove(extension);
+                FileExtensionModel.ExtensionInstance.CryptingExtensions = EncryptionExtensions;
+                FileExtensionModel.ExtensionInstance.SelectedCryptingExtensions = SelectedEncryptionExtensions;
             }
             catch { }
         }
@@ -61,18 +72,50 @@ namespace easy_save.Desktop.MVVM.ViewModel
         /// Adds the extension to the observable collection.
         /// </summary>
         /// <param name="extension"></param>
-        private void AddExtension(string extension)
+        private void AddEncryptionExtension(string extension)
         {
             try
             {
-                Extensions.Remove(extension);
-                SelectedExtensions.Add(extension);
-                FileExtensionModel.ExtensionInstance.CryptingExtensions = Extensions;
-                FileExtensionModel.ExtensionInstance.SelectedCryptingExtensions = SelectedExtensions;
+                EncryptionExtensions.Remove(extension);
+                SelectedEncryptionExtensions.Add(extension);
+                FileExtensionModel.ExtensionInstance.CryptingExtensions = EncryptionExtensions;
+                FileExtensionModel.ExtensionInstance.SelectedCryptingExtensions = SelectedEncryptionExtensions;
             }
             catch { }
         }
-        
+
+        /// <summary>
+        /// Removes the extension from the observable collection.
+        /// </summary>
+        /// <param name="extension"></param>
+        private void RemovePriorityExtension(string extension)
+        {
+            try
+            {
+                PriorityExtensions.Add(extension);
+                SelectedPriorityExtensions.Remove(extension);
+                FileExtensionModel.PriorityInstance.PriorityExtensions = PriorityExtensions;
+                FileExtensionModel.PriorityInstance.SelectedPriorityExtensions = SelectedPriorityExtensions;
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// Adds the extension to the observable collection.
+        /// </summary>
+        /// <param name="extension"></param>
+        private void AddPriorityExtension(string extension)
+        {
+            try
+            {
+                PriorityExtensions.Remove(extension);
+                SelectedPriorityExtensions.Add(extension);
+                FileExtensionModel.ExtensionInstance.PriorityExtensions = PriorityExtensions;
+                FileExtensionModel.ExtensionInstance.SelectedPriorityExtensions = SelectedPriorityExtensions;
+            }
+            catch { }
+        }
+
         /// <summary>
         /// Changes the log file extension depending on the choosen
         /// </summary>
