@@ -1,21 +1,16 @@
 ﻿using easy_save.Desktop.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using easy_save.Lib.Models;
 using easy_save.Lib.Service;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 
 namespace easy_save.Desktop.MVVM.ViewModel
 {
     internal class CreateViewModel : INotifyPropertyChanged
     {
-
         private string saveName;
+
         public string SaveName
         {
             get => saveName;
@@ -25,7 +20,9 @@ namespace easy_save.Desktop.MVVM.ViewModel
                 SetProperty();
             }
         }
+
         private string pathSource;
+
         public string PathSource
         {
             get => pathSource;
@@ -35,7 +32,9 @@ namespace easy_save.Desktop.MVVM.ViewModel
                 SetProperty();
             }
         }
+
         private string pathDestination;
+
         public string PathDestination
         {
             get => pathDestination;
@@ -57,10 +56,22 @@ namespace easy_save.Desktop.MVVM.ViewModel
         /// <summary>
         /// Binds the button with the Create method.
         /// </summary>
-        public CreateViewModel() 
+        public CreateViewModel()
         {
-            CreateCommand = new RelayCommand(x => Create());
-        }   
+            CreateCommand = new RelayCommand(
+                x => Create(),
+                x => CheckBoxsEmpty()
+            );
+
+            SaveName = "";
+            PathSource = "";
+            PathDestination = "";
+        }
+
+        private bool CheckBoxsEmpty()
+        {
+            return ((SaveName != "") && (PathSource != "") && (PathDestination != ""));
+        }
 
         /// <summary>
         /// Creates a save work with the entered name and paths.

@@ -2,7 +2,6 @@
     x:Class="easy_save.Desktop.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Menu="clr-namespace:easy_save.Desktop.Utilities"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="clr-namespace:easy_save.Desktop.MVVM.ViewModel"
@@ -24,13 +23,11 @@
         </Style>
     </Window.Resources>
 
-
     <!--  Border  -->
 
-    <Border CornerRadius="10">
+    <Border>
         <Border.Background>
             <ImageBrush ImageSource="Asset/Images/bg.png" Stretch="Fill" />
-
         </Border.Background>
 
         <Grid>
@@ -82,7 +79,6 @@
                     Content="{DynamicResource Exit}"
                     FontSize="17"
                     Style="{StaticResource MenuButtonStyle}" />
-
             </StackPanel>
 
             <!--  Languages  -->
@@ -109,7 +105,6 @@
                     Content="{DynamicResource English}"
                     Foreground="AliceBlue"
                     IsChecked="True" />
-
             </StackPanel>
 
             <!--  HomeView  -->
@@ -119,8 +114,6 @@
                 Grid.Column="1"
                 Margin="10"
                 Content="{Binding CurrentView}" />
-
         </Grid>
     </Border>
-
 </Window>

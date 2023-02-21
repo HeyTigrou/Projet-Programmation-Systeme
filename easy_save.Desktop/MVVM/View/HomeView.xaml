@@ -18,7 +18,6 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        
         <!--  Title  -->
         <StackPanel
             Grid.Row="0"
@@ -35,16 +34,18 @@
                 Foreground="AliceBlue"
                 Text="{DynamicResource HomeTitle}" />
         </StackPanel>
-        
+
         <!--  Image EasySave  -->
-        <Image Source="/Asset/Images/iconTop.png" Margin="0,115,0,0" Width="90" Height="90"  />
+        <Image
+            Width="90"
+            Height="90"
+            Margin="0,115,0,0"
+            Source="/Asset/Images/iconTop.png" />
 
         <StackPanel
             Grid.Row="1"
             Margin="0,-50,0,0"
             VerticalAlignment="Center">
-
-            
 
             <!--  Description EasySave  -->
             <TextBlock
@@ -74,7 +75,5 @@
                 Text="{DynamicResource Description3}"
                 TextWrapping="Wrap" />
         </StackPanel>
-        
     </Grid>
-    
 </UserControl>

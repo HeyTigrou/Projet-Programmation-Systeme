@@ -34,15 +34,22 @@
     <system:String x:Key="Encrypt">Extension à chiffrer :</system:String>
     <system:String x:Key="Generate">Générer une clé de cryptage</system:String>
 
-    
-    <system:String x:Key="LogFileExtension">Sauvegarder</system:String>
+    <system:String x:Key="PriorityExtensions">Extensions prioritaires:</system:String>
+    <system:String x:Key="SelectedExtensions">Extensions selectionnées</system:String>
+    <system:String x:Key="AvailableExtensions">Extensions Disponibles</system:String>
+
     <system:String x:Key="Add">Ajouter</system:String>
     <system:String x:Key="Remove">Supprimer</system:String>
 
-    <system:String x:Key="Search">Rechercher (optionnel)</system:String>
+    <system:String x:Key="LogFileExtension">Sauvegarder</system:String>
 
+    <system:String x:Key="Search">Rechercher</system:String>
+
+    <system:String x:Key="TitlePopUp">ERREUR ! Impossible de lancer le processus de sauvegarde</system:String>
     <system:String x:Key="RemoveThread">Arreter travail</system:String>
     <system:String x:Key="PauseThread">Mettre en pause travail</system:String>
     <system:String x:Key="ResumeThread">Relancer travail</system:String>
-
+    <system:String x:Key="ErrorPopUp">Logiciel métier en cours d'exécution, impossible de lancer le processus de sauvegarde.</system:String>
+    <system:String x:Key="ErrorPopUp2">Veuillez arrêter le processus métier.</system:String>
+    <system:String x:Key="Close">Fermer</system:String>
 </ResourceDictionary>

@@ -18,7 +18,7 @@
                 Style="{StaticResource SavesButtonStyle}" />
 
             <Button
-                Command="{Binding RemoveCommand}"  
+                Command="{Binding RemoveCommand}"
                 Content="{DynamicResource Remove}"
                 Style="{StaticResource SavesButtonStyle}" />
 
@@ -39,7 +39,6 @@
                 Command="{Binding ResumeThreadCommand}"
                 Content="{DynamicResource ResumeThread}"
                 Style="{StaticResource SavesButtonStyle}" />
-
         </StackPanel>
         <DataGrid
             Name="grid"
@@ -48,18 +47,13 @@
             IsReadOnly="True"
             ItemsSource="{Binding Processes}"
             SelectedItem="{Binding Selected}">
-            
 
-                <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Name}" Header="Name" />
-                    <DataGridTextColumn Binding="{Binding InputPath}" Header="Input Path" />
-                    <DataGridTextColumn Binding="{Binding OutputPath}" Header="Output Path" />
-                    <DataGridTextColumn Binding="{Binding SaveType}" Header="Save Type" />
-                </DataGrid.Columns>
-            </DataGrid>
-
-            
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Name}" Header="Name" />
+                <DataGridTextColumn Binding="{Binding InputPath}" Header="Input Path" />
+                <DataGridTextColumn Binding="{Binding OutputPath}" Header="Output Path" />
+                <DataGridTextColumn Binding="{Binding SaveType}" Header="Save Type" />
+            </DataGrid.Columns>
+        </DataGrid>
     </DockPanel>
-
-
 </UserControl>
