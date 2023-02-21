@@ -7,11 +7,6 @@ using System.Threading.Tasks;
 
 namespace easy_save.Lib.Models
 {
-    public enum StateTypes
-    {
-        Running,
-        Done
-    }
     /// <summary>
     /// This Model is used to create the state log
     /// </summary>

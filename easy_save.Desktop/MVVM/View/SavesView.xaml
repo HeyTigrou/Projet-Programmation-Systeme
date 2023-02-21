@@ -47,13 +47,14 @@
             ItemsSource="{Binding Processes}"
             SelectedItem="{Binding Selected}">
 
-            <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Name}" Header="Name" />
-                <DataGridTextColumn Binding="{Binding InputPath}" Header="Input Path" />
-                <DataGridTextColumn Binding="{Binding OutputPath}" Header="Output Path" />
-                <DataGridTextColumn Binding="{Binding SaveType}" Header="Save Type" />
-                <DataGridTextColumn Binding="{Binding Progression}" Header="Progresion" />
-            </DataGrid.Columns>
-        </DataGrid>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Name}" Header="Name" />
+                    <DataGridTextColumn Binding="{Binding InputPath}" Header="Input Path" />
+                    <DataGridTextColumn Binding="{Binding OutputPath}" Header="Output Path" />
+                    <DataGridTextColumn Binding="{Binding SaveType}" Header="Save Type" />
+                    <DataGridTextColumn Binding="{Binding Progression}" Header="Progresion" />
+                    <DataGridTextColumn Binding="{Binding State}" Header="State" />
+                </DataGrid.Columns>
+            </DataGrid>
     </DockPanel>
 </UserControl>

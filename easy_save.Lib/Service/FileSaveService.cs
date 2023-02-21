@@ -23,6 +23,7 @@ namespace easy_save.Lib.Service
         public readonly StateLoggerModel stateLoggerModel = new();
 
         public event EventHandler<SaveWorkModel> ThreadEnded;
+        public SaveWorkModel Save;
 
         public bool QuitThread { get; set; } = false;
         public ManualResetEvent ResetEvent = new ManualResetEvent(false);
@@ -37,34 +38,39 @@ namespace easy_save.Lib.Service
         {
             new Thread(() =>
             {
+                Save = save;
+                Save.State = nameof(SaveWorkState.Running);
                 ResetEvent.Set();
                 LoggerService logger = new();
                 // Checks save type and launchs the corresponding method.
-                if (save.SaveType == 0)
+                if (Save.SaveType == 0)
                 {
-                     SaveAllFiles(save, logger, extensions);
+                     SaveAllFiles(logger, extensions);
                 }
 
-                else if (save.SaveType == 1)
+                else if (Save.SaveType == 1)
                 {
-                     SaveChangedFiles(save, logger, extensions);
+                     SaveChangedFiles(logger, extensions);
                 }
-
-                ThreadEnded?.Invoke(this, save);
+                Save.State = nameof(SaveWorkState.Done);
+                ThreadEnded?.Invoke(this, Save);
             }).Start();
         }
 
         public void Pause()
         {
+            Save.State = nameof(SaveWorkState.Paused);
             ResetEvent.Reset();
         }
         public void Resume()
         {
+            Save.State = nameof(SaveWorkState.Running);
             ResetEvent.Set();
         }
 
         public void Quit()
         {
+            Save.State = nameof(SaveWorkState.Done);
             QuitThread = true;
             ResetEvent.Set();
         }
@@ -73,12 +79,12 @@ namespace easy_save.Lib.Service
         /// This method is used to setup the logger models
         /// </summary>
         /// <param name="save"></param>
-        private void InitializeLoggerModels(SaveWorkModel save)
+        private void InitializeLoggerModels()
         {
             long totalFileSize = 0;
 
             
-            string[] files = Directory.GetFiles(save.InputPath, "*.*", SearchOption.AllDirectories);
+            string[] files = Directory.GetFiles(Save.InputPath, "*.*", SearchOption.AllDirectories);
 
             stateLoggerModel.TotalFileToCopy = files.Length;
 
@@ -93,10 +99,10 @@ namespace easy_save.Lib.Service
 
             stateLoggerModel.NbFilesLeft = stateLoggerModel.TotalFileToCopy;
 
-            stateLoggerModel.State = nameof(StateTypes.Running);
-            stateLoggerModel.SourceFilePath = save.InputPath;
-            stateLoggerModel.TargetFilePath = save.OutputPath;
-            stateLoggerModel.Name = save.Name;
+            stateLoggerModel.State = nameof(SaveWorkState.Running);
+            stateLoggerModel.SourceFilePath = Save.InputPath;
+            stateLoggerModel.TargetFilePath = Save.OutputPath;
+            stateLoggerModel.Name = Save.Name;
         }
 
         /// <summary>
@@ -104,7 +110,7 @@ namespace easy_save.Lib.Service
         /// </summary>
         private void StateLoggerToDone()
         {
-            stateLoggerModel.State = nameof(StateTypes.Done);
+            stateLoggerModel.State = nameof(SaveWorkState.Done);
             stateLoggerModel.TotalFileSize = 0;
             stateLoggerModel.NbFilesLeft = 0;
             stateLoggerModel.TotalFileToCopy = 0;
@@ -119,16 +125,16 @@ namespace easy_save.Lib.Service
         /// <param name="logger"></param>
         /// <param name="extensions"></param>
         /// <returns></returns>
-        private int SaveAllFiles(SaveWorkModel save, LoggerService logger, List<string> extensions)
+        private int SaveAllFiles(LoggerService logger, List<string> extensions)
         {
-            logger.LogProcessFile(save.Name);
+            logger.LogProcessFile(Save.Name);
 
-            InitializeLoggerModels(save);
+            InitializeLoggerModels();
 
             logger.LogProcessState(stateLoggerModel);
 
             // Creates directories in the destination directory to reproduce the architecture of the source directory.
-            foreach (string dirPath in Directory.GetDirectories(save.InputPath, "*", SearchOption.AllDirectories))
+            foreach (string dirPath in Directory.GetDirectories(Save.InputPath, "*", SearchOption.AllDirectories))
             {
                 ResetEvent.WaitOne();
                 if(QuitThread == true)
@@ -136,12 +142,12 @@ namespace easy_save.Lib.Service
                     return 10;
                 }
 
-                Directory.CreateDirectory(dirPath.Replace(save.InputPath, save.OutputPath));
+                Directory.CreateDirectory(dirPath.Replace(Save.InputPath, Save.OutputPath));
             }
 
             int errorCount = 0;
             // Copies each file to the destionation path.
-            foreach (string newPath in Directory.GetFiles(save.InputPath, "*.*", SearchOption.AllDirectories))
+            foreach (string newPath in Directory.GetFiles(Save.InputPath, "*.*", SearchOption.AllDirectories))
             {
                 ResetEvent.WaitOne();
                 if (QuitThread == true)
@@ -150,7 +156,7 @@ namespace easy_save.Lib.Service
                 }
 
                 DailyLoggerModel dailyLoggerModel = new();
-                dailyLoggerModel.Name = save.Name;
+                dailyLoggerModel.Name = Save.Name;
 
                 DateTime before = DateTime.Now;
                 
@@ -158,7 +164,7 @@ namespace easy_save.Lib.Service
 
                 try
                 {
-                    int returnCode = CopyProcess(newPath, save, extensions);
+                    int returnCode = CopyProcess(newPath, extensions);
                     
                     DateTime after = DateTime.Now;
                     dailyLoggerModel.FileTransferTime = after - before;
@@ -174,14 +180,14 @@ namespace easy_save.Lib.Service
                 }
 
                 dailyLoggerModel.SourceFilePath = newPath;
-                dailyLoggerModel.TargetFilePath = newPath.Replace(save.InputPath, save.OutputPath);
+                dailyLoggerModel.TargetFilePath = newPath.Replace(Save.InputPath, Save.OutputPath);
                 FileInfo fileLength = new FileInfo(newPath);
                 dailyLoggerModel.Filesize = fileLength.Length;
 
                 logger.AddToDailyLog(dailyLoggerModel);
 
                 stateLoggerModel.NbFilesLeft--;
-                save.Progression = (stateLoggerModel.Progression * 100).ToString("0.0") + "%";
+                Save.Progression = (stateLoggerModel.Progression * 100).ToString("0.0") + "%";
             }
 
             StateLoggerToDone();
@@ -200,16 +206,16 @@ namespace easy_save.Lib.Service
         /// <param name="logger"></param>
         /// <param name="extensions"></param>
         /// <returns></returns>
-        private int SaveChangedFiles(SaveWorkModel save, LoggerService logger, List<string> extensions)
+        private int SaveChangedFiles(LoggerService logger, List<string> extensions)
         {
-            logger.LogProcessFile(save.Name);
+            logger.LogProcessFile(Save.Name);
 
-            InitializeLoggerModels(save);
+            InitializeLoggerModels();
 
             logger.LogProcessState(stateLoggerModel);
 
             // Creates directories in the destination directory to reproduce the architecture of the source directory, if it does not exist.
-            foreach (string dirPath in Directory.GetDirectories(save.InputPath, "*", SearchOption.AllDirectories))
+            foreach (string dirPath in Directory.GetDirectories(Save.InputPath, "*", SearchOption.AllDirectories))
             {
                 ResetEvent.WaitOne();
                 if (QuitThread == true)
@@ -218,7 +224,7 @@ namespace easy_save.Lib.Service
                 }
 
                 DirectoryInfo sourceDirectoryInfo = new DirectoryInfo(dirPath);
-                DirectoryInfo destinationDirectoryInfo = new DirectoryInfo(dirPath.Replace(save.InputPath, save.OutputPath));
+                DirectoryInfo destinationDirectoryInfo = new DirectoryInfo(dirPath.Replace(Save.InputPath, Save.OutputPath));
                 if (!destinationDirectoryInfo.Exists)
                 {
                     destinationDirectoryInfo.Create();
@@ -227,7 +233,7 @@ namespace easy_save.Lib.Service
 
             int errorCount = 0;
             // Copies modified files to the destionation path.
-            foreach (string newPath in Directory.GetFiles(save.InputPath, "*.*", SearchOption.AllDirectories))
+            foreach (string newPath in Directory.GetFiles(Save.InputPath, "*.*", SearchOption.AllDirectories))
             {
                 ResetEvent.WaitOne();
                 if (QuitThread == true)
@@ -236,11 +242,11 @@ namespace easy_save.Lib.Service
                 }
 
                 FileInfo sourceFileInfo = new(newPath);
-                FileInfo destinationFileInfo = new(newPath.Replace(save.InputPath, save.OutputPath));
+                FileInfo destinationFileInfo = new(newPath.Replace(Save.InputPath, Save.OutputPath));
                 if (!destinationFileInfo.Exists || sourceFileInfo.LastWriteTime > destinationFileInfo.LastWriteTime)
                 {
                     DailyLoggerModel dailyLoggerModel = new();
-                    dailyLoggerModel.Name = save.Name;
+                    dailyLoggerModel.Name = Save.Name;
 
                     DateTime before = DateTime.Now;
 
@@ -249,7 +255,7 @@ namespace easy_save.Lib.Service
 
                     try
                     {
-                        int returnCode = CopyProcess(newPath, save, extensions);
+                        int returnCode = CopyProcess(newPath, extensions);
 
                         DateTime after = DateTime.Now;
                         dailyLoggerModel.FileTransferTime = after - before;
@@ -265,7 +271,7 @@ namespace easy_save.Lib.Service
                     }
 
                     dailyLoggerModel.SourceFilePath = newPath;
-                    dailyLoggerModel.TargetFilePath = newPath.Replace(save.InputPath, save.OutputPath);
+                    dailyLoggerModel.TargetFilePath = newPath.Replace(Save.InputPath, Save.OutputPath);
                     FileInfo fileLength = new FileInfo(newPath);
                     dailyLoggerModel.Filesize = fileLength.Length;
 
@@ -276,7 +282,7 @@ namespace easy_save.Lib.Service
                     stateLoggerModel.TotalFileToCopy--;
                 }
                 stateLoggerModel.NbFilesLeft--;
-                save.Progression = (stateLoggerModel.Progression * 100).ToString("0.0") + "%";
+                Save.Progression = (stateLoggerModel.Progression * 100).ToString("0.0") + "%";
             }
 
             StateLoggerToDone();
@@ -295,12 +301,12 @@ namespace easy_save.Lib.Service
         /// <param name="save"></param>
         /// <param name="extensions"></param>
         /// <returns></returns>
-        private int CopyProcess(string inPath, SaveWorkModel save ,List<string> extensions)
+        private int CopyProcess(string inPath,List<string> extensions)
         {
             FileInfo fileInfo = new FileInfo(inPath);
 
             // Creates the destination path, by keeping the file name and changing the folder path.
-            string destinationPath = inPath.Replace(save.InputPath, save.OutputPath);
+            string destinationPath = inPath.Replace(Save.InputPath, Save.OutputPath);
             int returnCode = 0;
 
             // If the extension list is not empty

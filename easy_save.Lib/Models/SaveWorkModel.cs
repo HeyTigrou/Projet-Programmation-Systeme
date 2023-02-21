@@ -11,6 +11,13 @@ using System.Xml.Serialization;
 
 namespace easy_save.Lib.Models
 {
+    public enum SaveWorkState
+    {
+        Unstarted,
+        Running,
+        Done,
+        Paused
+    }
     /// <summary>
     /// This Model is used to manage the save works
     /// </summary>
@@ -25,6 +32,13 @@ namespace easy_save.Lib.Models
         public string Progression { 
             get { return (progression != null) ? progression : "" ; } 
             set { progression = value; OnPropertyChanged("Progression"); } 
+        }
+
+        private string state;
+        public string State
+        {
+            get { return (state != null) ? state : nameof(SaveWorkState.Unstarted); }
+            set { state = value; OnPropertyChanged("State"); }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
