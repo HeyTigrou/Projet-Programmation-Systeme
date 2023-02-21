@@ -1,21 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace easy_save.Lib.Models
 {
     /// <summary>
     /// This Model is used to manage the save works
     /// </summary>
-    public class SaveWorkModel 
+    [DataContract]
+    public class SaveWorkModel : INotifyPropertyChanged
     {
-        public string Name { get; set; }
-        public string InputPath { get; set; }
-        public string OutputPath { get; set; }
-        public int SaveType { get; set; }
+        [DataMember] public string Name { get; set; }
+        [DataMember] public string InputPath { get; set; }
+        [DataMember] public string OutputPath { get; set; }
+        [DataMember] public int SaveType { get; set; }
+        private string progression;
+        public string Progression { 
+            get { return (progression != null) ? progression : "" ; } 
+            set { progression = value; OnPropertyChanged("Progression"); } 
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

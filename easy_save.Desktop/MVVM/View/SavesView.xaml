@@ -41,7 +41,6 @@
                 Style="{StaticResource SavesButtonStyle}" />
         </StackPanel>
         <DataGrid
-            Name="grid"
             Margin="5"
             AutoGenerateColumns="False"
             IsReadOnly="True"
@@ -53,6 +52,7 @@
                 <DataGridTextColumn Binding="{Binding InputPath}" Header="Input Path" />
                 <DataGridTextColumn Binding="{Binding OutputPath}" Header="Output Path" />
                 <DataGridTextColumn Binding="{Binding SaveType}" Header="Save Type" />
+                <DataGridTextColumn Binding="{Binding Progression}" Header="Progresion" />
             </DataGrid.Columns>
         </DataGrid>
     </DockPanel>

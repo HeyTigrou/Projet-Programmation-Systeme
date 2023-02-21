@@ -32,6 +32,7 @@
 
     <system:String x:Key="TypeOfLog">Type of log :</system:String>
     <system:String x:Key="Encrypt">Extension to Encrypt :</system:String>
+    <system:String x:Key="Priority">Priority extensions :</system:String>
     <system:String x:Key="Generate">Generate an encryption key</system:String>
 
     <system:String x:Key="PriorityExtensions">Priority extensions:</system:String>

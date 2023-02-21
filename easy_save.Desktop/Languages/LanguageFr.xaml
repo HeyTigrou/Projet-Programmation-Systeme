@@ -32,16 +32,14 @@
 
     <system:String x:Key="TypeOfLog">Type de journal (log) :</system:String>
     <system:String x:Key="Encrypt">Extension à chiffrer :</system:String>
+    <system:String x:Key="Priority">Extension prioritaires :</system:String>
     <system:String x:Key="Generate">Générer une clé de cryptage</system:String>
 
-    <system:String x:Key="PriorityExtensions">Extensions prioritaires:</system:String>
-    <system:String x:Key="SelectedExtensions">Extensions selectionnées</system:String>
-    <system:String x:Key="AvailableExtensions">Extensions Disponibles</system:String>
 
+    <system:String x:Key="LogFileExtension">Sauvegarder</system:String>
     <system:String x:Key="Add">Ajouter</system:String>
     <system:String x:Key="Remove">Supprimer</system:String>
 
-    <system:String x:Key="LogFileExtension">Sauvegarder</system:String>
 
     <system:String x:Key="Search">Rechercher</system:String>
 
