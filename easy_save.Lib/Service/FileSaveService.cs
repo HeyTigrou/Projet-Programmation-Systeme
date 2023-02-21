@@ -21,29 +21,49 @@ namespace easy_save.Lib.Service
         /// We create an instance of each type of logger
         /// </summary>
         private readonly StateLoggerModel stateLoggerModel = new();
-        private ThreadManagementModel _ThreadManagementModel;
+
+
+        public bool QuitThread { get; set; } = false;
+        public ManualResetEvent ResetEvent = new ManualResetEvent(false);
+
         /// <summary>
         /// This method is used to select the right method to use : SaveAllFiles (Complete save) or SaveChangedFiles (Incremental Save)
         /// </summary>
         /// <param name="save"></param>
         /// <param name="extensions"></param>
         /// <returns></returns>
-        public int SaveProcess(SaveWorkModel save, List<string> extensions, ThreadManagementModel threadManagementModel)
+        public void SaveProcess(SaveWorkModel save, List<string> extensions)
         {
-            LoggerService logger = new();
-            _ThreadManagementModel = threadManagementModel;
-                
-            // Checks save type and launchs the corresponding method.
-            if (save.SaveType == 0)
+            new Thread(() =>
             {
-                return SaveAllFiles(save, logger, extensions);
-            }
+                ResetEvent.Set();
+                LoggerService logger = new();
+                // Checks save type and launchs the corresponding method.
+                if (save.SaveType == 0)
+                {
+                     SaveAllFiles(save, logger, extensions);
+                }
 
-            else if (save.SaveType == 1)
-            {
-                return SaveChangedFiles(save, logger, extensions);
-            }
-            return -1;
+                else if (save.SaveType == 1)
+                {
+                     SaveChangedFiles(save, logger, extensions);
+                }
+            }).Start();
+        }
+
+        public void Pause()
+        {
+            ResetEvent.Reset();
+        }
+        public void Resume()
+        {
+            ResetEvent.Set();
+        }
+
+        public void Quit()
+        {
+            ResetEvent.Set();
+            QuitThread = true;
         }
 
         /// <summary>
@@ -107,8 +127,8 @@ namespace easy_save.Lib.Service
             // Creates directories in the destination directory to reproduce the architecture of the source directory.
             foreach (string dirPath in Directory.GetDirectories(save.InputPath, "*", SearchOption.AllDirectories))
             {
-                _ThreadManagementModel.ResetEvent.WaitOne();
-                if(_ThreadManagementModel.QuitThread == true)
+                ResetEvent.WaitOne();
+                if(QuitThread == true)
                 {
                     return 10;
                 }
@@ -120,8 +140,8 @@ namespace easy_save.Lib.Service
             // Copies each file to the destionation path.
             foreach (string newPath in Directory.GetFiles(save.InputPath, "*.*", SearchOption.AllDirectories))
             {
-                _ThreadManagementModel.ResetEvent.WaitOne();
-                if (_ThreadManagementModel.QuitThread == true)
+                ResetEvent.WaitOne();
+                if (QuitThread == true)
                 {
                     return 10;
                 }
@@ -199,8 +219,8 @@ namespace easy_save.Lib.Service
             // Creates directories in the destination directory to reproduce the architecture of the source directory, if it does not exist.
             foreach (string dirPath in Directory.GetDirectories(save.InputPath, "*", SearchOption.AllDirectories))
             {
-                _ThreadManagementModel.ResetEvent.WaitOne();
-                if (_ThreadManagementModel.QuitThread == true)
+                ResetEvent.WaitOne();
+                if (QuitThread == true)
                 {
                     return 10;
                 }
@@ -217,8 +237,8 @@ namespace easy_save.Lib.Service
             // Copies modified files to the destionation path.
             foreach (string newPath in Directory.GetFiles(save.InputPath, "*.*", SearchOption.AllDirectories))
             {
-                _ThreadManagementModel.ResetEvent.WaitOne();
-                if (_ThreadManagementModel.QuitThread == true)
+                ResetEvent.WaitOne();
+                if (QuitThread == true)
                 {
                     return 10;
                 }

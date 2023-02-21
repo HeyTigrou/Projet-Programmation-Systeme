@@ -42,8 +42,8 @@
 
     <system:String x:Key="Search">Browse (optional)</system:String>
     
-    <system:String x:Key="RemoveThread">Delete thread</system:String>
-    <system:String x:Key="PauseThread">Pause thread</system:String>
-    <system:String x:Key="ResumeThread">Resume thread</system:String>
+    <system:String x:Key="RemoveThread">Stop work</system:String>
+    <system:String x:Key="PauseThread">Pause work</system:String>
+    <system:String x:Key="ResumeThread">Resume work</system:String>
     
 </ResourceDictionary>

@@ -27,20 +27,19 @@ namespace easy_save.Desktop.MVVM.ViewModel
 
         public ICommand RemoveCommand { get; }
         public ICommand RefreshCommand { get; }
-
         public ICommand LaunchCommand { get; }
         public ICommand RemoveThreadCommand { get; }
         public ICommand PauseThreadCommand { get; }
         public ICommand ResumeThreadCommand { get; }
 
-        private SaveWorkManagerService SaveWorkManager = new SaveWorkManagerService();
+        public SaveWorkModel Selected { get; set; }
 
+        private SaveWorkManagerService SaveWorkManager = new SaveWorkManagerService();
         /// <summary>
         /// This observable collection contains all the processes on the selected folder. It is binded to a datagrid in the view.
         /// </summary>
         public ObservableCollection<SaveWorkModel> Processes { get; } = new ObservableCollection<SaveWorkModel>();
-        public ObservableCollection<Thread> Threads { get; } = new ObservableCollection<Thread>();
-        public Dictionary<string, ThreadManagementModel> ThreadManagementModels { get; } = new Dictionary<string, ThreadManagementModel>();
+        public Dictionary<SaveWorkModel, FileSaveService> FileSaveServices { get; } = new Dictionary<SaveWorkModel, FileSaveService>();
         /// <summary>
         /// Binds the methods with button, and adds the existing save works to the observable collection.
         /// </summary>
@@ -49,33 +48,69 @@ namespace easy_save.Desktop.MVVM.ViewModel
 
             // Binds the Button with the methods.
             RefreshCommand = new RelayCommand(x => Refresh());
-            RemoveCommand = new RelayCommand(x => Remove(x as SaveWorkModel));
-            LaunchCommand = new RelayCommand(x => LaunchSave(x as SaveWorkModel));
 
-            RemoveThreadCommand = new RelayCommand(x => RemoveThread(x as Thread));
-            PauseThreadCommand = new RelayCommand(x => PauseThread(x as Thread));
-            ResumeThreadCommand = new RelayCommand(x => ResumeThread(x as Thread));
+            RemoveCommand = new RelayCommand(
+                x => Remove(),
+                x => CheckSelected()
+            );
+
+            LaunchCommand = new RelayCommand(
+                x => LaunchSave(),
+                x => CheckSelected()
+            );
+
+            RemoveThreadCommand = new RelayCommand(
+                x => RemoveThread(),
+                x => CheckSelected()
+            
+            );
+
+            PauseThreadCommand = new RelayCommand(
+                x => PauseThread(),
+                x => CheckSelected()
+            );
+
+            ResumeThreadCommand = new RelayCommand(
+                x => ResumeThread(),
+                x => CheckSelected()
+            );
 
             // Adds the existing saveworks to be shown in the view.
             Refresh();
         }
-        private void RemoveThread(Thread thread)
-        {
-            ThreadManagementModels[thread.Name].QuitThread = true;
-            ThreadManagementModels[thread.Name].ResetEvent.Set();
-            Threads.Remove(thread);
 
-            ThreadManagementModels.Remove(thread.Name);
+        private bool CheckSelected()
+        {
+            return Selected != null;
+        }
+        private void RemoveThread()
+        {
+            if (Selected == null)
+            {
+                return;
+            }
+
+            FileSaveServices[Selected].Quit();
+
+            FileSaveServices.Remove(Selected);
         }
 
-        private void PauseThread(Thread thread)
+        private void PauseThread()
         {
-            ThreadManagementModels[thread.Name].ResetEvent.Reset();
+            if (Selected == null)
+            {
+                return;
+            }
+            FileSaveServices[Selected].Pause();
         }
 
-        private void ResumeThread(Thread thread)
+        private void ResumeThread()
         {
-            ThreadManagementModels[thread.Name].ResetEvent.Set();
+            if (Selected == null)
+            {
+                return;
+            }
+            FileSaveServices[Selected].Resume();
         }
 
         /// <summary>
@@ -102,13 +137,16 @@ namespace easy_save.Desktop.MVVM.ViewModel
         /// Removes the selected save work.
         /// </summary>
         /// <param name="process"></param>
-        private void Remove(SaveWorkModel process)
+        private void Remove()
         {
-
+            if (Selected == null)
+            {
+                return;
+            }
             try
             {
                 // Deletes the selected save work.
-                SaveWorkManager.DeleteSaveWork(process.Name);
+                SaveWorkManager.DeleteSaveWork(Selected.Name);
 
                 // Refreshes the observable collection.
                 Refresh();
@@ -120,9 +158,12 @@ namespace easy_save.Desktop.MVVM.ViewModel
         /// Launches the selected save work.
         /// </summary>
         /// <param name="process"></param>
-        private void LaunchSave(SaveWorkModel process)
+        private void LaunchSave()
         {
-
+            if (Selected == null)
+            {
+                return;
+            }
             try
             {
                 int errorCount;
@@ -138,30 +179,15 @@ namespace easy_save.Desktop.MVVM.ViewModel
                 }
                 else
                 {
-                    if(!(Threads.Any(p => p.Name == process.Name)))
+                    if(!(FileSaveServices.Any(p => p.Key == Selected)))
                     {
-                        // launches the save work in a thread.
-                        ThreadManagementModel threadManagementModel = new ThreadManagementModel();
-                        ThreadManagementModels.Add(process.Name, threadManagementModel);
-
-                        var thread = new Thread(() => saveWork(process, extensions, threadManagementModel));
-                        thread.Name = process.Name;
-                        thread.Start();
-                        threadManagementModel.ResetEvent.Set();
-
-                        Threads.Add(thread);
+                        FileSaveService fileSaveService = new FileSaveService();
+                        fileSaveService.SaveProcess(Selected, extensions);
+                        FileSaveServices.Add(Selected, fileSaveService);
                     }
                 }
             }
             catch { }
-        }
-        
-        private void saveWork(SaveWorkModel process, List<string> extensions, ThreadManagementModel threadManagementModel)
-        {
-
-            int errorCount;
-            FileSaveService fileSaveService = new FileSaveService();
-            errorCount = fileSaveService.SaveProcess(process, extensions, threadManagementModel);
         }
     }
 }
