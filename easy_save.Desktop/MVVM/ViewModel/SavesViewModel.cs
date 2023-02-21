@@ -23,7 +23,7 @@ using System.Diagnostics;
 namespace easy_save.Desktop.MVVM.ViewModel
 {
     internal class SavesViewModel
-        {
+    {
 
         public ICommand RemoveCommand { get; }
         public ICommand RefreshCommand { get; }
@@ -32,6 +32,7 @@ namespace easy_save.Desktop.MVVM.ViewModel
         public ICommand PauseThreadCommand { get; }
         public ICommand ResumeThreadCommand { get; }
 
+        
         public SaveWorkModel Selected { get; set; }
 
         private SaveWorkManagerService SaveWorkManager = new SaveWorkManagerService();
@@ -39,13 +40,13 @@ namespace easy_save.Desktop.MVVM.ViewModel
         /// This observable collection contains all the processes on the selected folder. It is binded to a datagrid in the view.
         /// </summary>
         public ObservableCollection<SaveWorkModel> Processes { get; } = new ObservableCollection<SaveWorkModel>();
-        public Dictionary<SaveWorkModel, FileSaveService> FileSaveServices { get; } = new Dictionary<SaveWorkModel, FileSaveService>();
+
+        public Dictionary<SaveWorkModel, FileSaveService> FileSaveServices = new Dictionary<SaveWorkModel, FileSaveService>();
         /// <summary>
         /// Binds the methods with button, and adds the existing save works to the observable collection.
         /// </summary>
         public SavesViewModel()
         {
-
             // Binds the Button with the methods.
             RefreshCommand = new RelayCommand(x => Refresh());
 
@@ -89,10 +90,11 @@ namespace easy_save.Desktop.MVVM.ViewModel
             {
                 return;
             }
-
-            FileSaveServices[Selected].Quit();
-
-            FileSaveServices.Remove(Selected);
+            if (FileSaveServices.Any(p => p.Key == Selected))
+            {
+                FileSaveServices[Selected].Quit();
+                FileSaveServices.Remove(Selected);
+            }
         }
 
         private void PauseThread()
@@ -101,7 +103,10 @@ namespace easy_save.Desktop.MVVM.ViewModel
             {
                 return;
             }
-            FileSaveServices[Selected].Pause();
+            if (FileSaveServices.Any(p => p.Key == Selected))
+            {
+                FileSaveServices[Selected].Pause();
+            }
         }
 
         private void ResumeThread()
@@ -110,7 +115,10 @@ namespace easy_save.Desktop.MVVM.ViewModel
             {
                 return;
             }
-            FileSaveServices[Selected].Resume();
+            if (FileSaveServices.Any(p => p.Key == Selected))
+            {
+                FileSaveServices[Selected].Resume();
+            }
         }
 
         /// <summary>
@@ -119,18 +127,14 @@ namespace easy_save.Desktop.MVVM.ViewModel
         private void Refresh()
         {
 
-            try
-            {
-                // Clears the observable collection.
-                Processes.Clear();
+            // Clears the observable collection.
+            Processes.Clear();
 
-                // Refreshes it.
-                foreach (SaveWorkModel saveWork in SaveWorkManager.GetSaveWorks())
-                {
-                    Processes.Add(saveWork);
-                }
+            // Refreshes it.
+            foreach (SaveWorkModel saveWork in SaveWorkManager.GetSaveWorks())
+            {
+                Processes.Add(saveWork);
             }
-            catch { }
         }
 
         /// <summary>
@@ -143,15 +147,11 @@ namespace easy_save.Desktop.MVVM.ViewModel
             {
                 return;
             }
-            try
-            {
-                // Deletes the selected save work.
-                SaveWorkManager.DeleteSaveWork(Selected.Name);
+            // Deletes the selected save work.
+            SaveWorkManager.DeleteSaveWork(Selected.Name);
 
-                // Refreshes the observable collection.
-                Refresh();
-            }
-            catch { }
+            // Refreshes the observable collection.
+            Refresh();
         }
 
         /// <summary>
@@ -164,30 +164,33 @@ namespace easy_save.Desktop.MVVM.ViewModel
             {
                 return;
             }
-            try
-            {
-                int errorCount;
-                List<string> extensions = FileExtensionModel.ExtensionInstance.SelectedCryptingExtensions.ToList();
+            int errorCount;
+            List<string> extensions = FileExtensionModel.ExtensionInstance.SelectedCryptingExtensions.ToList();
 
-                // Returns if the 
-                ProcessStateService service = new ProcessStateService();
-                if (service.GetProcessState(ConfigurationManager.AppSettings["WorkProcessName"]))
+            // Returns if the 
+            ProcessStateService service = new ProcessStateService();
+            if (service.GetProcessState(ConfigurationManager.AppSettings["WorkProcessName"]))
+            {
+                // Shows failure popup if an application is running.
+                PopupProcessCannotStartView failurePopup = new PopupProcessCannotStartView();
+                failurePopup.ShowDialog();
+            }
+            else
+            {
+                if (!(FileSaveServices.Any(p => p.Key == Selected)))
                 {
-                    // Shows failure popup if an application is running.
-                    PopupProcessCannotStartView failurePopup = new PopupProcessCannotStartView();
-                    failurePopup.ShowDialog();
-                }
-                else
-                {
-                    if(!(FileSaveServices.Any(p => p.Key == Selected)))
-                    {
-                        FileSaveService fileSaveService = new FileSaveService();
-                        fileSaveService.SaveProcess(Selected, extensions);
-                        FileSaveServices.Add(Selected, fileSaveService);
-                    }
+                    FileSaveService fileSaveService = new FileSaveService();
+                    fileSaveService.ThreadEnded += FileSaveService_ThreadEnded;
+                    fileSaveService.SaveProcess(Selected, extensions);
+                    FileSaveServices.Add(Selected, fileSaveService);
                 }
             }
-            catch { }
         }
+
+        private void FileSaveService_ThreadEnded(object sender, SaveWorkModel e)
+        {
+            FileSaveServices.Remove(e);
+        }
+
     }
 }

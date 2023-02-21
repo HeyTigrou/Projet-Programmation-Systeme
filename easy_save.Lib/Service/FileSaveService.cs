@@ -20,8 +20,9 @@ namespace easy_save.Lib.Service
         /// <summary>
         /// We create an instance of each type of logger
         /// </summary>
-        private readonly StateLoggerModel stateLoggerModel = new();
+        public readonly StateLoggerModel stateLoggerModel = new();
 
+        public event EventHandler<SaveWorkModel> ThreadEnded;
 
         public bool QuitThread { get; set; } = false;
         public ManualResetEvent ResetEvent = new ManualResetEvent(false);
@@ -48,6 +49,8 @@ namespace easy_save.Lib.Service
                 {
                      SaveChangedFiles(save, logger, extensions);
                 }
+
+                ThreadEnded?.Invoke(this, save);
             }).Start();
         }
 
@@ -62,8 +65,8 @@ namespace easy_save.Lib.Service
 
         public void Quit()
         {
-            ResetEvent.Set();
             QuitThread = true;
+            ResetEvent.Set();
         }
 
         /// <summary>
@@ -151,11 +154,7 @@ namespace easy_save.Lib.Service
 
                 DateTime before = DateTime.Now;
                 
-                try
-                {
-                    logger.LogProcessState(stateLoggerModel);
-                }
-                catch { }
+                logger.LogProcessState(stateLoggerModel);
 
                 try
                 {
@@ -179,24 +178,17 @@ namespace easy_save.Lib.Service
                 FileInfo fileLength = new FileInfo(newPath);
                 dailyLoggerModel.Filesize = fileLength.Length;
 
-                try
-                {
-                    logger.AddToDailyLog(dailyLoggerModel);
-                }
-                catch { }
+                logger.AddToDailyLog(dailyLoggerModel);
 
                 stateLoggerModel.NbFilesLeft--;
+                save.Progression = (stateLoggerModel.Progression * 100).ToString("0.0") + "%";
             }
 
-            try
-            {
-                StateLoggerToDone();
+            StateLoggerToDone();
 
-                logger.LogDailySaves();
+            logger.LogDailySaves();
 
-                logger.LogProcessState(stateLoggerModel);
-            }
-            catch { }
+            logger.LogProcessState(stateLoggerModel);
 
             return errorCount;
         }
@@ -252,11 +244,7 @@ namespace easy_save.Lib.Service
 
                     DateTime before = DateTime.Now;
 
-                    try
-                    {
-                        logger.LogProcessState(stateLoggerModel);
-                    }
-                    catch { }
+                    logger.LogProcessState(stateLoggerModel);
                     
 
                     try
@@ -281,29 +269,22 @@ namespace easy_save.Lib.Service
                     FileInfo fileLength = new FileInfo(newPath);
                     dailyLoggerModel.Filesize = fileLength.Length;
 
-                    try
-                    {
-                        logger.AddToDailyLog(dailyLoggerModel);
-                    }
-                    catch { }
+                    logger.AddToDailyLog(dailyLoggerModel);
                 }
                 else
                 {
                     stateLoggerModel.TotalFileToCopy--;
                 }
                 stateLoggerModel.NbFilesLeft--;
+                save.Progression = (stateLoggerModel.Progression * 100).ToString("0.0") + "%";
             }
 
-            try
-            {
-                StateLoggerToDone();
+            StateLoggerToDone();
+                    
+            logger.LogDailySaves();
 
-                logger.LogDailySaves();
+            logger.LogProcessState(stateLoggerModel);
 
-                logger.LogProcessState(stateLoggerModel);
-            }
-            catch { }
-            
             return errorCount;
         }
 

@@ -41,25 +41,21 @@
                 Style="{StaticResource SavesButtonStyle}" />
 
         </StackPanel>
-        <DataGrid
-            Name="grid"
-            Margin="5"
-            AutoGenerateColumns="False"
-            IsReadOnly="True"
-            ItemsSource="{Binding Processes}"
-            SelectedItem="{Binding Selected}">
-            
-
+        <StackPanel  Orientation="Vertical">
+            <DataGrid
+                Margin="5"
+                AutoGenerateColumns="False"
+                IsReadOnly="True"
+                ItemsSource="{Binding Processes}"
+                SelectedItem="{Binding Selected}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Name}" Header="Name" />
                     <DataGridTextColumn Binding="{Binding InputPath}" Header="Input Path" />
                     <DataGridTextColumn Binding="{Binding OutputPath}" Header="Output Path" />
                     <DataGridTextColumn Binding="{Binding SaveType}" Header="Save Type" />
+                    <DataGridTextColumn Binding="{Binding Progression}" Header="Progresion"/>
                 </DataGrid.Columns>
             </DataGrid>
-
-            
+        </StackPanel>
     </DockPanel>
-
-
 </UserControl>
