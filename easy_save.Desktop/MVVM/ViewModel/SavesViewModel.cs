@@ -138,21 +138,20 @@ namespace easy_save.Desktop.MVVM.ViewModel
                 }
                 else
                 {
-                    // launches the save work in a thread.
+                    if(!(Threads.Any(p => p.Name == process.Name)))
+                    {
+                        // launches the save work in a thread.
+                        ThreadManagementModel threadManagementModel = new ThreadManagementModel();
+                        ThreadManagementModels.Add(process.Name, threadManagementModel);
 
+                        var thread = new Thread(() => saveWork(process, extensions, threadManagementModel));
+                        thread.Name = process.Name;
+                        thread.Start();
+                        threadManagementModel.ResetEvent.Set();
 
-                    ThreadManagementModel threadManagementModel = new ThreadManagementModel();
-                    ThreadManagementModels.Add(process.Name, threadManagementModel);
-
-                    var thread = new Thread(() => saveWork(process, extensions, threadManagementModel));
-                    thread.Name= process.Name;
-                    thread.Start();
-                    threadManagementModel.ResetEvent.Set();
-
-
-                    Threads.Add(thread);
+                        Threads.Add(thread);
+                    }
                 }
-                    
             }
             catch { }
         }
