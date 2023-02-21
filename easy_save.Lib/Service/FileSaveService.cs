@@ -12,6 +12,7 @@ using System.Diagnostics.Metrics;
 using Newtonsoft.Json.Bson;
 using System.Diagnostics;
 using System.Configuration;
+using DetectSoftware;
 
 namespace easy_save.Lib.Service
 {
@@ -145,9 +146,11 @@ namespace easy_save.Lib.Service
                 Directory.CreateDirectory(dirPath.Replace(Save.InputPath, Save.OutputPath));
             }
 
+            List<string> Files = PriorityProcess(Save.InputPath);
+
             int errorCount = 0;
             // Copies each file to the destionation path.
-            foreach (string newPath in Directory.GetFiles(Save.InputPath, "*.*", SearchOption.AllDirectories))
+            foreach (string newPath in Files)
             {
                 ResetEvent.WaitOne();
                 if (QuitThread == true)
@@ -231,9 +234,11 @@ namespace easy_save.Lib.Service
                 }
             }
 
+            List<string> Files = PriorityProcess(Save.InputPath);
+
             int errorCount = 0;
             // Copies modified files to the destionation path.
-            foreach (string newPath in Directory.GetFiles(Save.InputPath, "*.*", SearchOption.AllDirectories))
+            foreach (string newPath in Files)
             {
                 ResetEvent.WaitOne();
                 if (QuitThread == true)
@@ -324,6 +329,31 @@ namespace easy_save.Lib.Service
             }
 
             return returnCode;
+        }
+        
+        private List<string> PriorityProcess(string inputPath)
+        {
+            List<string> priorityFiles = new();
+            List<string> normalFiles = new();
+
+            List<string> priorityExtansions = FileExtensionModel.PriorityInstance.SelectedPriorityExtensions.ToList();
+
+            foreach (string FilePath in Directory.GetFiles(inputPath, "*.*", SearchOption.AllDirectories))
+            {
+                FileInfo info = new(FilePath);
+                if (priorityExtansions.Contains(info.Extension))
+                {
+                    priorityFiles.Add(FilePath);
+                }
+                else
+                {
+                     normalFiles.Add(FilePath);
+                }
+            }
+
+            priorityFiles.AddRange(normalFiles);
+
+            return priorityFiles;
         }
     }
 }
