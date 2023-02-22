@@ -1,0 +1,123 @@
+﻿<Window x:Class="easy_save.Client.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        Title="EasySave"
+        MinWidth="900"
+        MinHeight="550"
+        MaxWidth="900"
+        MaxHeight="550"
+        Icon="Asset/Images/iconTop.png"
+        mc:Ignorable="d">
+
+    <Border >
+        <Border.Background>
+            <ImageBrush ImageSource="Asset/Images/bg_client.png" Stretch="Fill" />
+        </Border.Background>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80" />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Image Width="200" Source="Asset/Images/logo.png" HorizontalAlignment="Left" />
+
+            <StackPanel
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Orientation="Vertical">
+
+                <RadioButton
+                    x:Name="FrenchButton"
+                    Margin="0,0,10,5"
+                    Checked="FrenchButton_Checked"
+                    Command="{Binding SwitchLanguageFR}"
+                    Content="{DynamicResource French}"
+                    Foreground="AliceBlue" />
+
+                <RadioButton
+                    x:Name="EnglishButton"
+                    Margin="0,5,10,0"
+                    Checked="EnglishButton_Checked"
+                    Command="{Binding SwitchLanguageEN}"
+                    Content="{DynamicResource English}"
+                    Foreground="AliceBlue"
+                    IsChecked="True" />
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" >
+
+                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+
+                        <Button
+                            Command="{Binding RefreshCommand}"
+                            Content="{DynamicResource Refresh}"
+                            Style="{StaticResource SavesButtonStyle}" />
+
+                        <Button
+                            Command="{Binding RemoveCommand}"
+                            CommandParameter="{Binding ElementName=grid, Path=SelectedItem}"
+                            Content="{DynamicResource Remove}"
+                            Style="{StaticResource SavesButtonStyle}" />
+
+                        <Button
+                Command="{Binding LaunchCommand}"
+                CommandParameter="{Binding ElementName=grid, Path=SelectedItem}"
+                Content="{DynamicResource Launch}"
+                Style="{StaticResource SavesButtonStyle}" />
+                    </StackPanel>
+                
+                    <StackPanel  Orientation="Vertical">
+                        <DataGrid Name="grid" Margin="5" AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding Processes}">
+
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding Name}" Header="Name" />
+                                <DataGridTextColumn Binding="{Binding InputPath}" Header="Input Path" />
+                                <DataGridTextColumn Binding="{Binding OutputPath}" Header="Output Path" />
+                                <DataGridTextColumn Binding="{Binding SaveType}" Header="Save Type" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Grid.Row="2">
+                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+
+                        <Button
+                    Command="{Binding RemoveThreadCommand}"
+                    CommandParameter="{Binding ElementName=Threads, Path=SelectedItem}"
+                    Content="{DynamicResource RemoveThread}"
+                    Style="{StaticResource SavesButtonStyle}" Click="Button_Click" />
+                        
+                        <Button
+                    Command="{Binding PauseThreadCommand}"
+                    CommandParameter="{Binding ElementName=Threads, Path=SelectedItem}"
+                    Content="{DynamicResource PauseThread}"
+                    Style="{StaticResource SavesButtonStyle}" />
+                        
+                        <Button
+                    Command="{Binding ResumeThreadCommand}"
+                    CommandParameter="{Binding ElementName=Threads, Path=SelectedItem}"
+                    Content="{DynamicResource ResumeThread}"
+                    Style="{StaticResource SavesButtonStyle}" />
+                    </StackPanel>
+
+                <DataGrid Name="Threads" Margin="5" AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding Threads}">
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Name}" Header="Name" />
+                        <DataGridTextColumn Binding="{Binding IsAlive}" Header="Is Alive" />
+                        <DataGridTextColumn Binding="{Binding ThreadState}" Header="State" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>
