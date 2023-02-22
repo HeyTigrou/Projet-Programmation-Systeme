@@ -64,29 +64,36 @@
             <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Grid.Row="1">
 
                 <Button
+                Width="75"
                 Command="{Binding RefreshCommand}"
                 Content="{DynamicResource Refresh}"
                 Style="{StaticResource SavesButtonStyle}" />
 
                 <Button
+                Width="78"
                 Command="{Binding RemoveCommand}"
                 Content="{DynamicResource Remove}"
-                Style="{StaticResource SavesButtonStyle}"/>
+                Style="{StaticResource SavesButtonStyle}" />
 
                 <Button
+                Width="60"
                 Command="{Binding LaunchCommand}"
                 Content="{DynamicResource Launch}"
                 Style="{StaticResource SavesButtonStyle}" />
 
                 <Button
+                Width="95"
                 Command="{Binding StopCommand}"
                 Content="{DynamicResource RemoveThread}"
                 Style="{StaticResource SavesButtonStyle}" />
+
                 <Button
+                Width="145"
                 Command="{Binding PauseCommand}"
                 Content="{DynamicResource PauseThread}"
                 Style="{StaticResource SavesButtonStyle}" />
                 <Button
+                Width="105"
                 Command="{Binding ResumeCommand}"
                 Content="{DynamicResource ResumeThread}"
                 Style="{StaticResource SavesButtonStyle}" />
