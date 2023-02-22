@@ -28,6 +28,7 @@ namespace easy_save.Lib.Service
         private string StateLogXmlFile;
         private string DirectoryPath;
         private List<DailyLoggerModel> DailyLogs = new();
+        private static Mutex mutex = new Mutex(false);
 
         // The constructor of the class
         public LoggerService()
@@ -146,6 +147,7 @@ namespace easy_save.Lib.Service
         /// </summary>
         public void LogDailySaves()
         {
+            mutex.WaitOne();
             // We call the method that will create the log file if it doesn't exist
             SetLogFilePath();
             string DailyLogString;
@@ -171,7 +173,6 @@ namespace easy_save.Lib.Service
                 DailyLogString = System.Text.Json.JsonSerializer.Serialize(fileDataJson);
                 File.WriteAllText(DailyLogJsonFile, DailyLogString);
             }
-
             if (ConfigurationManager.AppSettings["LogsInXMl"] == "Y")
             {
                 // Gets the file text if its not empty and deserializes it into a list of DailyLoggerModel.
@@ -191,6 +192,7 @@ namespace easy_save.Lib.Service
                     x.Serialize(writer, fileDataXml);
                 }
             }
+            mutex.ReleaseMutex();
         }
 
         /// <summary>

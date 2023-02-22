@@ -131,7 +131,12 @@ namespace easy_save.Lib.Service
             {
                 while(!largePriorityFiles || !priorityExtansions || !largeNormalFiles || !normalFiles)
                 {
-                    if(!largePriorityFiles)
+                    ResetEvent.WaitOne();
+                    if (QuitThread == true)
+                    {
+                        break;
+                    }
+                    if (!largePriorityFiles)
                     {
                         if (!Files[1].Any())
                             largePriorityFiles = true;

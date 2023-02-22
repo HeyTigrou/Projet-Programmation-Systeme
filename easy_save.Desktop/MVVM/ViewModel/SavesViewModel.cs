@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 
 namespace easy_save.Desktop.MVVM.ViewModel
@@ -137,14 +138,17 @@ namespace easy_save.Desktop.MVVM.ViewModel
         }
         private void LaunchSaveReceived(Object sender, string name)
         {
-            foreach (var item in FileSaveServices)
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                if (item.Key.Name == name)
+                foreach (var item in Processes)
                 {
-                    Selected = item.Key;
-                    LaunchSave();
+                    if (item.Name == name)
+                    {
+                        Selected = item;
+                        LaunchSave();
+                    }
                 }
-            }
+            });
         }
 
         private void Stop()
@@ -190,17 +194,21 @@ namespace easy_save.Desktop.MVVM.ViewModel
         private void Refresh()
         {
             SocketConnection.server.SendRefresh();
-            // Clears the observable collection.
-            Processes.Clear();
-
-            // Refreshes it.
-            foreach (SaveWorkModel saveWork in SaveWorkManager.GetSaveWorks())
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                SocketConnection.server.SendSaveWork(saveWork);
-                saveWork.StateChanged += StateChangedEvent;
-                saveWork.ProgressionChanged += ProgressionChangedEvent;
-                Processes.Add(saveWork);
-            }
+                // Clears the observable collection.
+                Processes.Clear();
+
+                // Refreshes it.
+                foreach (SaveWorkModel saveWork in SaveWorkManager.GetSaveWorks())
+                {
+                    SocketConnection.server.SendSaveWork(saveWork);
+                    saveWork.StateChanged += StateChangedEvent;
+                    saveWork.ProgressionChanged += ProgressionChangedEvent;
+                    Processes.Add(saveWork);
+                }
+            });
+            
         }
 
         private void StateChangedEvent(Object sender, string state)

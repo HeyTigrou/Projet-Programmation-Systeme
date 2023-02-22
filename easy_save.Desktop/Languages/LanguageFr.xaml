@@ -22,9 +22,6 @@
     <system:String x:Key="Differential">Fichiers modifiés</system:String>
     <system:String x:Key="ToCreate">Créer</system:String>
 
-    <system:String x:Key="Refresh">Rafraichir</system:String>
-    <system:String x:Key="Launch">Lancer</system:String>
-    <system:String x:Key="LaunchAll">Tous lancer</system:String>
 
     <system:String x:Key="TypeOfLog">Type de trace (log) :</system:String>
     <system:String x:Key="Encrypt">Extension à chiffrer :</system:String>
@@ -34,20 +31,25 @@
 
     <system:String x:Key="LogFileExtension">Sauvegarder</system:String>
     <system:String x:Key="Add">Ajouter</system:String>
-    <system:String x:Key="Remove">Supprimer</system:String>
 
 
     <system:String x:Key="Search">Rechercher</system:String>
 
     <system:String x:Key="TitlePopUp">ERREUR ! Impossible de lancer le processus de sauvegarde</system:String>
-    <system:String x:Key="RemoveThread">Arreter travail</system:String>
-    <system:String x:Key="PauseThread">Mettre en pause travail</system:String>
-    <system:String x:Key="ResumeThread">Relancer travail</system:String>
+
+    
     <system:String x:Key="ErrorPopUp">Logiciel métier en cours d'exécution, impossible de lancer le processus de sauvegarde.</system:String>
     <system:String x:Key="ErrorPopUp2">Veuillez arrêter le processus métier.</system:String>
     <system:String x:Key="Close">Fermer</system:String>
 
 
+    <system:String x:Key="Remove">Supprimer</system:String>
+    <system:String x:Key="Refresh">Rafraichir</system:String>
+    <system:String x:Key="Launch">Lancer</system:String>
+    <system:String x:Key="RemoveThread">Arreter travail</system:String>
+    <system:String x:Key="PauseThread">Mettre en pause travail</system:String>
+    <system:String x:Key="ResumeThread">Relancer travail</system:String>
+    
     <system:String x:Key="HeaderName">Nom</system:String>
     <system:String x:Key="InputPathHeader">Chemin d'entrée</system:String>
     <system:String x:Key="OutputPathHeader">Chemin de sortie</system:String>
