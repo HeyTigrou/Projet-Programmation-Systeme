@@ -12,6 +12,7 @@ namespace easy_save.Client
         {
             InitializeComponent();
             SwitchLanguage("en");
+            Connexion.Start();
         }
 
         private void FrenchButton_Checked(object sender, RoutedEventArgs e)
@@ -37,8 +38,5 @@ namespace easy_save.Client
             Resources.MergedDictionaries.Add(dict);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-        }
     }
 }

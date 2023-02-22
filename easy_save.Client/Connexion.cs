@@ -1,43 +1,90 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Sockets;
+﻿using System.Net.Sockets;
 using System.Net;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
+using easy_save.Lib.Models;
+using System.Collections.ObjectModel;
 
 namespace easy_save.Client
 {
-    internal class Connexion
+    public class Client
     {
-        public static void Main(string[] args)
-        {
-            using (Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
+        private Socket ConnexionSocket;
+        public int Port;
+        public ObservableCollection<SaveWorkModel> Processes;
+        public Client(int port, ObservableCollection<SaveWorkModel> processes) 
+        { 
+            Port = port;
+            Processes = processes;
+            ConnexionSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
+            IPEndPoint server = new IPEndPoint(IPAddress.Parse("127.0.0.1"), Port);
+            ConnexionSocket.Connect(server);
+
+            new Thread(_ =>
             {
-                IPEndPoint server = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 55894);
-                socket.Connect(server);
-
-                Console.WriteLine($"Client connected to {server.Address}:{server.Port}");
-
-                // Message de bienvenue
-                byte[] buffer = new byte[1024];
-                int count = socket.Receive(buffer);
-                Console.WriteLine(Serializer.Deserialize(buffer, count));
-
-                Console.WriteLine("Tap quit to exit");
-
-                do
+                while (true)
                 {
-                    string message = Console.ReadLine();
-                    if (message == "quit")
+                    byte[] buffer1 = new byte[1024];
+                    int Length = ConnexionSocket.Receive(buffer1);
+                    string message = System.Text.Encoding.UTF8.GetString(buffer1, 0, Length);
+                    Decode(message);
+                }
+            }).Start();
+        }
+
+
+        public void Send(string message)
+        {
+            byte[] buffer = System.Text.Encoding.UTF8.GetBytes(message);
+            ConnexionSocket.Send(buffer);
+        }
+
+        public void Decode(string message)
+        {
+            string[] splitedMessage = message.Split("||");
+            switch (splitedMessage[0])
+            {
+                case "SaveWork":
+                    {
+                        SaveWorkModel saveWorkModel = new SaveWorkModel()
+                        {
+                            Name = splitedMessage[1],
+                            InputPath = splitedMessage[2],
+                            OutputPath = splitedMessage[3],
+                            SaveType = int.Parse(splitedMessage[4])
+                        };
+                        Processes.Add(saveWorkModel);
                         break;
-
-                    try { socket.Send(Serializer.Serialize(message)); }
-                    catch { break; }
-                } while (true);
-
-                Console.WriteLine("Server disconnected");
+                    }
+                case "Progression":
+                    {
+                        string name = splitedMessage[1];
+                        string progression = splitedMessage[2];
+                        foreach (SaveWorkModel saveWork in Processes)
+                        {
+                            if (saveWork.Name == name)
+                            {
+                                saveWork.Progression = progression;
+                            }
+                        }
+                        break;
+                    }
+                case "Refresh":
+                    Processes.Clear();
+                    break;
+                case "State":
+                    {
+                        string name = splitedMessage[1];
+                        string state = splitedMessage[2];
+                        foreach (SaveWorkModel saveWork in Processes)
+                        {
+                            if (saveWork.Name == name)
+                            {
+                                saveWork.State = state;
+                            }
+                        }
+                        break;
+                    }
+                default: break;
             }
         }
     }

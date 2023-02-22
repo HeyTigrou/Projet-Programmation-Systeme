@@ -15,6 +15,7 @@ namespace easy_save.Desktop
         private readonly Socket socket;
 
         public event EventHandler Disposed;
+        public event EventHandler<string> MessageReceived;
 
         public Client(Socket socket)
         {
@@ -36,15 +37,23 @@ namespace easy_save.Desktop
                 try
                 {
                     int count = socket.Receive(buffer);
-                    //socket.Send(Serializer.Serialize("Message bien reçu"));
                     if (count == 0)
                         throw new SocketException();
+                    string message = Encoding.UTF8.GetString(buffer, 0, count);
+
+                    MessageReceived?.Invoke(this, message);
                 }
                 catch (SocketException)
                 {
                     Dispose();
                 }
             }
+        }
+
+        public void send(string message)
+        {
+            byte[] buffer = System.Text.Encoding.UTF8.GetBytes(message);
+            socket.Send(buffer);
         }
 
 
