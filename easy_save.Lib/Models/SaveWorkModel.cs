@@ -16,7 +16,8 @@ namespace easy_save.Lib.Models
         Unstarted,
         Running,
         Done,
-        Paused
+        Paused,
+        Paused_ApplicationIsRunning
     }
     /// <summary>
     /// This Model is used to manage the save works
