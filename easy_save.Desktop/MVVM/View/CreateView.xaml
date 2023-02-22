@@ -35,7 +35,7 @@
                 Margin="10"
                 HorizontalAlignment="Left"
                 VerticalContentAlignment="Center"
-                Text="{Binding SaveName, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+                Text="{Binding SaveName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
         </StackPanel>
 
         <!--  Input Part  -->
@@ -55,7 +55,7 @@
                     Margin="10"
                     HorizontalAlignment="Left"
                     VerticalContentAlignment="Center"
-                    Text="{Binding PathSource, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+                    Text="{Binding PathSource, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
                 <Button
                     Width="100"
@@ -94,7 +94,7 @@
                     Margin="10"
                     HorizontalAlignment="Left"
                     VerticalContentAlignment="Center"
-                    Text="{Binding PathDestination, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+                    Text="{Binding PathDestination, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
                 <Button
                     Width="100"
