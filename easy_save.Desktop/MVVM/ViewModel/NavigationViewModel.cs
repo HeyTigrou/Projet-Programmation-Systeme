@@ -22,10 +22,15 @@ namespace easy_save.Desktop.MVVM.ViewModel
         public ICommand SavesCommand { get; set; }
         public ICommand SettingCommand { get; set; }
 
-        private void Home(object obj)=> CurrentView = new HomeViewModel();
-        private void Create(object obj) => CurrentView = new CreateViewModel();
-        private void Saves(object obj) => CurrentView = new SavesViewModel();
-        private void Setting(object obj) => CurrentView = new SettingViewModel();
+        HomeViewModel homeViewModel = new HomeViewModel();
+        CreateViewModel createViewModel = new CreateViewModel();
+        SavesViewModel savesViewModel = new SavesViewModel();
+        SettingViewModel settingViewModel = new SettingViewModel();
+
+        private void Home(object obj)=> CurrentView = homeViewModel;
+        private void Create(object obj) => CurrentView = createViewModel;
+        private void Saves(object obj) => CurrentView = savesViewModel;
+        private void Setting(object obj) => CurrentView = settingViewModel;
 
         /// <summary>
         /// Binds the Buttons to the methods, which create new views.
