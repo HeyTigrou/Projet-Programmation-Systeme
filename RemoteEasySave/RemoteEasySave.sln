@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RemoteEasySave.Desktop", "RemoteEasySave.Desktop.csproj", "{7A14825B-A233-4852-BDBB-289774FEB4C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteEasySave.Lib", "..\RemoteEasySave.Service\RemoteEasySave.Lib.csproj", "{44E0EF60-71BF-471E-8886-E27587935401}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7A14825B-A233-4852-BDBB-289774FEB4C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A14825B-A233-4852-BDBB-289774FEB4C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A14825B-A233-4852-BDBB-289774FEB4C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A14825B-A233-4852-BDBB-289774FEB4C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44E0EF60-71BF-471E-8886-E27587935401}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44E0EF60-71BF-471E-8886-E27587935401}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44E0EF60-71BF-471E-8886-E27587935401}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44E0EF60-71BF-471E-8886-E27587935401}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8B475287-6EEF-42BA-940C-1C15ED1BD923}
+	EndGlobalSection
+EndGlobal

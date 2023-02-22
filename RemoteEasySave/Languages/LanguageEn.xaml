@@ -1,0 +1,23 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <system:String x:Key="French">Français</system:String>
+    <system:String x:Key="English">English</system:String>
+
+    <system:String x:Key="Refresh">Refresh</system:String>
+    <system:String x:Key="Remove">Remove</system:String>
+    <system:String x:Key="Launch">Launch</system:String>
+
+    <system:String x:Key="RemoveThread">Delete thread</system:String>
+    <system:String x:Key="PauseThread">Pause thread</system:String>
+    <system:String x:Key="ResumeThread">Resume thread</system:String>
+
+    <system:String x:Key="HeaderName">Name</system:String>
+    <system:String x:Key="InputPathHeader">Input path</system:String>
+    <system:String x:Key="OutputPathHeader">Output path</system:String>
+    <system:String x:Key="SaveTypeHeader">Type</system:String>
+    <system:String x:Key="ProgressionHeader">Progression</system:String>
+    <system:String x:Key="SaveWorkStateHeader">State</system:String>
+</ResourceDictionary>

@@ -1,0 +1,115 @@
+﻿<Window x:Class="RemoteEasySave.Desktop.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        Title="EasySave"
+        MinWidth="900"
+        MinHeight="550"
+        MaxWidth="900"
+        MaxHeight="550"
+        Icon="Asset/Images/iconTop.png"
+        mc:Ignorable="d">
+
+    <Window.Resources>
+
+        <TextBlock x:Key="HeaderNameText" Text="{DynamicResource HeaderName}"/>
+        <TextBlock x:Key="InputPathHeaderText" Text="{DynamicResource InputPathHeader}"/>
+        <TextBlock x:Key="OutputPathHeaderText" Text="{DynamicResource OutputPathHeader}"/>
+        <TextBlock x:Key="SaveTypeHeaderText" Text="{DynamicResource SaveTypeHeader}"/>
+        <TextBlock x:Key="ProgressionHeaderText" Text="{DynamicResource ProgressionHeader}"/>
+        <TextBlock x:Key="SaveWorkStateHeaderText" Text="{DynamicResource SaveWorkStateHeader}"/>
+    </Window.Resources>
+    <Border >
+        <Border.Background>
+            <ImageBrush ImageSource="Asset/Images/bg_client.png" Stretch="Fill" />
+        </Border.Background>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80" />
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="10*"/>
+            </Grid.RowDefinitions>
+
+            <Image Width="200" Source="Asset/Images/logo.png" HorizontalAlignment="Left" />
+
+            <StackPanel
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Orientation="Vertical">
+
+                <RadioButton
+                    x:Name="FrenchButton"
+                    Margin="0,0,10,5"
+                    Checked="FrenchButton_Checked"
+                    Command="{Binding SwitchLanguageFR}"
+                    Content="{DynamicResource French}"
+                    Foreground="AliceBlue" />
+
+                <RadioButton
+                    x:Name="EnglishButton"
+                    Margin="0,5,10,0"
+                    Checked="EnglishButton_Checked"
+                    Command="{Binding SwitchLanguageEN}"
+                    Content="{DynamicResource English}"
+                    Foreground="AliceBlue"
+                    IsChecked="True" />
+            </StackPanel>
+
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Grid.Row="1">
+
+                <Button
+                Command="{Binding RefreshCommand}"
+                Content="{DynamicResource Refresh}"
+                Style="{StaticResource SavesButtonStyle}" />
+
+                <Button
+                Command="{Binding RemoveCommand}"
+                Content="{DynamicResource Remove}"
+                Style="{StaticResource SavesButtonStyle}"/>
+
+                <Button
+                Command="{Binding LaunchCommand}"
+                Content="{DynamicResource Launch}"
+                Style="{StaticResource SavesButtonStyle}" />
+
+                <Button
+                Command="{Binding StopCommand}"
+                Content="{DynamicResource RemoveThread}"
+                Style="{StaticResource SavesButtonStyle}" />
+                <Button
+                Command="{Binding PauseCommand}"
+                Content="{DynamicResource PauseThread}"
+                Style="{StaticResource SavesButtonStyle}" />
+                <Button
+                Command="{Binding ResumeCommand}"
+                Content="{DynamicResource ResumeThread}"
+                Style="{StaticResource SavesButtonStyle}" />
+            </StackPanel>
+            <DataGrid
+                Grid.Row="2"
+            Margin="5"
+            AutoGenerateColumns="False"
+            IsReadOnly="True"
+            ItemsSource="{Binding Processes}"
+            SelectedItem="{Binding Selected}">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Name}" Header="{StaticResource  HeaderNameText}" />
+                    <DataGridTextColumn Binding="{Binding InputPath}" Header="{StaticResource  InputPathHeaderText}" />
+                    <DataGridTextColumn Binding="{Binding OutputPath}" Header="{StaticResource  OutputPathHeaderText}" />
+                    <DataGridTextColumn Binding="{Binding SaveType}" Header="{StaticResource  SaveTypeHeaderText}" />
+                    <DataGridTextColumn Binding="{Binding Progression}" Header="{StaticResource  ProgressionHeaderText}" />
+                    <DataGridTextColumn Binding="{Binding State}" Header="{StaticResource  SaveWorkStateHeaderText}" />
+                </DataGrid.Columns>
+            </DataGrid>
+
+
+        </Grid>
+    </Border>
+</Window>
