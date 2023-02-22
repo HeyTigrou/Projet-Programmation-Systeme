@@ -4,14 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace easy_save.Desktop
+namespace easy_save.Lib.SocketListener
 {
-    internal class Program
+    public static class SocketConnection
     {
-        private static void Main(string[] args)
+        public static bool connected = false;
+        public static Listener server = new Listener();
+        public static void Connect(int port)
         {
-            Listener server = new Listener();
-            server.StartListening(42042);
+            server.StartListening(port);
         }
     }
 }

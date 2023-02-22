@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace easy_save.Desktop
+namespace easy_save.Lib.SocketListener
 {
     public class Client : IDisposable
     {

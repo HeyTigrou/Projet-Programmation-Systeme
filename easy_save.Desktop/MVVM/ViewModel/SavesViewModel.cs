@@ -3,6 +3,7 @@ using easy_save.Desktop.MVVM.View;
 using easy_save.Desktop.Utilities;
 using easy_save.Lib.Models;
 using easy_save.Lib.Service;
+using easy_save.Lib.SocketListener;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -32,21 +33,24 @@ namespace easy_save.Desktop.MVVM.ViewModel
         public ObservableCollection<SaveWorkModel> Processes { get; } = new ObservableCollection<SaveWorkModel>();
 
         public Dictionary<SaveWorkModel, FileSaveService> FileSaveServices = new Dictionary<SaveWorkModel, FileSaveService>();
-        private Listener listener;
         /// <summary>
         /// Binds the methods with button, and adds the existing save works to the observable collection.
         /// </summary>
         public SavesViewModel()
         {
-            listener = new Listener();
-            listener.StopCommandReceived += StopReceived;
-            listener.PauseCommandReceived += PauseReceived;
-            listener.ResumeCommandReceived += ResumeReceived;
-            listener.RefreshCommandReceived += RefreshReceived;
-            listener.RemoveCommandReceived += RemoveReceived;
-            listener.LaunchSaveCommandReceived += LaunchSaveReceived;
+            if(SocketConnection.connected == false)
+            {
+                SocketConnection.server.StopCommandReceived += StopReceived;
+                SocketConnection.server.PauseCommandReceived += PauseReceived;
+                SocketConnection.server.ResumeCommandReceived += ResumeReceived;
+                SocketConnection.server.RefreshCommandReceived += RefreshReceived;
+                SocketConnection.server.RemoveCommandReceived += RemoveReceived;
+                SocketConnection.server.LaunchSaveCommandReceived += LaunchSaveReceived;
 
-            listener.StartListening(42042);
+                SocketConnection.Connect(42042);
+
+                SocketConnection.connected = true;
+            }
             // Binds the Button with the methods.
             RefreshCommand = new RelayCommand(x => Refresh());
 
@@ -185,14 +189,14 @@ namespace easy_save.Desktop.MVVM.ViewModel
         /// </summary>
         private void Refresh()
         {
-            listener.SendRefresh();
+            SocketConnection.server.SendRefresh();
             // Clears the observable collection.
             Processes.Clear();
 
             // Refreshes it.
             foreach (SaveWorkModel saveWork in SaveWorkManager.GetSaveWorks())
             {
-                listener.SendSaveWork(saveWork);
+                SocketConnection.server.SendSaveWork(saveWork);
                 saveWork.StateChanged += StateChangedEvent;
                 saveWork.ProgressionChanged += ProgressionChangedEvent;
                 Processes.Add(saveWork);
@@ -201,11 +205,11 @@ namespace easy_save.Desktop.MVVM.ViewModel
 
         private void StateChangedEvent(Object sender, string state)
         {
-            listener.SendState((sender as SaveWorkModel).Name, state);
+            SocketConnection.server.SendState((sender as SaveWorkModel).Name, state);
         }
         private void ProgressionChangedEvent(Object sender, string progression)
         {
-            listener.SendProgression((sender as SaveWorkModel).Name, progression);
+            SocketConnection.server.SendProgression((sender as SaveWorkModel).Name, progression);
         }
         /// <summary>
         /// Removes the selected save work.

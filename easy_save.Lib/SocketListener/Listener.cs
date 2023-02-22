@@ -11,7 +11,7 @@ using easy_save.Lib.Models;
 using System.Diagnostics;
 using System.Xml.Linq;
 
-namespace easy_save.Desktop
+namespace easy_save.Lib.SocketListener
 {
     public class Listener : IDisposable
     {
@@ -63,7 +63,7 @@ namespace easy_save.Desktop
 
         public void SendState(string name, string state)
         {
-            string message = $"State||{name}||{state}";
+            string message = $"State||{name}||{state}||";
             foreach (var client in clients)
             {
                 client.send(message);
@@ -72,7 +72,7 @@ namespace easy_save.Desktop
 
         public void SendProgression(string name, string progression)
         {
-            string message = $"Progression||{name}||{progression}";
+            string message = $"Progression||{name}||{progression}||";
             foreach (var client in clients)
             {
                 client.send(message);
@@ -81,7 +81,7 @@ namespace easy_save.Desktop
 
         public void SendRefresh()
         {
-            string message = "Refresh|| ";
+            string message = "Refresh||";
             foreach (var client in clients)
             {
                 client.send(message);
@@ -90,7 +90,7 @@ namespace easy_save.Desktop
 
         public void SendSaveWork(SaveWorkModel saveWork)
         {
-            string message = $"Progression||{saveWork.Name}||{saveWork.InputPath}||{saveWork.OutputPath}||{saveWork.SaveType}||{saveWork.Progression}||{saveWork.State}";
+            string message = $"SaveWork||{saveWork.Name}||{saveWork.InputPath}||{saveWork.OutputPath}||{saveWork.SaveType}||{saveWork.Progression}||{saveWork.State}||";
             foreach (var client in clients)
             {
                 client.send(message);
