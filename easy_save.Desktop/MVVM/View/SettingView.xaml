@@ -8,175 +8,259 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
 
-    <Border Margin="20">
-        <Grid HorizontalAlignment="Center">
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
 
-            <StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock
-                        Margin="0,10,10,0"
-                        HorizontalAlignment="Left"
-                        FontSize="14"
-                        Foreground="AliceBlue"
-                        Text="{DynamicResource TypeOfLog}" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="65" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-                    <ComboBox
-                        Width="260"
-                        Height="30"
-                        Margin="0,0,35,0">
-                        <ComboBoxItem Content="Json" IsSelected="{Binding JsonIsSelected}" />
-                        <ComboBoxItem Content="XML" IsSelected="{Binding XmlIsSelected}" />
-                        <ComboBoxItem Content="XML and Json" IsSelected="{Binding BothAreSelected}" />
-                    </ComboBox>
-                    <Button
-                        Width="70"
-                        Height="30"
-                        Command="{Binding ChangeLogExtension}"
-                        Content="{DynamicResource LogFileExtension}"
-                        FontSize="15" />
-                </StackPanel>
+        <!--  Type of log  -->
+        <TextBlock
+            Grid.Row="0"
+            Grid.Column="0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            FontSize="14"
+            Foreground="AliceBlue"
+            Text="{DynamicResource TypeOfLog}" />
 
-                <!--  Encryted files gestion  -->
-                <StackPanel>
+        <ComboBox
+            Grid.Row="0"
+            Grid.Column="1"
+            Width="210"
+            Height="30">
+            <ComboBoxItem Content="Json" IsSelected="{Binding JsonIsSelected}" />
+            <ComboBoxItem Content="XML" IsSelected="{Binding XmlIsSelected}" />
+            <ComboBoxItem Content="XML and Json" IsSelected="{Binding BothAreSelected}" />
+        </ComboBox>
 
-                    <TextBlock
-                        Margin="20,10,0,0"
-                        HorizontalAlignment="Left"
-                        FontSize="14"
-                        Foreground="AliceBlue"
-                        Text="{DynamicResource Encrypt}" />
+        <Button
+            Grid.Row="0"
+            Grid.Column="2"
+            Width="100"
+            Height="35"
+            Margin="20,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Command="{Binding ChangeLogExtension}"
+            Content="{DynamicResource LogFileExtension}"
+            Style="{DynamicResource CreateButtonStyle}">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}" Style="{StaticResource ButtonBorderStyle}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
 
-                    <StackPanel Orientation="Horizontal">
+        <!--  Encryted files gestion  -->
+        <StackPanel
+            Grid.Row="1"
+            Grid.Column="0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Bottom"
+            Orientation="Vertical">
+            <TextBlock
+                Margin="20,10,0,0"
+                FontSize="14"
+                Foreground="AliceBlue"
+                Text="{DynamicResource Encrypt}" />
 
-                        <DataGrid
-                            Name="ListOfExtensionToCrypt"
-                            Width="180"
-                            Height="90"
-                            AutoGenerateColumns="False"
-                            IsReadOnly="True"
-                            ItemsSource="{Binding EncryptionExtensions}"
-                            SelectedItem="{Binding EncryptionExtensionSelected}">
+            <DataGrid
+                Name="ListOfExtensionToCrypt"
+                Width="180"
+                Height="112"
+                AutoGenerateColumns="False"
+                IsReadOnly="True"
+                ItemsSource="{Binding EncryptionExtensions}"
+                SelectedItem="{Binding EncryptionExtensionSelected}">
 
-                            <DataGrid.Columns>
-                                <DataGridTextColumn
-                                    Width="*"
-                                    Binding="{Binding}"
-                                    Header="{DynamicResource AvailableExtensions}" />
-                            </DataGrid.Columns>
-                        </DataGrid>
-                        <StackPanel>
-                            <Button
-                                Width="70"
-                                Height="30"
-                                Margin="10,15,10,0"
-                                Command="{Binding AddExtensionToEncrypt}"
-                                CommandParameter="{Binding ElementName=ListOfExtensionToCrypt, Path=SelectedItem}"
-                                Content="{DynamicResource Add}"
-                                FontSize="15" />
+                <DataGrid.Columns>
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding}"
+                        Header="{DynamicResource AvailableExtensions}" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
 
-                            <Button
-                                Width="70"
-                                Height="30"
-                                Margin="10,10,10,0"
-                                Command="{Binding RemoveExtensionToEncrypt}"
-                                CommandParameter="{Binding ElementName=ListOfExtensionToEncrypt, Path=SelectedItem}"
-                                Content="{DynamicResource Remove}"
-                                FontSize="15" />
-                        </StackPanel>
+        <StackPanel
+            Grid.Row="1"
+            Grid.Column="1"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Bottom">
+            <Button
+                Width="100"
+                Height="35"
+                Margin="0,0,0,10"
+                Command="{Binding AddExtensionToEncrypt}"
+                CommandParameter="{Binding ElementName=ListOfExtensionToCrypt, Path=SelectedItem}"
+                Content="{DynamicResource Add}"
+                Style="{DynamicResource CreateButtonStyle}">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" Style="{StaticResource ButtonBorderStyle}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
 
-                        <DataGrid
-                            Name="ListOfExtensionToEncrypt"
-                            Width="180"
-                            Height="90"
-                            AutoGenerateColumns="False"
-                            IsReadOnly="True"
-                            ItemsSource="{Binding SelectedEncryptionExtensions}">
+            <Button
+                Width="100"
+                Height="35"
+                Margin="0,10,0,10"
+                Command="{Binding RemoveExtensionToEncrypt}"
+                CommandParameter="{Binding ElementName=ListOfExtensionToEncrypt, Path=SelectedItem}"
+                Content="{DynamicResource Remove}"
+                Style="{DynamicResource CreateButtonStyle}">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" Style="{StaticResource ButtonBorderStyle}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </StackPanel>
 
-                            <DataGrid.Columns>
-                                <DataGridTextColumn
-                                    Width="*"
-                                    Binding="{Binding}"
-                                    Header="{DynamicResource SelectedExtensions}" />
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </StackPanel>
+        <DataGrid
+            Name="ListOfExtensionToEncrypt"
+            Grid.Row="1"
+            Grid.Column="2"
+            Width="180"
+            Height="112"
+            VerticalAlignment="Bottom"
+            AutoGenerateColumns="False"
+            IsReadOnly="True"
+            ItemsSource="{Binding SelectedEncryptionExtensions}">
 
-                    <Button
-                        Width="300"
-                        Height="30"
-                        Margin="20"
-                        Command="{Binding GenerateKey}"
-                        Content="{DynamicResource Generate}"
-                        FontSize="15" />
-                </StackPanel>
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding}"
+                    Header="{DynamicResource SelectedExtensions}" />
+            </DataGrid.Columns>
+        </DataGrid>
 
-                <!--  Priority files gestion  -->
-                <StackPanel>
-                    <TextBlock
-                        Margin="20,10,0,0"
-                        HorizontalAlignment="Left"
-                        FontSize="14"
-                        Foreground="AliceBlue"
-                        Text="{DynamicResource Priority}" />
+        <!--  Generate key  -->
 
-                    <StackPanel Orientation="Horizontal">
-                        <DataGrid
-                            Name="ListOfFilesPriority"
-                            Width="180"
-                            Height="90"
-                            AutoGenerateColumns="False"
-                            IsReadOnly="True"
-                            ItemsSource="{Binding PriorityExtensions}"
-                            SelectedItem="{Binding PriorityExtensionSelected}">
+        <Button
+            Grid.Row="2"
+            Grid.ColumnSpan="3"
+            Width="300"
+            Height="35"
+            VerticalAlignment="Center"
+            Command="{Binding GenerateKey}"
+            Content="{DynamicResource Generate}"
+            Style="{DynamicResource CreateButtonStyle}">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}" Style="{StaticResource ButtonBorderStyle}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
 
-                            <DataGrid.Columns>
-                                <DataGridTextColumn
-                                    Width="*"
-                                    Binding="{Binding}"
-                                    Header="{DynamicResource AvailableExtensions}" />
-                            </DataGrid.Columns>
-                        </DataGrid>
+        <!--  Priority files gestion  -->
+        <StackPanel
+            Grid.Row="3"
+            Grid.Column="0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Bottom"
+            Orientation="Vertical">
+            <TextBlock
+                Margin="20,10,0,0"
+                FontSize="14"
+                Foreground="AliceBlue"
+                Text="{DynamicResource Priority}" />
 
-                        <StackPanel>
-                            <Button
-                                Width="70"
-                                Height="30"
-                                Margin="10,15,10,0"
-                                Command="{Binding AddExtensionPriority}"
-                                CommandParameter="{Binding ElementName=ListOfFilesPriority, Path=SelectedItem}"
-                                Content="{DynamicResource Add}"
-                                FontSize="15" />
+            <DataGrid
+                Name="ListOfFilesPriority"
+                Width="180"
+                Height="112"
+                AutoGenerateColumns="False"
+                IsReadOnly="True"
+                ItemsSource="{Binding PriorityExtensions}"
+                SelectedItem="{Binding PriorityExtensionSelected}">
 
-                            <Button
-                                Width="70"
-                                Height="30"
-                                Margin="10,10,10,0"
-                                Command="{Binding RemoveExtensionPriority}"
-                                CommandParameter="{Binding ElementName=ListOfSelectedPriorityExtensions, Path=SelectedItem}"
-                                Content="{DynamicResource Remove}"
-                                FontSize="15" />
+                <DataGrid.Columns>
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding}"
+                        Header="{DynamicResource AvailableExtensions}" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
 
-                        </StackPanel>
+        <StackPanel
+            Grid.Row="3"
+            Grid.Column="1"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Bottom">
+            <Button
+                Width="100"
+                Height="35"
+                Margin="0,0,0,10"
+                Command="{Binding AddExtensionPriority}"
+                CommandParameter="{Binding ElementName=ListOfFilesPriority, Path=SelectedItem}"
+                Content="{DynamicResource Add}"
+                FontSize="15"
+                Style="{DynamicResource CreateButtonStyle}">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" Style="{StaticResource ButtonBorderStyle}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
 
-                        <DataGrid
-                            Name="ListOfSelectedPriorityExtensions"
-                            Width="180"
-                            Height="90"
-                            AutoGenerateColumns="False"
-                            IsReadOnly="True"
-                            ItemsSource="{Binding SelectedPriorityExtensions}">
+            <Button
+                Width="100"
+                Height="35"
+                Margin="0,10,0,10"
+                Command="{Binding RemoveExtensionPriority}"
+                CommandParameter="{Binding ElementName=ListOfSelectedPriorityExtensions, Path=SelectedItem}"
+                Content="{DynamicResource Remove}"
+                Style="{DynamicResource CreateButtonStyle}">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" Style="{StaticResource ButtonBorderStyle}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </StackPanel>
 
-                            <DataGrid.Columns>
-                                <DataGridTextColumn
-                                    Width="*"
-                                    Binding="{Binding}"
-                                    Header="{DynamicResource SelectedExtensions}" />
-                            </DataGrid.Columns>
-                        </DataGrid>
+        <DataGrid
+            Name="ListOfSelectedPriorityExtensions"
+            Grid.Row="3"
+            Grid.Column="2"
+            Width="180"
+            Height="112"
+            VerticalAlignment="Bottom"
+            AutoGenerateColumns="False"
+            IsReadOnly="True"
+            ItemsSource="{Binding SelectedPriorityExtensions}">
 
-                    </StackPanel>
-                </StackPanel>
-            </StackPanel>
-        </Grid>
-    </Border>
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding}"
+                    Header="{DynamicResource SelectedExtensions}" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
 </UserControl>

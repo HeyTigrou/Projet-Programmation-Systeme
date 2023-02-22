@@ -23,97 +23,96 @@
         </Style>
     </Window.Resources>
 
-    <!--  Border  -->
+    <!--  Main Grid  -->
 
-    <Border>
-        <Border.Background>
+    <Grid>
+        <Grid.Background>
             <ImageBrush ImageSource="Asset/Images/bg.png" Stretch="Fill" />
-        </Border.Background>
+        </Grid.Background>
 
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="72" />
-                <RowDefinition />
-            </Grid.RowDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="72" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
 
-            <Image Width="150" Source="Asset/Images/logo.png" />
+        <!--  Logo  -->
 
-            <!--  Menu  -->
+        <Image Width="150" Source="Asset/Images/logo.png" />
 
-            <StackPanel Grid.Row="1">
+        <!--  Menu  -->
 
-                <RadioButton
-                    Command="{Binding HomeCommand}"
-                    Content="{DynamicResource Home}"
-                    IsChecked="True"
-                    Style="{StaticResource MenuButtonStyle}" />
+        <StackPanel Grid.Row="1">
 
-                <RadioButton
-                    Command="{Binding CreateCommand}"
-                    Content="{DynamicResource Create}"
-                    Style="{StaticResource MenuButtonStyle}" />
+            <RadioButton
+                Command="{Binding HomeCommand}"
+                Content="{DynamicResource Home}"
+                IsChecked="True"
+                Style="{StaticResource MenuButtonStyle}" />
 
-                <RadioButton
-                    Command="{Binding SavesCommand}"
-                    Content="{DynamicResource Detail}"
-                    Style="{StaticResource MenuButtonStyle}" />
+            <RadioButton
+                Command="{Binding CreateCommand}"
+                Content="{DynamicResource Create}"
+                Style="{StaticResource MenuButtonStyle}" />
 
-                <RadioButton
-                    Command="{Binding SettingCommand}"
-                    Content="{DynamicResource Setting}"
-                    Style="{StaticResource MenuButtonStyle}" />
+            <RadioButton
+                Command="{Binding SavesCommand}"
+                Content="{DynamicResource Detail}"
+                Style="{StaticResource MenuButtonStyle}" />
 
-                <RadioButton
-                    x:Name="Exit"
-                    Width="100"
-                    Height="30"
-                    Margin="20"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Bottom"
-                    Click="Button_Click"
-                    Content="{DynamicResource Exit}"
-                    FontSize="17"
-                    Style="{StaticResource MenuButtonStyle}" />
-            </StackPanel>
+            <RadioButton
+                Command="{Binding SettingCommand}"
+                Content="{DynamicResource Setting}"
+                Style="{StaticResource MenuButtonStyle}" />
 
-            <!--  Languages  -->
-
-            <StackPanel
-                Grid.Column="1"
+            <RadioButton
+                x:Name="Exit"
+                Width="100"
+                Height="30"
+                Margin="20"
                 HorizontalAlignment="Right"
-                VerticalAlignment="Center"
-                Orientation="Vertical">
+                Click="Button_Click"
+                Content="{DynamicResource Exit}"
+                FontSize="17"
+                Style="{StaticResource MenuButtonStyle}" />
+        </StackPanel>
 
-                <RadioButton
-                    x:Name="FrenchButton"
-                    Margin="0,0,10,5"
-                    Checked="FrenchButton_Checked"
-                    Command="{Binding SwitchLanguageFR}"
-                    Content="{DynamicResource French}"
-                    Foreground="AliceBlue" />
+        <!--  Languages  -->
 
-                <RadioButton
-                    x:Name="EnglishButton"
-                    Margin="0,5,10,0"
-                    Checked="EnglishButton_Checked"
-                    Command="{Binding SwitchLanguageEN}"
-                    Content="{DynamicResource English}"
-                    Foreground="AliceBlue"
-                    IsChecked="True" />
-            </StackPanel>
+        <StackPanel
+            Grid.Column="1"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Center"
+            Orientation="Vertical">
 
-            <!--  HomeView  -->
+            <RadioButton
+                x:Name="FrenchButton"
+                Margin="0,0,10,5"
+                Checked="FrenchButton_Checked"
+                Command="{Binding SwitchLanguageFR}"
+                Content="Français"
+                Foreground="AliceBlue" />
 
-            <ContentControl
-                Grid.Row="1"
-                Grid.Column="1"
-                Margin="10"
-                Content="{Binding CurrentView}" />
-        </Grid>
-    </Border>
+            <RadioButton
+                x:Name="EnglishButton"
+                Margin="0,5,10,0"
+                Checked="EnglishButton_Checked"
+                Command="{Binding SwitchLanguageEN}"
+                Content="English"
+                Foreground="AliceBlue"
+                IsChecked="True" />
+        </StackPanel>
+
+        <!--  HomeView  -->
+
+        <ContentControl
+            Grid.Row="1"
+            Grid.Column="1"
+            Margin="10"
+            Content="{Binding CurrentView}" />
+    </Grid>
 </Window>

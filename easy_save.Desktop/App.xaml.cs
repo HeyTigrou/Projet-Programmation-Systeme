@@ -1,7 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading;
+﻿using System.Threading;
 using System.Windows;
 
 namespace easy_save.Desktop
@@ -17,7 +14,7 @@ namespace easy_save.Desktop
             if (!createdNew)
             {
                 MessageBox.Show("Error EasySave is already running");
-                Application.Current.Shutdown(); 
+                Application.Current.Shutdown();
             }
             base.OnStartup(e);
         }

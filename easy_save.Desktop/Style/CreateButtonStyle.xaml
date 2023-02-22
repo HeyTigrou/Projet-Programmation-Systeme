@@ -6,6 +6,9 @@
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="FontWeight" Value="Medium" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Foreground" Value="AliceBlue" />
+        <Setter Property="FontWeight" Value="Medium" />
 
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">

@@ -8,53 +8,148 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
 
-    <StackPanel HorizontalAlignment="Center">
+    <Grid
+        Margin="10"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="90" />
+            <RowDefinition Height="90" />
+            <RowDefinition Height="90" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-        <!--  Name Text  -->
-        <TextBlock
-            Margin="20,10,0,0"
-            HorizontalAlignment="Left"
-            FontSize="14"
-            Foreground="AliceBlue"
-            Text="{DynamicResource Name}" />
+        <!--  Name Part  -->
+        <StackPanel Grid.Row="0">
+            <TextBlock
+                Margin="20,10,0,0"
+                HorizontalAlignment="Left"
+                FontSize="14"
+                Foreground="AliceBlue"
+                Text="{DynamicResource Name}" />
 
-        <!--  Name Input  -->
-        <TextBox
-            x:Name="nameTextBox"
-            Width="500"
-            Height="40"
-            Margin="10"
-            HorizontalAlignment="Left"
-            VerticalContentAlignment="Center"
-            Text="{Binding SaveName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-
-        <!--  Source Text  -->
-        <TextBlock
-            Margin="20,10,0,0"
-            HorizontalAlignment="Left"
-            FontSize="14"
-            Foreground="AliceBlue"
-            Text="{DynamicResource Source}" />
-
-        <!--  Source Input  -->
-        <StackPanel Orientation="Horizontal">
             <TextBox
-                x:Name="sourceTextBox"
+                x:Name="nameTextBox"
                 Width="500"
                 Height="40"
                 Margin="10"
                 HorizontalAlignment="Left"
                 VerticalContentAlignment="Center"
-                Text="{Binding PathSource, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                Text="{Binding SaveName, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+        </StackPanel>
 
+        <!--  Input Part  -->
+        <StackPanel Grid.Row="1">
+            <TextBlock
+                Margin="20,10,0,0"
+                HorizontalAlignment="Left"
+                FontSize="14"
+                Foreground="AliceBlue"
+                Text="{DynamicResource Source}" />
+
+            <StackPanel Orientation="Horizontal">
+                <TextBox
+                    x:Name="sourceTextBox"
+                    Width="500"
+                    Height="40"
+                    Margin="10"
+                    HorizontalAlignment="Left"
+                    VerticalContentAlignment="Center"
+                    Text="{Binding PathSource, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+
+                <Button
+                    Width="100"
+                    Height="40"
+                    Click="btnInputPath"
+                    Content="{DynamicResource Search}"
+                    FontSize="14"
+                    FontWeight="Medium"
+                    Style="{StaticResource CreateButtonStyle}">
+
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}" Style="{StaticResource ButtonBorderStyle}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+
+        <!--  Destination Part  -->
+        <StackPanel Grid.Row="2">
+            <TextBlock
+                Margin="20,10,0,0"
+                HorizontalAlignment="Left"
+                FontSize="14"
+                Foreground="AliceBlue"
+                Text="{DynamicResource Destination}" />
+
+            <StackPanel Orientation="Horizontal">
+                <TextBox
+                    x:Name="destinationTextBox"
+                    Width="500"
+                    Height="40"
+                    Margin="10"
+                    HorizontalAlignment="Left"
+                    VerticalContentAlignment="Center"
+                    Text="{Binding PathDestination, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+
+                <Button
+                    Width="100"
+                    Height="40"
+                    Click="btnOutputPath"
+                    Content="{DynamicResource Search}"
+                    FontSize="14"
+                    FontWeight="Medium"
+                    Style="{StaticResource CreateButtonStyle}">
+
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}" Style="{StaticResource ButtonBorderStyle}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+
+        <!--  Type of Save  -->
+        <StackPanel Grid.Row="3">
+            <StackPanel>
+                <TextBlock
+                    Margin="20,10,0,0"
+                    HorizontalAlignment="Left"
+                    FontSize="14"
+                    Foreground="AliceBlue"
+                    Text="{DynamicResource TypeOfBackup}" />
+
+                <RadioButton
+                    x:Name="complete"
+                    Margin="20,10,10,5"
+                    Content="{DynamicResource Complete}"
+                    Foreground="AliceBlue"
+                    IsChecked="{Binding Path=CompleteIsChecked}" />
+
+                <RadioButton
+                    x:Name="differential"
+                    Margin="20,5,10,0"
+                    Content="{DynamicResource Differential}"
+                    Foreground="AliceBlue" />
+            </StackPanel>
+
+            <!--  Create Button  -->
             <Button
                 Width="100"
                 Height="40"
-                Click="btnInputPath"
-                Content="{DynamicResource Search}"
+                Margin="0,0,0,20"
+                HorizontalAlignment="Right"
+                Command="{Binding CreateCommand}"
+                Content="{DynamicResource ToCreate}"
                 FontSize="14"
                 FontWeight="Medium"
-                Foreground="AliceBlue"
                 Style="{StaticResource CreateButtonStyle}">
 
                 <Button.Template>
@@ -66,87 +161,5 @@
                 </Button.Template>
             </Button>
         </StackPanel>
-
-        <!--  Destination Text  -->
-        <TextBlock
-            Margin="20,10,0,0"
-            HorizontalAlignment="Left"
-            FontSize="14"
-            Foreground="AliceBlue"
-            Text="{DynamicResource Destination}" />
-
-        <!--  Destination Input  -->
-        <StackPanel Orientation="Horizontal">
-            <TextBox
-                x:Name="destinationTextBox"
-                Width="500"
-                Height="40"
-                Margin="10"
-                HorizontalAlignment="Left"
-                VerticalContentAlignment="Center"
-                Text="{Binding PathDestination, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-
-            <Button
-                Width="100"
-                Height="40"
-                Click="btnOutputPath"
-                Content="{DynamicResource Search}"
-                FontSize="14"
-                FontWeight="Medium"
-                Foreground="AliceBlue"
-                Style="{StaticResource CreateButtonStyle}">
-
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" Style="{StaticResource ButtonBorderStyle}">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Border>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
-        </StackPanel>
-
-        <!--  Type of Backup Text  -->
-        <TextBlock
-            Margin="20,10,0,0"
-            HorizontalAlignment="Left"
-            FontSize="14"
-            Foreground="AliceBlue"
-            Text="{DynamicResource TypeOfBackup}" />
-
-        <!--  Type of Backup  -->
-        <RadioButton
-            x:Name="complete"
-            Margin="20,10,10,5"
-            Content="{DynamicResource Complete}"
-            Foreground="AliceBlue"
-            IsChecked="{Binding Path=CompleteIsChecked}" />
-
-        <RadioButton
-            x:Name="differential"
-            Margin="20,5,10,0"
-            Content="{DynamicResource Differential}"
-            Foreground="AliceBlue" />
-
-        <!--  Create Button  -->
-        <Button
-            Width="100"
-            Height="40"
-            HorizontalAlignment="Right"
-            Command="{Binding CreateCommand}"
-            Content="{DynamicResource ToCreate}"
-            FontSize="14"
-            FontWeight="Medium"
-            Foreground="AliceBlue"
-            Style="{StaticResource CreateButtonStyle}">
-
-            <Button.Template>
-                <ControlTemplate TargetType="Button">
-                    <Border Background="{TemplateBinding Background}" Style="{StaticResource ButtonBorderStyle}">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                    </Border>
-                </ControlTemplate>
-            </Button.Template>
-        </Button>
-    </StackPanel>
+    </Grid>
 </UserControl>

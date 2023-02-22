@@ -13,6 +13,7 @@
                 <ResourceDictionary Source="Style/MenuButtonStyle.xaml" />
                 <ResourceDictionary Source="Style/SavesButtonStyle.xaml" />
                 <ResourceDictionary Source="Style/CreateButtonStyle.xaml" />
+                <ResourceDictionary Source="Style/HomeTextBlockStyle.xaml" />
                 <ResourceDictionary Source="Languages/LanguageFr.xaml" />
                 <ResourceDictionary Source="Languages/LanguageEn.xaml" />
                 <ResourceDictionary Source="Utilities/DataTemplate.xaml" />

@@ -9,71 +9,50 @@
     mc:Ignorable="d">
 
     <Grid HorizontalAlignment="Center">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-
         <Grid.RowDefinitions>
             <RowDefinition Height="200" />
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <!--  Title  -->
         <StackPanel
             Grid.Row="0"
-            Height="180"
-            VerticalAlignment="Center"
-            Orientation="Horizontal">
+            Margin="0,20,0,0"
+            HorizontalAlignment="Center"
+            Orientation="Vertical">
 
+            <!--  Title  -->
             <TextBlock
-                Height="133"
-                Margin="50,0,0,0"
-                HorizontalAlignment="Center"
+                Height="75"
                 FontSize="50"
                 FontWeight="Medium"
                 Foreground="AliceBlue"
                 Text="{DynamicResource HomeTitle}" />
+
+            <!--  Image EasySave  -->
+            <Image
+                Width="90"
+                Height="90"
+                Margin="20"
+                Source="/Asset/Images/iconTop.png" />
         </StackPanel>
 
-        <!--  Image EasySave  -->
-        <Image
-            Width="90"
-            Height="90"
-            Margin="0,115,0,0"
-            Source="/Asset/Images/iconTop.png" />
-
-        <StackPanel
-            Grid.Row="1"
-            Margin="0,-50,0,0"
-            VerticalAlignment="Center">
-
-            <!--  Description EasySave  -->
-            <TextBlock
-                Margin="0,0,10,0"
-                VerticalAlignment="Center"
-                FontSize="14"
-                FontWeight="Medium"
-                Foreground="AliceBlue"
-                Text="{DynamicResource Description1}"
-                TextWrapping="Wrap" />
+        <!--  Description EasySave  -->
+        <StackPanel Grid.Row="1" Margin="0,45,0,0">
 
             <TextBlock
                 Margin="0,10,10,0"
-                VerticalAlignment="Center"
-                FontSize="14"
-                FontWeight="Medium"
-                Foreground="AliceBlue"
-                Text="{DynamicResource Description2}"
-                TextWrapping="Wrap" />
+                Style="{DynamicResource HomeTextBlockStyle}"
+                Text="{DynamicResource Description1}" />
 
             <TextBlock
                 Margin="0,10,10,0"
-                VerticalAlignment="Center"
-                FontSize="14"
-                FontWeight="Medium"
-                Foreground="AliceBlue"
-                Text="{DynamicResource Description3}"
-                TextWrapping="Wrap" />
+                Style="{DynamicResource HomeTextBlockStyle}"
+                Text="{DynamicResource Description2}" />
+
+            <TextBlock
+                Margin="0,10,10,0"
+                Style="{DynamicResource HomeTextBlockStyle}"
+                Text="{DynamicResource Description3}" />
         </StackPanel>
     </Grid>
 </UserControl>

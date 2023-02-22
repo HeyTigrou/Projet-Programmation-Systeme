@@ -9,10 +9,6 @@
     <system:String x:Key="Setting">SETTING</system:String>
     <system:String x:Key="Exit">EXIT</system:String>
 
-    <system:String x:Key="Langage">Chose a langage</system:String>
-    <system:String x:Key="French">French</system:String>
-    <system:String x:Key="English">English</system:String>
-
     <system:String x:Key="HomeTitle">Welcome in EasySave</system:String>
     <system:String x:Key="Description1">EasySave is an application that will allow you to save your data in a secure way using encryption methods set up.</system:String>
     <system:String x:Key="Description2">You will be able to choose the file formats you want to encrypt.</system:String>

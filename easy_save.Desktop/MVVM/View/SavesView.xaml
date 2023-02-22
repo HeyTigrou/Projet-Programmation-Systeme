@@ -13,29 +13,35 @@
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
 
             <Button
+                Width="75"
                 Command="{Binding RefreshCommand}"
                 Content="{DynamicResource Refresh}"
                 Style="{StaticResource SavesButtonStyle}" />
 
             <Button
+                Width="78"
                 Command="{Binding RemoveCommand}"
                 Content="{DynamicResource Remove}"
                 Style="{StaticResource SavesButtonStyle}" />
 
             <Button
+                Width="60"
                 Command="{Binding LaunchCommand}"
                 Content="{DynamicResource Launch}"
                 Style="{StaticResource SavesButtonStyle}" />
 
             <Button
+                Width="95"
                 Command="{Binding RemoveThreadCommand}"
                 Content="{DynamicResource RemoveThread}"
                 Style="{StaticResource SavesButtonStyle}" />
             <Button
+                Width="145"
                 Command="{Binding PauseThreadCommand}"
                 Content="{DynamicResource PauseThread}"
                 Style="{StaticResource SavesButtonStyle}" />
             <Button
+                Width="105"
                 Command="{Binding ResumeThreadCommand}"
                 Content="{DynamicResource ResumeThread}"
                 Style="{StaticResource SavesButtonStyle}" />
@@ -47,14 +53,14 @@
             ItemsSource="{Binding Processes}"
             SelectedItem="{Binding Selected}">
 
-                <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Name}" Header="Name" />
-                    <DataGridTextColumn Binding="{Binding InputPath}" Header="Input Path" />
-                    <DataGridTextColumn Binding="{Binding OutputPath}" Header="Output Path" />
-                    <DataGridTextColumn Binding="{Binding SaveType}" Header="Save Type" />
-                    <DataGridTextColumn Binding="{Binding Progression}" Header="Progresion" />
-                    <DataGridTextColumn Binding="{Binding State}" Header="State" />
-                </DataGrid.Columns>
-            </DataGrid>
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Name}" Header="Name" />
+                <DataGridTextColumn Binding="{Binding InputPath}" Header="Input Path" />
+                <DataGridTextColumn Binding="{Binding OutputPath}" Header="Output Path" />
+                <DataGridTextColumn Binding="{Binding SaveType}" Header="Save Type" />
+                <DataGridTextColumn Binding="{Binding Progression}" Header="Progresion" />
+                <DataGridTextColumn Binding="{Binding State}" Header="State" />
+            </DataGrid.Columns>
+        </DataGrid>
     </DockPanel>
 </UserControl>

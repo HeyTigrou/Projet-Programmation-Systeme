@@ -9,10 +9,6 @@
     <system:String x:Key="Setting">PARAMETRE</system:String>
     <system:String x:Key="Exit">QUITTER</system:String>
 
-    <system:String x:Key="Langage">Language</system:String>
-    <system:String x:Key="French">Français</system:String>
-    <system:String x:Key="English">Anglais</system:String>
-
     <system:String x:Key="HomeTitle">Bienvenue dans EasySave</system:String>
     <system:String x:Key="Description1">EasySave est une application qui vous permettra de sauvegarder vos données de manière sécurisée à l'aide de méthodes de chiffrement mis en place.</system:String>
     <system:String x:Key="Description2">Vous aurez la possibilité de choisir les formats de fichiers que vous voulez chiffrer.</system:String>
@@ -30,7 +26,7 @@
     <system:String x:Key="Launch">Lancer</system:String>
     <system:String x:Key="LaunchAll">Tous lancer</system:String>
 
-    <system:String x:Key="TypeOfLog">Type de journal (log) :</system:String>
+    <system:String x:Key="TypeOfLog">Type de trace (log) :</system:String>
     <system:String x:Key="Encrypt">Extension à chiffrer :</system:String>
     <system:String x:Key="Priority">Extension prioritaires :</system:String>
     <system:String x:Key="Generate">Générer une clé de cryptage</system:String>
