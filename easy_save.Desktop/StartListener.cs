@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace easy_save.Desktop
 {
-    internal class StartListener
+    internal class Program
     {
+        private static void Main(string[] args)
+        {
+            Listener server = new Listener();
+            server.StartListening(42042);
+        }
     }
 }
