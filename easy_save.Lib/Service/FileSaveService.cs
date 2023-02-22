@@ -1,18 +1,7 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO.Enumeration;
-using System.Security.Cryptography;
-using easy_save.Lib.Models;
-using System.Drawing;
-using System.Diagnostics.Metrics;
-using Newtonsoft.Json.Bson;
-using System.Diagnostics;
-using System.Configuration;
+﻿using easy_save.Lib.Models;
 using DetectSoftware;
+using System.Configuration;
+using System.Collections.Generic;
 
 namespace easy_save.Lib.Service
 {
@@ -22,9 +11,12 @@ namespace easy_save.Lib.Service
         /// We create an instance of each type of logger
         /// </summary>
         public readonly StateLoggerModel stateLoggerModel = new();
+        private static Mutex Mutex = new Mutex(false);
 
         public event EventHandler<SaveWorkModel> ThreadEnded;
         public SaveWorkModel Save;
+
+        private LoggerService Logger = new LoggerService();
 
         public bool QuitThread { get; set; } = false;
         public ManualResetEvent ResetEvent = new ManualResetEvent(false);
@@ -42,22 +34,146 @@ namespace easy_save.Lib.Service
                 Save = save;
                 Save.State = nameof(SaveWorkState.Running);
                 ResetEvent.Set();
-                LoggerService logger = new();
-                // Checks save type and launchs the corresponding method.
-                if (Save.SaveType == 0)
-                {
-                     SaveAllFiles(logger, extensions);
-                }
 
-                else if (Save.SaveType == 1)
-                {
-                     SaveChangedFiles(logger, extensions);
-                }
+                StartSaveProcess(extensions);
+                
                 Save.State = nameof(SaveWorkState.Done);
                 ThreadEnded?.Invoke(this, Save);
             }).Start();
+            new Thread(() =>
+            {
+                ProcessStateService service = new ProcessStateService();
+                while (Save.State != nameof(SaveWorkState.Done))
+                {
+                    if(service.GetProcessState(ConfigurationManager.AppSettings["WorkProcessName"]) && Save.State == nameof(SaveWorkState.Running))
+                    {
+                        ResetEvent.Reset();
+                        Save.State = nameof(SaveWorkState.Paused_ApplicationIsRunning);
+                    }
+                    Thread.Sleep(1000);
+                }
+            }).Start();
         }
 
+        private void StartSaveProcess(List<string> extensions)
+        {
+            Logger.LogProcessFile(Save.Name);
+
+            InitializeLoggerModels();
+
+            Logger.LogProcessState(stateLoggerModel);
+
+            // Creates directories in the destination directory to reproduce the architecture of the source directory, if it does not exist.
+            foreach (string dirPath in Directory.GetDirectories(Save.InputPath, "*", SearchOption.AllDirectories))
+            {
+                ResetEvent.WaitOne();
+                if (QuitThread == true)
+                {
+                    return;
+                }
+
+                DirectoryInfo sourceDirectoryInfo = new DirectoryInfo(dirPath);
+                DirectoryInfo destinationDirectoryInfo = new DirectoryInfo(dirPath.Replace(Save.InputPath, Save.OutputPath));
+                if (!destinationDirectoryInfo.Exists)
+                {
+                    destinationDirectoryInfo.Create();
+                }
+            }
+
+            List<List<string>> Files = PriorityProcess(Save.InputPath);
+
+            bool priorityExtansions = false;
+            bool largePriorityFiles = false;
+            bool normalFiles = false;
+            bool largeNormalFiles = false;
+            // Checks save type and launchs the corresponding method.
+            if (Save.SaveType == 0)
+            {
+                while (!largePriorityFiles || !priorityExtansions || !largeNormalFiles || !normalFiles)
+                {
+                    if (!largePriorityFiles)
+                    {
+                        if (!Files[1].Any())
+                            largePriorityFiles = true;
+
+                        if (Mutex.WaitOne(100))
+                        {
+                            SaveAllFiles(extensions, Files[1]);
+                            largePriorityFiles = true;
+                            Mutex.ReleaseMutex();
+                        }
+                    }
+                    if (!priorityExtansions)
+                    {
+                        SaveAllFiles(extensions, Files[0]);
+                        priorityExtansions = true;
+                    }
+                    if (!largeNormalFiles && largePriorityFiles && priorityExtansions)
+                    {
+                        if (!Files[3].Any())
+                            largeNormalFiles = true;
+
+                        if (Mutex.WaitOne(100))
+                        {
+                            SaveAllFiles(extensions, Files[3]);
+                            largeNormalFiles = true;
+                            Mutex.ReleaseMutex();
+                        }
+                    }
+                    if (!normalFiles && largePriorityFiles && priorityExtansions)
+                    {
+                        SaveAllFiles(extensions, Files[2]);
+                        normalFiles = true;
+                    }
+                }
+            }
+            else if (Save.SaveType == 1)
+            {
+                while(!largePriorityFiles || !priorityExtansions || !largeNormalFiles || !normalFiles)
+                {
+                    if(!largePriorityFiles)
+                    {
+                        if (!Files[1].Any())
+                            largePriorityFiles = true;
+
+                        if (Mutex.WaitOne(100))
+                        {
+                            SaveChangedFiles(extensions, Files[1]);
+                            largePriorityFiles= true;
+                            Mutex.ReleaseMutex();
+                        }
+                    }
+                    if (!priorityExtansions)
+                    {
+                        SaveChangedFiles(extensions, Files[0]);
+                        priorityExtansions = true;
+                    }
+                    if (!largeNormalFiles && largePriorityFiles && priorityExtansions)
+                    {
+                        if (!Files[3].Any())
+                            largeNormalFiles = true;
+
+                        if (Mutex.WaitOne(100))
+                        {
+                            SaveChangedFiles(extensions, Files[3]);
+                            largeNormalFiles= true;
+                            Mutex.ReleaseMutex();
+                        }
+                    }
+                    if (!normalFiles && largePriorityFiles && priorityExtansions)
+                    {
+                        SaveChangedFiles(extensions, Files[2]);
+                        normalFiles= true;
+                    }
+                }
+            }
+
+            StateLoggerToDone();
+
+            Logger.LogDailySaves();
+
+            Logger.LogProcessState(stateLoggerModel);
+        }
         public void Pause()
         {
             Save.State = nameof(SaveWorkState.Paused);
@@ -83,8 +199,7 @@ namespace easy_save.Lib.Service
         private void InitializeLoggerModels()
         {
             long totalFileSize = 0;
-
-            
+                        
             string[] files = Directory.GetFiles(Save.InputPath, "*.*", SearchOption.AllDirectories);
 
             stateLoggerModel.TotalFileToCopy = files.Length;
@@ -126,28 +241,8 @@ namespace easy_save.Lib.Service
         /// <param name="logger"></param>
         /// <param name="extensions"></param>
         /// <returns></returns>
-        private void SaveAllFiles(LoggerService logger, List<string> extensions)
+        private void SaveAllFiles(List<string> extensions, List<string> Files)
         {
-            logger.LogProcessFile(Save.Name);
-
-            InitializeLoggerModels();
-
-            logger.LogProcessState(stateLoggerModel);
-
-            // Creates directories in the destination directory to reproduce the architecture of the source directory.
-            foreach (string dirPath in Directory.GetDirectories(Save.InputPath, "*", SearchOption.AllDirectories))
-            {
-                ResetEvent.WaitOne();
-                if(QuitThread == true)
-                {
-                    return;
-                }
-
-                Directory.CreateDirectory(dirPath.Replace(Save.InputPath, Save.OutputPath));
-            }
-
-            List<string> Files = PriorityProcess(Save.InputPath);
-
             // Copies each file to the destionation path.
             foreach (string newPath in Files)
             {
@@ -162,7 +257,7 @@ namespace easy_save.Lib.Service
 
                 DateTime before = DateTime.Now;
                 
-                logger.LogProcessState(stateLoggerModel);
+                Logger.LogProcessState(stateLoggerModel);
 
                 try
                 {
@@ -185,17 +280,11 @@ namespace easy_save.Lib.Service
                 FileInfo fileLength = new FileInfo(newPath);
                 dailyLoggerModel.Filesize = fileLength.Length;
 
-                logger.AddToDailyLog(dailyLoggerModel);
+                Logger.AddToDailyLog(dailyLoggerModel);
 
                 stateLoggerModel.NbFilesLeft--;
                 Save.Progression = (stateLoggerModel.Progression * 100).ToString("0.0") + "%";
             }
-
-            StateLoggerToDone();
-
-            logger.LogDailySaves();
-
-            logger.LogProcessState(stateLoggerModel);
         }
 
         /// <summary>
@@ -205,33 +294,8 @@ namespace easy_save.Lib.Service
         /// <param name="logger"></param>
         /// <param name="extensions"></param>
         /// <returns></returns>
-        private void SaveChangedFiles(LoggerService logger, List<string> extensions)
+        private void SaveChangedFiles(List<string> extensions, List<string> Files)
         {
-            logger.LogProcessFile(Save.Name);
-
-            InitializeLoggerModels();
-
-            logger.LogProcessState(stateLoggerModel);
-
-            // Creates directories in the destination directory to reproduce the architecture of the source directory, if it does not exist.
-            foreach (string dirPath in Directory.GetDirectories(Save.InputPath, "*", SearchOption.AllDirectories))
-            {
-                ResetEvent.WaitOne();
-                if (QuitThread == true)
-                {
-                    return;
-                }
-
-                DirectoryInfo sourceDirectoryInfo = new DirectoryInfo(dirPath);
-                DirectoryInfo destinationDirectoryInfo = new DirectoryInfo(dirPath.Replace(Save.InputPath, Save.OutputPath));
-                if (!destinationDirectoryInfo.Exists)
-                {
-                    destinationDirectoryInfo.Create();
-                }
-            }
-
-            List<string> Files = PriorityProcess(Save.InputPath);
-
             // Copies modified files to the destionation path.
             foreach (string newPath in Files)
             {
@@ -250,7 +314,7 @@ namespace easy_save.Lib.Service
 
                     DateTime before = DateTime.Now;
 
-                    logger.LogProcessState(stateLoggerModel);
+                    Logger.LogProcessState(stateLoggerModel);
                     
 
                     try
@@ -274,7 +338,7 @@ namespace easy_save.Lib.Service
                     FileInfo fileLength = new FileInfo(newPath);
                     dailyLoggerModel.Filesize = fileLength.Length;
 
-                    logger.AddToDailyLog(dailyLoggerModel);
+                    Logger.AddToDailyLog(dailyLoggerModel);
                 }
                 else
                 {
@@ -283,12 +347,6 @@ namespace easy_save.Lib.Service
                 stateLoggerModel.NbFilesLeft--;
                 Save.Progression = (stateLoggerModel.Progression * 100).ToString("0.0") + "%";
             }
-
-            StateLoggerToDone();
-                    
-            logger.LogDailySaves();
-
-            logger.LogProcessState(stateLoggerModel);
         }
 
         /// <summary>
@@ -298,7 +356,7 @@ namespace easy_save.Lib.Service
         /// <param name="save"></param>
         /// <param name="extensions"></param>
         /// <returns></returns>
-        private int CopyProcess(string inPath,List<string> extensions)
+        private int CopyProcess(string inPath, List<string> extensions)
         {
             FileInfo fileInfo = new FileInfo(inPath);
 
@@ -322,10 +380,12 @@ namespace easy_save.Lib.Service
 
             return returnCode;
         }
-        
-        private List<string> PriorityProcess(string inputPath)
+
+        private List<List<string>> PriorityProcess(string inputPath)
         {
             List<string> priorityFiles = new();
+            List<string> largePriorityFiles = new();
+            List<string> largeNormalFiles = new();
             List<string> normalFiles = new();
 
             List<string> priorityExtansions = FileExtensionModel.PriorityInstance.SelectedPriorityExtensions.ToList();
@@ -333,9 +393,17 @@ namespace easy_save.Lib.Service
             foreach (string FilePath in Directory.GetFiles(inputPath, "*.*", SearchOption.AllDirectories))
             {
                 FileInfo info = new(FilePath);
-                if (priorityExtansions.Contains(info.Extension))
+                if((Int32.Parse(ConfigurationManager.AppSettings["FileSizeLimit"]) < info.Length) && priorityExtansions.Contains(info.Extension))
+                {
+                    largePriorityFiles.Add(FilePath);
+                }
+                else if (priorityExtansions.Contains(info.Extension))
                 {
                     priorityFiles.Add(FilePath);
+                }
+                else if (Int32.Parse(ConfigurationManager.AppSettings["FileSizeLimit"]) < info.Length)
+                {
+                     largeNormalFiles.Add(FilePath);
                 }
                 else
                 {
@@ -343,9 +411,15 @@ namespace easy_save.Lib.Service
                 }
             }
 
-            priorityFiles.AddRange(normalFiles);
+            List<List<string>> Files = new List<List<string>>
+            {
+                priorityFiles,
+                largePriorityFiles,
+                normalFiles,
+                largeNormalFiles,
+            };
 
-            return priorityFiles;
+            return Files;
         }
     }
 }
