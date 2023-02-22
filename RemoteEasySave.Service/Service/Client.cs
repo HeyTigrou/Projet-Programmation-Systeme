@@ -12,12 +12,20 @@ namespace RemoteEasySave.Lib.Service
     {
         private Socket ConnexionSocket;
         public int Port;
+        public event EventHandler<SaveWorkModel> AddSaveWork;
+        public event EventHandler ClearSaveWorkCollection;
+
         public ObservableCollection<SaveWorkModel> Processes;
         public Client(int port, ObservableCollection<SaveWorkModel> processes)
         {
             Port = port;
             Processes = processes;
             ConnexionSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            
+        }
+
+        public void Start()
+        {
             IPEndPoint server = new IPEndPoint(IPAddress.Parse("127.0.0.1"), Port);
             ConnexionSocket.Connect(server);
 
@@ -56,11 +64,11 @@ namespace RemoteEasySave.Lib.Service
                                 InputPath = list[2],
                                 OutputPath = list[3],
                                 SaveType = int.Parse(list[4]),
-                                State = list[5],
-                                Progression = list[6],
+                                Progression = list[5],
+                                State = list[6]
                             };
                             list.RemoveRange(1, 7);
-                            Processes.Add(saveWorkModel);
+                            AddSaveWork?.Invoke(this, saveWorkModel);
                         }
                         break;
 
@@ -79,7 +87,7 @@ namespace RemoteEasySave.Lib.Service
                         break;
                     }
                 case "Refresh":
-                    Processes.Clear();
+                    ClearSaveWorkCollection?.Invoke(this, EventArgs.Empty);
                     break;
                 case "State":
                     {

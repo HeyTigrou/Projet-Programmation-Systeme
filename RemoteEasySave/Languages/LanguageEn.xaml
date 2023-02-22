@@ -6,13 +6,12 @@
     <system:String x:Key="French">Français</system:String>
     <system:String x:Key="English">English</system:String>
 
-    <system:String x:Key="Refresh">Refresh</system:String>
     <system:String x:Key="Remove">Remove</system:String>
+    <system:String x:Key="Refresh">Refresh</system:String>
     <system:String x:Key="Launch">Launch</system:String>
-
-    <system:String x:Key="RemoveThread">Delete thread</system:String>
-    <system:String x:Key="PauseThread">Pause thread</system:String>
-    <system:String x:Key="ResumeThread">Resume thread</system:String>
+    <system:String x:Key="RemoveThread">Stop work</system:String>
+    <system:String x:Key="PauseThread">Pause work</system:String>
+    <system:String x:Key="ResumeThread">Resume work</system:String>
 
     <system:String x:Key="HeaderName">Name</system:String>
     <system:String x:Key="InputPathHeader">Input path</system:String>

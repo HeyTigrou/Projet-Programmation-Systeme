@@ -3,6 +3,8 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using RemoteEasySave.Lib.Service;
 using RemoteEasySave.Lib.Models;
+using System.Windows;
+using System;
 
 namespace RemoteEasySave.Desktop.MVVM.ViewModel
 {
@@ -30,6 +32,9 @@ namespace RemoteEasySave.Desktop.MVVM.ViewModel
         public SavesViewModel()
         {
             ClientConnexion = new Client(42042, Processes);
+            ClientConnexion.AddSaveWork += AddToCollection;
+            ClientConnexion.ClearSaveWorkCollection += ClearCollection;
+            ClientConnexion.Start();
             // Binds the Button with the methods.
             RefreshCommand = new RelayCommand(x => Refresh());
 
@@ -131,6 +136,21 @@ namespace RemoteEasySave.Desktop.MVVM.ViewModel
             }
             string message = $"LaunchSave||{Selected.Name}";
             ClientConnexion.Send(message);
+        }
+        public void AddToCollection(Object sender, SaveWorkModel saveWorkModel)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                Processes.Add(saveWorkModel);
+            });
+        }
+
+        public void ClearCollection(Object sender, EventArgs e)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                Processes.Clear();
+            });
         }
     }
 }
