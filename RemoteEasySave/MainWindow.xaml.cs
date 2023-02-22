@@ -4,6 +4,7 @@ using System.Windows;
 
 namespace RemoteEasySave.Desktop
 {
+    
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -13,7 +14,7 @@ namespace RemoteEasySave.Desktop
         {
             InitializeComponent();
             SwitchLanguage("en");
-            SavesViewModel viewModel = new SavesViewModel();
+            this.DataContext = new SavesViewModel();
         }
 
         private void FrenchButton_Checked(object sender, RoutedEventArgs e)

@@ -101,7 +101,6 @@ namespace RemoteEasySave.Desktop.MVVM.ViewModel
         /// </summary>
         private void Refresh()
         {
-
             string message = "Refresh|| ";
             ClientConnexion.Send(message);
         }
