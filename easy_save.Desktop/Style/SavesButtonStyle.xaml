@@ -1,8 +1,0 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-
-    <Style x:Key="SavesButtonStyle" TargetType="{x:Type Button}">
-
-        <Setter Property="Padding" Value="10,5,10,5" />
-        <Setter Property="Margin" Value="5" />
-    </Style>
-</ResourceDictionary>
