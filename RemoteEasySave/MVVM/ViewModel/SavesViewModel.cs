@@ -59,8 +59,6 @@ namespace RemoteEasySave.Desktop.MVVM.ViewModel
                 x => CheckSelected()
             );
 
-            // Adds the existing saveworks to be shown in the view.
-            Refresh();
         }
 
         private bool CheckSelected()

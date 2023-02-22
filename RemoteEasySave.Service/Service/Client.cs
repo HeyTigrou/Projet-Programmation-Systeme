@@ -3,6 +3,8 @@ using System.Net;
 using System.Threading;
 using RemoteEasySave.Lib.Models;
 using System.Collections.ObjectModel;
+using System;
+using System.Diagnostics;
 
 namespace RemoteEasySave.Lib.Service
 {
@@ -45,15 +47,23 @@ namespace RemoteEasySave.Lib.Service
             {
                 case "SaveWork":
                     {
-                        SaveWorkModel saveWorkModel = new SaveWorkModel()
+                        List<string> list = splitedMessage.Cast<string>().ToList();
+                        while (list.Count >= 7)
                         {
-                            Name = splitedMessage[1],
-                            InputPath = splitedMessage[2],
-                            OutputPath = splitedMessage[3],
-                            SaveType = int.Parse(splitedMessage[4])
-                        };
-                        Processes.Add(saveWorkModel);
+                            SaveWorkModel saveWorkModel = new SaveWorkModel()
+                            {
+                                Name = list[1],
+                                InputPath = list[2],
+                                OutputPath = list[3],
+                                SaveType = int.Parse(list[4]),
+                                State = list[5],
+                                Progression = list[6],
+                            };
+                            list.RemoveRange(1, 7);
+                            Processes.Add(saveWorkModel);
+                        }
                         break;
+
                     }
                 case "Progression":
                     {
