@@ -16,7 +16,8 @@ namespace easy_save.Lib.Models
         Unstarted,
         Running,
         Done,
-        Paused
+        Paused,
+        Paused_ApplicationIsRunning
     }
     /// <summary>
     /// This Model is used to manage the save works
@@ -28,18 +29,23 @@ namespace easy_save.Lib.Models
         [DataMember] public string InputPath { get; set; }
         [DataMember] public string OutputPath { get; set; }
         [DataMember] public int SaveType { get; set; }
-        private string progression;
+
         public string Progression { 
             get { return (progression != null) ? progression : "" ; } 
-            set { progression = value; OnPropertyChanged("Progression"); } 
+            set { progression = value; OnPropertyChanged("Progression"); ProgressionChanged?.Invoke(this, progression); } 
         }
 
-        private string state;
         public string State
         {
             get { return (state != null) ? state : nameof(SaveWorkState.Unstarted); }
-            set { state = value; OnPropertyChanged("State"); }
+            set { state = value; OnPropertyChanged("State"); StateChanged?.Invoke(this, state);  }
         }
+
+        private string state;
+        private string progression;
+
+        public event EventHandler<string> StateChanged;
+        public event EventHandler<string> ProgressionChanged;
 
         public event PropertyChangedEventHandler PropertyChanged;
         

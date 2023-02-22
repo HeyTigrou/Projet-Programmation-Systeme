@@ -8,6 +8,15 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
 
+    <UserControl.Resources>
+        <TextBlock x:Key="HeaderNameText" Text="{DynamicResource HeaderName}" />
+        <TextBlock x:Key="InputPathHeaderText" Text="{DynamicResource InputPathHeader}" />
+        <TextBlock x:Key="OutputPathHeaderText" Text="{DynamicResource OutputPathHeader}" />
+        <TextBlock x:Key="SaveTypeHeaderText" Text="{DynamicResource SaveTypeHeader}" />
+        <TextBlock x:Key="ProgressionHeaderText" Text="{DynamicResource ProgressionHeader}" />
+        <TextBlock x:Key="SaveWorkStateHeaderText" Text="{DynamicResource SaveWorkStateHeader}" />
+    </UserControl.Resources>
+
     <DockPanel LastChildFill="True">
 
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
@@ -32,17 +41,18 @@
 
             <Button
                 Width="95"
-                Command="{Binding RemoveThreadCommand}"
+                Command="{Binding StopCommand}"
                 Content="{DynamicResource RemoveThread}"
                 Style="{StaticResource SavesButtonStyle}" />
+
             <Button
                 Width="145"
-                Command="{Binding PauseThreadCommand}"
+                Command="{Binding PauseCommand}"
                 Content="{DynamicResource PauseThread}"
                 Style="{StaticResource SavesButtonStyle}" />
             <Button
                 Width="105"
-                Command="{Binding ResumeThreadCommand}"
+                Command="{Binding ResumeCommand}"
                 Content="{DynamicResource ResumeThread}"
                 Style="{StaticResource SavesButtonStyle}" />
         </StackPanel>
@@ -54,12 +64,12 @@
             SelectedItem="{Binding Selected}">
 
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Name}" Header="Name" />
-                <DataGridTextColumn Binding="{Binding InputPath}" Header="Input Path" />
-                <DataGridTextColumn Binding="{Binding OutputPath}" Header="Output Path" />
-                <DataGridTextColumn Binding="{Binding SaveType}" Header="Save Type" />
-                <DataGridTextColumn Binding="{Binding Progression}" Header="Progresion" />
-                <DataGridTextColumn Binding="{Binding State}" Header="State" />
+                <DataGridTextColumn Binding="{Binding Name}" Header="{StaticResource HeaderNameText}" />
+                <DataGridTextColumn Binding="{Binding InputPath}" Header="{StaticResource InputPathHeaderText}" />
+                <DataGridTextColumn Binding="{Binding OutputPath}" Header="{StaticResource OutputPathHeaderText}" />
+                <DataGridTextColumn Binding="{Binding SaveType}" Header="{StaticResource SaveTypeHeaderText}" />
+                <DataGridTextColumn Binding="{Binding Progression}" Header="{StaticResource ProgressionHeaderText}" />
+                <DataGridTextColumn Binding="{Binding State}" Header="{StaticResource SaveWorkStateHeaderText}" />
             </DataGrid.Columns>
         </DataGrid>
     </DockPanel>

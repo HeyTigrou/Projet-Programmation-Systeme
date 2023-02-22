@@ -49,4 +49,12 @@
     <system:String x:Key="ErrorPopUp">Business software running, unable to start save process.</system:String>
     <system:String x:Key="ErrorPopUp2">Please shutdown the business process.</system:String>
     <system:String x:Key="Close">Close</system:String>
+
+
+    <system:String x:Key="HeaderName">Name</system:String>
+    <system:String x:Key="InputPathHeader">Input path</system:String>
+    <system:String x:Key="OutputPathHeader">Output path</system:String>
+    <system:String x:Key="SaveTypeHeader">Type</system:String>
+    <system:String x:Key="ProgressionHeader">Progression</system:String>
+    <system:String x:Key="SaveWorkStateHeader">State</system:String>
 </ResourceDictionary>

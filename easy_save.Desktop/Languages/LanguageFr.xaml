@@ -46,4 +46,12 @@
     <system:String x:Key="ErrorPopUp">Logiciel métier en cours d'exécution, impossible de lancer le processus de sauvegarde.</system:String>
     <system:String x:Key="ErrorPopUp2">Veuillez arrêter le processus métier.</system:String>
     <system:String x:Key="Close">Fermer</system:String>
+
+
+    <system:String x:Key="HeaderName">Nom</system:String>
+    <system:String x:Key="InputPathHeader">Chemin d'entrée</system:String>
+    <system:String x:Key="OutputPathHeader">Chemin de sortie</system:String>
+    <system:String x:Key="SaveTypeHeader">Type</system:String>
+    <system:String x:Key="ProgressionHeader">Progression</system:String>
+    <system:String x:Key="SaveWorkStateHeader">Etat</system:String>
 </ResourceDictionary>
