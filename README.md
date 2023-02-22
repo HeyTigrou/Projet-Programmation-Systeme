@@ -1,5 +1,5 @@
 ----------------
-# EasySave Project V2.0 (English)
+# EasySave Project V3.0 remote client (English)
 
 Welcome to the System Programming Project of :
 - IRAZOQUI Luken
@@ -20,8 +20,8 @@ Technologies used :
 
 ## Useful information:
 
-### Desktop Application (V2.0) :
-This desktop application allows us to create backup jobs, delete them, run them (one by one or all in a row) and encrypt files from these backups (depending on their extension). These backup jobs generate log files in json and / or xml .
+### Desktop Application remote client (V3.0) :
+This application allows us to monitor the progress of backups in real time and to act on them from a remote station
 
 #### Documentation :
 The Documentation is located in the "Documentation" directory of this Github, it is divided into several parts: 
@@ -36,7 +36,7 @@ The Documentation is located in the "Documentation" directory of this Github, it
   - The manual for the customer support 
 
 ----------------
-# Projet EasySave V2.0 (Français)
+# Client distant Projet EasySave V3.0 (Français)
 
 Bienvenue sur le Projet Programmation Système de :
 - IRAZOQUI Luken
@@ -57,8 +57,8 @@ Technologies utilisées :
 
 ## Infos Utiles :
 
-### Application Bureau (V2.0) :
-Cette application bureau nous permet de créer des travaux de sauvegarde, de les supprimer, de les éxécuter (un à par un ou tous à la suite) et de crypter des fichier de ces sauvegardes (en fonction de leur extentsion) . Ces travaux de sauvegarde génère des fichiers de logs json et / ou xml.
+### Client distant de l'application (V3.0) :
+Cette application nous permet de suivre en temps réel l'avancement des sauvegardes et d'agir sur celles-ci depuis un poste déporté
 
 #### Documentation :
 La Documentation se trouve dans le répertoire "Documentation" de ce Github, elle est divisée en plusieurs parties : 
