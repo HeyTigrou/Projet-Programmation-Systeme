@@ -103,53 +103,6 @@ namespace easy_save.Desktop.MVVM.ViewModel
             if(saveWorkModel != null )
                 FileSaveServices.Remove(saveWorkModel);
         }
-        private void PauseReceived(Object sender, string name)
-        {
-            foreach (var item in FileSaveServices)
-            {
-                if (item.Key.Name == name)
-                {
-                    FileSaveServices[item.Key].Pause();
-                }
-            }
-        }
-        private void ResumeReceived(Object sender, string name)
-        {
-            foreach (var item in FileSaveServices)
-            {
-                if (item.Key.Name == name)
-                {
-                    FileSaveServices[item.Key].Resume();
-                }
-            }
-        }
-        private void RefreshReceived(Object sender, EventArgs e)
-        {
-            Refresh();
-        }
-        private void RemoveReceived(Object sender, string name)
-        {
-            // Deletes the selected save work.
-            SaveWorkManager.DeleteSaveWork(name);
-
-            // Refreshes the observable collection.
-            Refresh();
-        }
-        private void LaunchSaveReceived(Object sender, string name)
-        {
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                foreach (var item in Processes)
-                {
-                    if (item.Name == name)
-                    {
-                        Selected = item;
-                        LaunchSave();
-                    }
-                }
-            });
-        }
-
         private void Stop()
         {
             if (Selected == null)
@@ -163,6 +116,17 @@ namespace easy_save.Desktop.MVVM.ViewModel
             }
         }
 
+
+        private void PauseReceived(Object sender, string name)
+        {
+            foreach (var item in FileSaveServices)
+            {
+                if (item.Key.Name == name)
+                {
+                    FileSaveServices[item.Key].Pause();
+                }
+            }
+        }
         private void Pause()
         {
             if (Selected == null)
@@ -175,6 +139,17 @@ namespace easy_save.Desktop.MVVM.ViewModel
             }
         }
 
+
+        private void ResumeReceived(Object sender, string name)
+        {
+            foreach (var item in FileSaveServices)
+            {
+                if (item.Key.Name == name)
+                {
+                    FileSaveServices[item.Key].Resume();
+                }
+            }
+        }
         private void Resume()
         {
             if (Selected == null)
@@ -187,6 +162,10 @@ namespace easy_save.Desktop.MVVM.ViewModel
             }
         }
 
+        private void RefreshReceived(Object sender, EventArgs e)
+        {
+            Refresh();
+        }
         /// <summary>
         /// Refreshes the observable collection, clears it and adds the save works.
         /// </summary>
@@ -218,6 +197,16 @@ namespace easy_save.Desktop.MVVM.ViewModel
         {
             socketConnection.server.SendProgression((sender as SaveWorkModel).Name, progression);
         }
+
+
+        private void RemoveReceived(Object sender, string name)
+        {
+            // Deletes the selected save work.
+            SaveWorkManager.DeleteSaveWork(name);
+
+            // Refreshes the observable collection.
+            Refresh();
+        }
         /// <summary>
         /// Removes the selected save work.
         /// </summary>
@@ -235,6 +224,22 @@ namespace easy_save.Desktop.MVVM.ViewModel
             Refresh();
         }
 
+
+
+        private void LaunchSaveReceived(Object sender, string name)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                foreach (var item in Processes)
+                {
+                    if (item.Name == name)
+                    {
+                        Selected = item;
+                        LaunchSave();
+                    }
+                }
+            });
+        }
         /// <summary>
         /// Launches the selected save work.
         /// </summary>
