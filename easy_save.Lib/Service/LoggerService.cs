@@ -57,7 +57,7 @@ namespace easy_save.Lib.Service
 
             if (ConfigurationManager.AppSettings["LogsInJson"] == "Y")
             {
-                DailyLogJsonFile = Path.Combine(DirectoryPath + $"{currentDate}-{FileName}.json");
+                DailyLogJsonFile = Path.Combine(DirectoryPath, $"{currentDate}-{FileName}.json");
                 // If the file doesn't exist, we create it
                 if (!File.Exists(DailyLogJsonFile))
                 {
@@ -68,7 +68,7 @@ namespace easy_save.Lib.Service
 
             if (ConfigurationManager.AppSettings["LogsInXMl"] == "Y")
             {
-                DailyLogXmlFile = Path.Combine(DirectoryPath + $"{currentDate}-{FileName}.xml");
+                DailyLogXmlFile = Path.Combine(DirectoryPath, $"{currentDate}-{FileName}.xml");
                 // If the file doesn't exist, we create it
                 if (!File.Exists(DailyLogXmlFile))
                 {
@@ -85,7 +85,7 @@ namespace easy_save.Lib.Service
         {
             if (ConfigurationManager.AppSettings["LogsInJson"] == "Y")
             {
-                StateLogJsonFile = Path.Combine(StateLogDirectoryPath + $"{processName}.json");
+                StateLogJsonFile = Path.Combine(StateLogDirectoryPath, $"{processName}.json");
                 // If the file doesn't exist, we create it
                 if (!File.Exists(StateLogJsonFile))
                 {
@@ -95,7 +95,7 @@ namespace easy_save.Lib.Service
 
             if (ConfigurationManager.AppSettings["LogsInXMl"] == "Y")
             {
-                StateLogXmlFile = Path.Combine(StateLogDirectoryPath + $"{processName}.xml");
+                StateLogXmlFile = Path.Combine(StateLogDirectoryPath, $"{processName}.xml");
                 // If the file doesn't exist, we create it
                 if (!File.Exists(StateLogXmlFile))
                 {

@@ -45,7 +45,6 @@ namespace easy_save.Lib.Service
             return works;
         }
 
-
         /// <summary>
         /// This method is used to create a save work
         /// </summary>
@@ -68,7 +67,8 @@ namespace easy_save.Lib.Service
             {
                 // Creates a file with the save work details.
                 string json = JsonConvert.SerializeObject(saveWork);
-                File.WriteAllText($@"{ConfigurationManager.AppSettings["SaveProjectEmplacement"]}{saveWork.Name}.json", json);
+                string path = Path.Combine(ConfigurationManager.AppSettings["SaveProjectEmplacement"], $"{saveWork.Name}.json");
+                File.WriteAllText(path, json);
                 return true;
             }
 
