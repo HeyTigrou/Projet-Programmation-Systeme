@@ -24,11 +24,12 @@ namespace RemoteEasySave.Desktop.MVVM.ViewModel
 
 
         /// <summary>
-        /// This observable collection contains all the processes on the selected folder. It is binded to a datagrid in the view.
+        /// This observable collection contains all the processes. It is binded to a datagrid in the view.
         /// </summary>
         public ObservableCollection<SaveWorkModel> Processes { get; } = new ObservableCollection<SaveWorkModel>();
         /// <summary>
-        /// Binds the methods with button, and adds the existing save works to the observable collection.
+        /// Binds the methods with buttons. 
+        /// Connects with the main application.
         /// </summary>
         public SavesViewModel()
         {
@@ -72,6 +73,9 @@ namespace RemoteEasySave.Desktop.MVVM.ViewModel
             return Selected != null;
         }
 
+        /// <summary>
+        /// Stops a running save work.
+        /// </summary>
         private void Stop()
         {
             if (Selected == null)
@@ -88,6 +92,9 @@ namespace RemoteEasySave.Desktop.MVVM.ViewModel
             }
         }
 
+        /// <summary>
+        /// Pauses a running save work.
+        /// </summary>
         private void Pause()
         {
             if (Selected == null)
@@ -104,6 +111,9 @@ namespace RemoteEasySave.Desktop.MVVM.ViewModel
             }
         }
 
+        /// <summary>
+        /// Resumes a running save work.
+        /// </summary>
         private void Resume()
         {
             if (Selected == null)
@@ -138,7 +148,6 @@ namespace RemoteEasySave.Desktop.MVVM.ViewModel
         /// <summary>
         /// Removes the selected save work.
         /// </summary>
-        /// <param name="process"></param>
         private void Remove()
         {
             if (Selected == null)
@@ -158,7 +167,6 @@ namespace RemoteEasySave.Desktop.MVVM.ViewModel
         /// <summary>
         /// Launches the selected save work.
         /// </summary>
-        /// <param name="process"></param>
         private void LaunchSave()
         {
             if (Selected == null)

@@ -2,7 +2,8 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:system="clr-namespace:System;assembly=mscorlib">
-
+    
+    <!-- Ressources for the Main Window -->
     <system:String x:Key="French">Français</system:String>
     <system:String x:Key="English">English</system:String>
 
@@ -20,7 +21,7 @@
     <system:String x:Key="ProgressionHeader">Progression</system:String>
     <system:String x:Key="SaveWorkStateHeader">State</system:String>
 
-
+    <!-- Ressources for the popup -->
     <system:String x:Key="NotConnectedToServerPopUp">The server application is not running, please launch the main application, before relaunching this one.</system:String>
     <system:String x:Key="TitlePopUp">Error !</system:String>
     <system:String x:Key="Close">Close</system:String>

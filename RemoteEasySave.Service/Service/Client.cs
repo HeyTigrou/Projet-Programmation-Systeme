@@ -26,6 +26,9 @@ namespace RemoteEasySave.Lib.Service
             
         }
 
+        /// <summary>
+        /// Searches for connection, and starts a thread to receive messages.
+        /// </summary>
         public void Start()
         {
             bool connected = false;
@@ -64,7 +67,10 @@ namespace RemoteEasySave.Lib.Service
             }).Start();
         }
 
-
+        /// <summary>
+        /// Sends message to connected server.
+        /// </summary>
+        /// <param name="message"></param>
         public void Send(string message)
         {
             try
@@ -78,6 +84,10 @@ namespace RemoteEasySave.Lib.Service
             }
         }
 
+        /// <summary>
+        /// Parses message to run the choosen function.
+        /// </summary>
+        /// <param name="message"></param>
         public void Decode(string message)
         {
             string[] splitedMessage = message.Split("||");
@@ -138,7 +148,6 @@ namespace RemoteEasySave.Lib.Service
         #region IDISPOSABLE
 
         private bool disposedValue;
-
         protected virtual void Dispose(bool disposing)
         {
             if (!disposedValue)
@@ -150,7 +159,6 @@ namespace RemoteEasySave.Lib.Service
                 disposedValue = true;
             }
         }
-
         public void Dispose()
         {
             if (closed)
