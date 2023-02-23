@@ -10,6 +10,7 @@ using System.Reflection;
 using easy_save.Lib.Models;
 using System.Diagnostics;
 using System.Xml.Linq;
+using System.Configuration;
 
 namespace easy_save.Lib.SocketListener
 {
@@ -34,7 +35,7 @@ namespace easy_save.Lib.SocketListener
 
         public void StartListening(int port)
         {
-            IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
+            IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse(ConfigurationManager.AppSettings["ServerIp"]), port);
             listenSocket.Bind(endPoint);
             listenSocket.Listen(10);
 

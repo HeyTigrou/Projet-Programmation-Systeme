@@ -48,7 +48,7 @@ namespace easy_save.Desktop.MVVM.ViewModel
             socketConnection.server.RemoveCommandReceived += RemoveReceived;
             socketConnection.server.LaunchSaveCommandReceived += LaunchSaveReceived;
 
-            socketConnection.Connect(42042);
+            socketConnection.Connect();
 
 
             // Binds the Button with the methods.

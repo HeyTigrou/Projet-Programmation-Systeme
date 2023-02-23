@@ -81,8 +81,7 @@
                 Height="112"
                 AutoGenerateColumns="False"
                 IsReadOnly="True"
-                ItemsSource="{Binding EncryptionExtensions}"
-                SelectedItem="{Binding EncryptionExtensionSelected}">
+                ItemsSource="{Binding EncryptionExtensions}">
 
                 <DataGrid.Columns>
                     <DataGridTextColumn
@@ -191,8 +190,8 @@
                 Height="112"
                 AutoGenerateColumns="False"
                 IsReadOnly="True"
-                ItemsSource="{Binding PriorityExtensions}"
-                SelectedItem="{Binding PriorityExtensionSelected}">
+                ItemsSource="{Binding PriorityExtensions}">
+
 
                 <DataGrid.Columns>
                     <DataGridTextColumn

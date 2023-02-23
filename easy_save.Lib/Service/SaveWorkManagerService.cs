@@ -82,7 +82,7 @@ namespace easy_save.Lib.Service
         public bool DeleteSaveWork(string name)
         {
             // Creates file path with the file name.
-            string path = $@"{ConfigurationManager.AppSettings["SaveProjectEmplacement"]}{name}.json";
+            string path = Path.Combine(ConfigurationManager.AppSettings["SaveProjectEmplacement"], $"{name}.json"); 
             try
             {
                 // Deletes file.
