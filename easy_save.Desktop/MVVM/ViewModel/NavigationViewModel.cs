@@ -17,7 +17,7 @@ namespace easy_save.Desktop.MVVM.ViewModel
             set { _currentView = value; OnPropertyChanged(); }
         }
 
-        public ICommand HomeCommand { get; set; }
+        public ICommand Home Command { get; set; }
         public ICommand CreateCommand { get; set; }
         public ICommand SavesCommand { get; set; }
         public ICommand SettingCommand { get; set; }
