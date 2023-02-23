@@ -5,6 +5,7 @@ using RemoteEasySave.Lib.Service;
 using RemoteEasySave.Lib.Models;
 using System.Windows;
 using System;
+using RemoteEasySave.Desktop.MVVM.View;
 
 namespace RemoteEasySave.Desktop.MVVM.ViewModel
 {
@@ -31,7 +32,7 @@ namespace RemoteEasySave.Desktop.MVVM.ViewModel
         /// </summary>
         public SavesViewModel()
         {
-            ClientConnexion = new Client(42042, Processes);
+            ClientConnexion = new Client(Processes);
             ClientConnexion.AddSaveWork += AddToCollection;
             ClientConnexion.ClearSaveWorkCollection += ClearCollection;
             ClientConnexion.Start();
@@ -78,7 +79,13 @@ namespace RemoteEasySave.Desktop.MVVM.ViewModel
                 return;
             }
                 string message = $"Stop||{Selected.Name}";
+            if (!ClientConnexion.closed)
                 ClientConnexion.Send(message);
+            else
+            {
+                NotConnectedToServerPopUp failurePopup = new NotConnectedToServerPopUp();
+                failurePopup.ShowDialog();
+            }
         }
 
         private void Pause()
@@ -88,7 +95,13 @@ namespace RemoteEasySave.Desktop.MVVM.ViewModel
                 return;
             }
                 string message = $"Pause||{Selected.Name}";
+            if(!ClientConnexion.closed)
                 ClientConnexion.Send(message);
+            else
+            {
+                NotConnectedToServerPopUp failurePopup = new NotConnectedToServerPopUp();
+                failurePopup.ShowDialog();
+            }
         }
 
         private void Resume()
@@ -98,7 +111,13 @@ namespace RemoteEasySave.Desktop.MVVM.ViewModel
                 return;
             }
                 string message = $"Resume||{Selected.Name}";
+            if (!ClientConnexion.closed)
                 ClientConnexion.Send(message);
+            else
+            {
+                NotConnectedToServerPopUp failurePopup = new NotConnectedToServerPopUp();
+                failurePopup.ShowDialog();
+            }
         }
 
         /// <summary>
@@ -107,7 +126,13 @@ namespace RemoteEasySave.Desktop.MVVM.ViewModel
         private void Refresh()
         {
             string message = "Refresh|| ";
-            ClientConnexion.Send(message);
+            if (!ClientConnexion.closed)
+                ClientConnexion.Send(message);
+            else
+            {
+                NotConnectedToServerPopUp failurePopup = new NotConnectedToServerPopUp();
+                failurePopup.ShowDialog();
+            }
         }
 
         /// <summary>
@@ -121,7 +146,13 @@ namespace RemoteEasySave.Desktop.MVVM.ViewModel
                 return;
             }
             string message = $"Remove||{Selected.Name}";
-            ClientConnexion.Send(message);
+            if (!ClientConnexion.closed)
+                ClientConnexion.Send(message);
+            else
+            {
+                NotConnectedToServerPopUp failurePopup = new NotConnectedToServerPopUp();
+                failurePopup.ShowDialog();
+            }
         }
 
         /// <summary>
@@ -135,7 +166,13 @@ namespace RemoteEasySave.Desktop.MVVM.ViewModel
                 return;
             }
             string message = $"LaunchSave||{Selected.Name}";
-            ClientConnexion.Send(message);
+            if (!ClientConnexion.closed)
+                ClientConnexion.Send(message);
+            else
+            {
+                NotConnectedToServerPopUp failurePopup = new NotConnectedToServerPopUp();
+                failurePopup.ShowDialog();
+            }
         }
         public void AddToCollection(Object sender, SaveWorkModel saveWorkModel)
         {

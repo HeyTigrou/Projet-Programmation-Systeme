@@ -47,7 +47,6 @@
                     x:Name="FrenchButton"
                     Margin="0,0,10,5"
                     Checked="FrenchButton_Checked"
-                    Command="{Binding SwitchLanguageFR}"
                     Content="{DynamicResource French}"
                     Foreground="AliceBlue" />
 
@@ -55,7 +54,6 @@
                     x:Name="EnglishButton"
                     Margin="0,5,10,0"
                     Checked="EnglishButton_Checked"
-                    Command="{Binding SwitchLanguageEN}"
                     Content="{DynamicResource English}"
                     Foreground="AliceBlue"
                     IsChecked="True" />

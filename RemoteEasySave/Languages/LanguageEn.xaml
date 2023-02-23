@@ -19,4 +19,9 @@
     <system:String x:Key="SaveTypeHeader">Type</system:String>
     <system:String x:Key="ProgressionHeader">Progression</system:String>
     <system:String x:Key="SaveWorkStateHeader">State</system:String>
+
+
+    <system:String x:Key="NotConnectedToServerPopUp">The server application is not running, please launch the main application, before relaunching this one.</system:String>
+    <system:String x:Key="TitlePopUp">Error !</system:String>
+    <system:String x:Key="Close">Close</system:String>
 </ResourceDictionary>

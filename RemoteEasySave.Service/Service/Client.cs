@@ -5,6 +5,7 @@ using RemoteEasySave.Lib.Models;
 using System.Collections.ObjectModel;
 using System;
 using System.Diagnostics;
+using System.Configuration;
 
 namespace RemoteEasySave.Lib.Service
 {
@@ -14,11 +15,12 @@ namespace RemoteEasySave.Lib.Service
         public int Port;
         public event EventHandler<SaveWorkModel> AddSaveWork;
         public event EventHandler ClearSaveWorkCollection;
+        public bool closed = false;
 
         public ObservableCollection<SaveWorkModel> Processes;
-        public Client(int port, ObservableCollection<SaveWorkModel> processes)
+        public Client(ObservableCollection<SaveWorkModel> processes)
         {
-            Port = port;
+            Port = Int32.Parse(ConfigurationManager.AppSettings["ServerPort"]);
             Processes = processes;
             ConnexionSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             
@@ -26,17 +28,38 @@ namespace RemoteEasySave.Lib.Service
 
         public void Start()
         {
-            IPEndPoint server = new IPEndPoint(IPAddress.Parse("127.0.0.1"), Port);
-            ConnexionSocket.Connect(server);
+            bool connected = false;
+            IPEndPoint server = new IPEndPoint(IPAddress.Parse(ConfigurationManager.AppSettings["ServerIp"]), Port);
+            while (!connected)
+            {
+                try
+                {
+
+                    ConnexionSocket.Connect(server);
+                    connected= true;
+                    
+                }
+                catch { connected = false; Thread.Sleep(100); }
+            }
 
             new Thread(_ =>
             {
                 while (true)
                 {
-                    byte[] buffer1 = new byte[1024];
-                    int Length = ConnexionSocket.Receive(buffer1);
-                    string message = System.Text.Encoding.UTF8.GetString(buffer1, 0, Length);
-                    Decode(message);
+                    try
+                    {
+                        byte[] buffer1 = new byte[1024];
+                        int Length = ConnexionSocket.Receive(buffer1);
+                        if (Length == 0)
+                            throw new SocketException();
+                        string message = System.Text.Encoding.UTF8.GetString(buffer1, 0, Length);
+                        Decode(message);
+                    }
+                    catch(SocketException)
+                    {
+                        Dispose();
+                        break;
+                    }
                 }
             }).Start();
         }
@@ -44,8 +67,15 @@ namespace RemoteEasySave.Lib.Service
 
         public void Send(string message)
         {
-            byte[] buffer = System.Text.Encoding.UTF8.GetBytes(message);
-            ConnexionSocket.Send(buffer);
+            try
+            {
+                byte[] buffer = System.Text.Encoding.UTF8.GetBytes(message);
+                ConnexionSocket.Send(buffer);
+            }
+            catch (SocketException)
+            {
+                Dispose();
+            }
         }
 
         public void Decode(string message)
@@ -105,5 +135,32 @@ namespace RemoteEasySave.Lib.Service
                 default: break;
             }
         }
+        #region IDISPOSABLE
+
+        private bool disposedValue;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    ConnexionSocket.Dispose();
+                }
+                disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            if (closed)
+                return;
+            closed = true;
+
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
+
+        #endregion IDISPOSABLE
     }
 }

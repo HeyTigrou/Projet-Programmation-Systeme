@@ -20,6 +20,8 @@
     <system:String x:Key="ProgressionHeader">Progression</system:String>
     <system:String x:Key="SaveWorkStateHeader">Etat</system:String>
 
-    
 
+    <system:String x:Key="NotConnectedToServerPopUp">L'application serveur n'est pas en cours d'éxécution, veuillez lancer l'application principale, avant de relancer celle ci.</system:String>
+    <system:String x:Key="TitlePopUp">ERREUR !</system:String>
+    <system:String x:Key="Close">Fermer</system:String>
 </ResourceDictionary>
