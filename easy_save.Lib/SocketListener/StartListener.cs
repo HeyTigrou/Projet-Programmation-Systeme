@@ -10,6 +10,10 @@ namespace easy_save.Lib.SocketListener
     public class SocketConnection
     {
         public Listener server = new Listener();
+
+        /// <summary>
+        /// Starts the start listening method.
+        /// </summary>
         public void Connect()
         {
             int port = Int32.Parse(ConfigurationManager.AppSettings["ServerPort"]);

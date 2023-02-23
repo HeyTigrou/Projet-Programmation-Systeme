@@ -3,17 +3,20 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:system="clr-namespace:System;assembly=System.Runtime">
 
+    <!-- Ressources for the navigation view -->
     <system:String x:Key="Home">ACCUEIL</system:String>
     <system:String x:Key="Create">NOUVEAU</system:String>
     <system:String x:Key="Detail">SAUVEGARDES</system:String>
     <system:String x:Key="Setting">PARAMETRE</system:String>
     <system:String x:Key="Exit">QUITTER</system:String>
 
+    <!-- Ressources for the home view -->
     <system:String x:Key="HomeTitle">Bienvenue dans EasySave</system:String>
     <system:String x:Key="Description1">EasySave est une application qui vous permettra de sauvegarder vos données de manière sécurisée à l'aide de méthodes de chiffrement mis en place.</system:String>
     <system:String x:Key="Description2">Vous aurez la possibilité de choisir les formats de fichiers que vous voulez chiffrer.</system:String>
     <system:String x:Key="Description3">L'application vous permet aussi de réaliser plusieurs processus de sauvegarde en simultanée.</system:String>
 
+    <!-- Ressources for the create view -->
     <system:String x:Key="Name">Nom :</system:String>
     <system:String x:Key="Source">Chemin du fichier à sauvegarder :</system:String>
     <system:String x:Key="Destination">Chemin du fichier de destination :</system:String>
@@ -21,28 +24,24 @@
     <system:String x:Key="Complete">Tous les fichiers</system:String>
     <system:String x:Key="Differential">Fichiers modifiés</system:String>
     <system:String x:Key="ToCreate">Créer</system:String>
+    <system:String x:Key="Search">Rechercher</system:String>
 
-
+    <!-- Ressources for the settings view -->
     <system:String x:Key="TypeOfLog">Type de trace (log) :</system:String>
     <system:String x:Key="Encrypt">Extension à chiffrer :</system:String>
     <system:String x:Key="Priority">Extension prioritaires :</system:String>
     <system:String x:Key="Generate">Générer une clé de cryptage</system:String>
-
-
     <system:String x:Key="LogFileExtension">Sauvegarder</system:String>
     <system:String x:Key="Add">Ajouter</system:String>
 
 
-    <system:String x:Key="Search">Rechercher</system:String>
-
+    <!-- Ressources for the popup -->
     <system:String x:Key="TitlePopUp">ERREUR ! Impossible de lancer le processus de sauvegarde</system:String>
-
-    
     <system:String x:Key="ErrorPopUp">Logiciel métier en cours d'exécution, impossible de lancer le processus de sauvegarde.</system:String>
     <system:String x:Key="ErrorPopUp2">Veuillez arrêter le processus métier.</system:String>
     <system:String x:Key="Close">Fermer</system:String>
 
-
+    <!-- Ressources for the saves view -->
     <system:String x:Key="Remove">Supprimer</system:String>
     <system:String x:Key="Refresh">Rafraichir</system:String>
     <system:String x:Key="Launch">Lancer</system:String>

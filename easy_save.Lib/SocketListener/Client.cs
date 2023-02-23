@@ -28,6 +28,9 @@ namespace easy_save.Lib.SocketListener
             thread.Start();
         }
 
+        /// <summary>
+        /// Gets the messages and invoke an event to decode it.
+        /// </summary>
         private void Listen()
         {
             byte[] buffer = new byte[1024];
@@ -50,6 +53,10 @@ namespace easy_save.Lib.SocketListener
             }
         }
 
+        /// <summary>
+        /// Sends message to client.
+        /// </summary>
+        /// <param name="message"></param>
         public void send(string message)
         {
             byte[] buffer = System.Text.Encoding.UTF8.GetBytes(message);

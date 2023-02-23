@@ -22,7 +22,7 @@ namespace easy_save.Lib.Service
         public ManualResetEvent ResetEvent = new ManualResetEvent(false);
 
         /// <summary>
-        /// This method is used to select the right method to use : SaveAllFiles (Complete save) or SaveChangedFiles (Incremental Save)
+        /// This method creates 2 threads, the first launches the save functions, the second checks if an app is running, to stop the first thread if necessary.
         /// </summary>
         /// <param name="save"></param>
         /// <param name="extensions"></param>
@@ -55,6 +55,10 @@ namespace easy_save.Lib.Service
             }).Start();
         }
 
+        /// <summary>
+        /// This method is used to select the right method to use : SaveAllFiles (Complete save) or SaveChangedFiles (Incremental Save)
+        /// </summary>
+        /// <param name="extensions"></param>
         private void StartSaveProcess(List<string> extensions)
         {
             Logger.LogProcessFile(Save.Name);
@@ -179,17 +183,28 @@ namespace easy_save.Lib.Service
 
             Logger.LogProcessState(stateLoggerModel);
         }
+
+        /// <summary>
+        /// Pauses the thread.
+        /// </summary>
         public void Pause()
         {
             Save.State = nameof(SaveWorkState.Paused);
             ResetEvent.Reset();
         }
+
+        /// <summary>
+        /// Resumes the thread
+        /// </summary>
         public void Resume()
         {
             Save.State = nameof(SaveWorkState.Running);
             ResetEvent.Set();
         }
 
+        /// <summary>
+        /// Stops the thread.
+        /// </summary>
         public void Quit()
         {
             Save.State = nameof(SaveWorkState.Done);

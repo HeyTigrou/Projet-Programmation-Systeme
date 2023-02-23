@@ -33,6 +33,10 @@ namespace easy_save.Lib.SocketListener
             listenSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         }
 
+        /// <summary>
+        /// Waits for client connections, up to 10 connections.
+        /// </summary>
+        /// <param name="port"></param>
         public void StartListening(int port)
         {
             IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse(ConfigurationManager.AppSettings["ServerIp"]), port);
@@ -44,6 +48,9 @@ namespace easy_save.Lib.SocketListener
             thread.Start();
         }
 
+        /// <summary>
+        /// Adds clients
+        /// </summary>
         private void WaitForClient()
         {
             while (!closed)
@@ -62,6 +69,11 @@ namespace easy_save.Lib.SocketListener
             }
         }
 
+        /// <summary>
+        /// Sends the state of the save work to clients.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="state"></param>
         public void SendState(string name, string state)
         {
             string message = $"State||{name}||{state}||";
@@ -71,6 +83,11 @@ namespace easy_save.Lib.SocketListener
             }
         }
 
+        /// <summary>
+        /// Send the progression fo the save work to clients.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="progression"></param>
         public void SendProgression(string name, string progression)
         {
             string message = $"Progression||{name}||{progression}||";
@@ -80,6 +97,9 @@ namespace easy_save.Lib.SocketListener
             }
         }
 
+        /// <summary>
+        /// Send refresh command to clients.
+        /// </summary>
         public void SendRefresh()
         {
             string message = "Refresh||";
@@ -89,6 +109,10 @@ namespace easy_save.Lib.SocketListener
             }
         }
 
+        /// <summary>
+        /// Sends save work to client to show in the clients grid.
+        /// </summary>
+        /// <param name="saveWork"></param>
         public void SendSaveWork(SaveWorkModel saveWork)
         {
             string message = $"SaveWork||{saveWork.Name}||{saveWork.InputPath}||{saveWork.OutputPath}||{saveWork.SaveType}||{saveWork.Progression}||{saveWork.State}||";
@@ -98,6 +122,11 @@ namespace easy_save.Lib.SocketListener
             }
         }
 
+        /// <summary>
+        /// Parses the received message, to know which function to launch.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="message"></param>
         public void Message_Received(Object sender, string message)
         {
             string[] splitedMessage = message.Split("||");

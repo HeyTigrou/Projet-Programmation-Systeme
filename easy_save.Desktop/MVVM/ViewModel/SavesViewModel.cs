@@ -35,6 +35,7 @@ namespace easy_save.Desktop.MVVM.ViewModel
         public ObservableCollection<SaveWorkModel> Processes { get; } = new ObservableCollection<SaveWorkModel>();
 
         public Dictionary<SaveWorkModel, FileSaveService> FileSaveServices = new Dictionary<SaveWorkModel, FileSaveService>();
+
         /// <summary>
         /// Binds the methods with button, and adds the existing save works to the observable collection.
         /// </summary>
@@ -89,6 +90,11 @@ namespace easy_save.Desktop.MVVM.ViewModel
             return Selected != null;
         }
 
+        /// <summary>
+        /// Event for received stop command, stops the choosen save work.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="name"></param>
         private void StopReceived(Object sender, string name)
         {
             SaveWorkModel? saveWorkModel = null;
@@ -103,6 +109,10 @@ namespace easy_save.Desktop.MVVM.ViewModel
             if(saveWorkModel != null )
                 FileSaveServices.Remove(saveWorkModel);
         }
+
+        /// <summary>
+        /// Stops the choosen save work.
+        /// </summary>
         private void Stop()
         {
             if (Selected == null)
@@ -116,7 +126,11 @@ namespace easy_save.Desktop.MVVM.ViewModel
             }
         }
 
-
+        /// <summary>
+        /// Event for the received pause command, pauses the choosen save work.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="name"></param>
         private void PauseReceived(Object sender, string name)
         {
             foreach (var item in FileSaveServices)
@@ -127,6 +141,9 @@ namespace easy_save.Desktop.MVVM.ViewModel
                 }
             }
         }
+        /// <summary>
+        /// Pauses the choosen save work.
+        /// </summary>
         private void Pause()
         {
             if (Selected == null)
@@ -139,7 +156,11 @@ namespace easy_save.Desktop.MVVM.ViewModel
             }
         }
 
-
+        /// <summary>
+        /// Event for the received resume command, resumes the choosen save work.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="name"></param>
         private void ResumeReceived(Object sender, string name)
         {
             foreach (var item in FileSaveServices)
@@ -150,6 +171,9 @@ namespace easy_save.Desktop.MVVM.ViewModel
                 }
             }
         }
+        /// <summary>
+        /// Resumes the choosen save work.
+        /// </summary>
         private void Resume()
         {
             if (Selected == null)
@@ -162,6 +186,11 @@ namespace easy_save.Desktop.MVVM.ViewModel
             }
         }
 
+        /// <summary>
+        /// Event for the received refresh command, refreshes the choosen save work.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="name"></param>
         private void RefreshReceived(Object sender, EventArgs e)
         {
             Refresh();
@@ -189,16 +218,31 @@ namespace easy_save.Desktop.MVVM.ViewModel
             
         }
 
+        /// <summary>
+        /// Event to send state to the client when it changes.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="state"></param>
         private void StateChangedEvent(Object sender, string state)
         {
             socketConnection.server.SendState((sender as SaveWorkModel).Name, state);
         }
+        /// <summary>
+        /// Event to send progression to the client when it changes.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="state"></param>
         private void ProgressionChangedEvent(Object sender, string progression)
         {
             socketConnection.server.SendProgression((sender as SaveWorkModel).Name, progression);
         }
 
 
+        /// <summary>
+        /// Event for the received remove command, removes the choosen save work.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="name"></param>
         private void RemoveReceived(Object sender, string name)
         {
             // Deletes the selected save work.
@@ -225,7 +269,11 @@ namespace easy_save.Desktop.MVVM.ViewModel
         }
 
 
-
+        /// <summary>
+        /// Event for the received launch command, laucnhes the choosen save work.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="name"></param>
         private void LaunchSaveReceived(Object sender, string name)
         {
             Application.Current.Dispatcher.Invoke(() =>
