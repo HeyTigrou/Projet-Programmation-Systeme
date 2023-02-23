@@ -97,7 +97,7 @@ namespace RemoteEasySave.Lib.Service
                                 Progression = list[5],
                                 State = list[6]
                             };
-                            list.RemoveRange(1, 7);
+                            list.RemoveRange(1, 7); 
                             AddSaveWork?.Invoke(this, saveWorkModel);
                         }
                         break;
