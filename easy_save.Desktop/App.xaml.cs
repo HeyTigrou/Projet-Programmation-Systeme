@@ -1,4 +1,6 @@
-﻿using System.Threading;
+﻿using System;
+using System.Diagnostics;
+using System.Threading;
 using System.Windows;
 
 namespace easy_save.Desktop
@@ -17,6 +19,11 @@ namespace easy_save.Desktop
                 Application.Current.Shutdown();
             }
             base.OnStartup(e);
+        }
+        protected override void OnExit(ExitEventArgs e)
+        {
+            base.OnExit(e);
+            Process.GetCurrentProcess().Kill();
         }
     }
 }

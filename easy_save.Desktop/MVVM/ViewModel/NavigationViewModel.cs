@@ -41,7 +41,6 @@ namespace easy_save.Desktop.MVVM.ViewModel
             CreateCommand = new RelayCommand(Create);
             SavesCommand = new RelayCommand(Saves);
             SettingCommand = new RelayCommand(Setting);
-
             CurrentView = new HomeViewModel();
         }
 
