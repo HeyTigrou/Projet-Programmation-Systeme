@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,11 +15,11 @@ namespace RemoteEasySave.Desktop
     /// </summary>
     public partial class App : Application
     {
-        private static Mutex _mutex = null;
+        private static Mutex mutex = null;
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            _mutex = new Mutex(true, "RemoteEasySave", out bool createdNew);
+            mutex = new Mutex(true, "RemoteEasySave", out bool createdNew);
 
             if (!createdNew)
             {
@@ -26,6 +27,11 @@ namespace RemoteEasySave.Desktop
                 Application.Current.Shutdown();
             }
             base.OnStartup(e);
+        }
+        protected override void OnExit(ExitEventArgs e)
+        {
+            base.OnExit(e);
+            Process.GetCurrentProcess().Kill();
         }
     }
 }
