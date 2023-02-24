@@ -5,11 +5,11 @@ namespace easy_save.Desktop
 {
     public partial class App : Application
     {
-        private static Mutex _mutex = null;
+        private static Mutex mutex = null;
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            _mutex = new Mutex(true, "EasySave", out bool createdNew);
+            mutex = new Mutex(true, "EasySave", out bool createdNew);
 
             if (!createdNew)
             {
